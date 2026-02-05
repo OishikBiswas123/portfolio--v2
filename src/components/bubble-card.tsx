@@ -82,54 +82,56 @@ export function BubbleCard({ children, className = '', delay = 0, color = 'blue'
       <motion.div
         className="absolute -top-1 -left-1 w-2 h-2 rounded-full bg-white/40 opacity-60"
         animate={{
-          y: [-3, 3, -3],
-          x: [-2, 2, -2],
-          scale: [1, 1.3, 1],
+          y: [-3, 3],
+          x: [-2, 2],
+          scale: [1, 1.3],
         }}
-        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 2.5, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
       />
       <motion.div
         className="absolute -bottom-1 -right-1 w-2.5 h-2.5 rounded-full bg-white/30 opacity-50"
         animate={{
-          y: [3, -3, 3],
-          x: [2, -2, 2],
-          scale: [1, 1.4, 1],
+          y: [3, -3],
+          x: [2, -2],
+          scale: [1, 1.4],
         }}
-        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+        transition={{ duration: 3, repeat: Infinity, repeatType: "reverse", ease: "easeInOut", delay: 0.5 }}
       />
 
       {/* Main card - Large circular shape */}
       <motion.div
         className={`relative rounded-full w-[380px] h-[380px] md:w-[420px] md:h-[420px] bg-gradient-to-br ${colors.bg} ${colors.border} border-2 transition-all duration-300 flex items-center justify-center overflow-hidden shadow-2xl`}
         animate={{
-          y: [0, -8, 0],
-          scale: [1, 1.01, 1],
+          y: [0, -8],
         }}
         transition={{
-          duration: 4 + delay,
-          repeat: Infinity,
-          ease: "easeInOut",
+          y: {
+            duration: 4,
+            repeat: Infinity,
+            repeatType: "reverse",
+            ease: "easeInOut",
+          }
         }}
         whileHover={{
           scale: 1.05,
-          rotate: [0, -3, 3, -2, 2, 0],
+          rotate: -3,
+          transition: { duration: 0.3 }
         }}
-        transition={{
-          type: "spring",
-          stiffness: 300,
-          damping: 10
+        whileTap={{
+          scale: 0.95,
         }}
       >
         {/* Inner glow ring */}
         <motion.div
           className="absolute inset-6 rounded-full border border-white/30"
           animate={{
-            scale: [1, 1.02, 1],
-            opacity: [0.3, 0.6, 0.3],
+            scale: [1, 1.02],
+            opacity: [0.3, 0.6],
           }}
           transition={{
             duration: 2.5,
             repeat: Infinity,
+            repeatType: "reverse",
             ease: "easeInOut",
           }}
         />

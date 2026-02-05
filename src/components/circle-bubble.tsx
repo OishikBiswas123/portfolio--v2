@@ -103,17 +103,19 @@ export function CircleBubble({ children, delay = 0, color = 'pink' }: CircleBubb
       <motion.div
         className={`relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden shadow-2xl border-2 bg-gradient-to-br ${colorMap[color].bg} ${colorMap[color].border} cursor-pointer`}
         animate={{
-          y: [0, -10, 0],
+          y: [0, -10],
         }}
         transition={{
-          duration: 4,
-          repeat: Infinity,
-          ease: "easeInOut",
+          y: {
+            duration: 4,
+            repeat: Infinity,
+            repeatType: "reverse",
+            ease: "easeInOut",
+          }
         }}
         whileHover={{
           scale: 1.1,
-          rotate: [0, -5, 5, 0],
-          boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
+          rotate: -5,
         }}
         whileTap={{ scale: 0.95 }}
       >

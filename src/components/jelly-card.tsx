@@ -88,21 +88,22 @@ export function JellyCard({ children, className = '', delay = 0, color = 'pink' 
       <motion.div
         className={`relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden shadow-2xl border-2 bg-gradient-to-br ${colors.bg} ${colors.border} cursor-pointer`}
         animate={{
-          y: [0, -10, 0],
+          y: [0, -10],
         }}
         transition={{
-          duration: 4,
-          repeat: Infinity,
-          ease: "easeInOut",
+          y: {
+            duration: 4,
+            repeat: Infinity,
+            repeatType: "reverse",
+            ease: "easeInOut",
+          }
         }}
         whileHover={{
-          scale: [1, 1.1, 0.95, 1.05, 1],
-          rotate: [0, -5, 5, -3, 3, 0],
-          transition: {
-            duration: 0.6,
-            ease: "easeInOut",
-            times: [0, 0.2, 0.4, 0.6, 0.8, 1]
-          }
+          scale: 1.1,
+          rotate: -5,
+        }}
+        whileTap={{
+          scale: 0.95,
         }}
         style={{
           transformOrigin: "center center"
