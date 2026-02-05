@@ -100,7 +100,7 @@ export function BubbleCard({ children, className = '', delay = 0, color = 'blue'
 
       {/* Main card - Large circular shape */}
       <motion.div
-        className={`relative rounded-full w-[380px] h-[380px] md:w-[420px] md:h-[420px] bg-gradient-to-br ${colors.bg} ${colors.border} border-2 transition-all duration-300 flex items-center justify-center overflow-hidden shadow-2xl`}
+        className={`relative rounded-full w-[380px] h-[380px] md:w-[420px] md:h-[420px] bg-gradient-to-br ${colors.bg} ${colors.border} border-2 transition-all duration-300 flex items-center justify-center overflow-hidden shadow-2xl cursor-pointer`}
         animate={{
           y: [0, -8],
         }}
