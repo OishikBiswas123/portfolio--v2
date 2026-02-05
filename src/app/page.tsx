@@ -16,7 +16,7 @@ import { WordHoverText } from "@/components/word-hover-text"
 import { JellyCard } from "@/components/jelly-card"
 import { FloatingParticles } from "@/components/floating-particles"
 import { FloatingBallsAround } from "@/components/floating-balls-around"
-import { FloatingTechWords } from "@/components/floating-tech-words"
+import { FloatingTechIcons } from "@/components/floating-tech-icons"
 import { motion } from "framer-motion"
 
 export default function Home() {
@@ -44,7 +44,7 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative w-full min-h-screen flex items-center overflow-hidden">
         <FuturisticBackground />
-        <FloatingTechWords />
+        <FloatingTechIcons />
         <div className="relative z-10 container mx-auto px-6 py-20">
           <div className="flex flex-col md:flex-row gap-8 items-center">
             {/* Left Side - Profile Photo */}
