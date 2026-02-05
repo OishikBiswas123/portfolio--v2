@@ -32,10 +32,9 @@ export function GoogleMapsLogo({ className = "w-12 h-12" }: { className?: string
 
 export function LinkedInLogo({ className = "w-12 h-12" }: { className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M20.45 2H3.55A1.55 1.55 0 0 0 2 3.55v16.9A1.55 1.55 0 0 0 3.55 22h16.9A1.55 1.55 0 0 0 22 20.45V3.55A1.55 1.55 0 0 0 20.45 2z" fill="#0A66C2"/>
-      <path d="M7.27 9.75h2.83v8.5H7.27v-8.5zm1.42-4.5a1.64 1.64 0 1 1 0 3.28 1.64 1.64 0 0 1 0-3.28zM17 18.25h-2.83v-4.14c0-.99-.02-2.26-1.38-2.26-1.38 0-1.59 1.08-1.59 2.19v4.21H8.37V9.75h2.71v1.17h.04c.38-.71 1.3-1.46 2.67-1.46 2.86 0 3.38 1.88 3.38 4.33v4.46z" fill="white"/>
-    </svg>
+    <div className={`${className} bg-[#0A66C2] rounded-lg flex items-center justify-center text-white font-bold text-2xl`}>
+      in
+    </div>
   )
 }
 
