@@ -16,6 +16,8 @@ export function CircleBubble({ children, delay = 0, color = 'pink' }: CircleBubb
     green: 'from-green-400/30 to-emerald-500/30 border-green-400/40',
     yellow: 'from-yellow-400/30 to-orange-500/30 border-yellow-400/40',
     purple: 'from-purple-400/30 to-indigo-500/30 border-purple-400/40',
+    cyan: 'from-cyan-400/30 to-teal-500/30 border-cyan-400/40',
+    orange: 'from-orange-400/30 to-amber-500/30 border-orange-400/40',
   }
 
   return (
@@ -71,21 +73,21 @@ export function CircleBubble({ children, delay = 0, color = 'pink' }: CircleBubb
 
       {/* Main circle */}
       <motion.div
-        className={`relative w-40 h-40 rounded-full bg-gradient-to-br ${colorMap[color]} backdrop-blur-md border-2 flex flex-col items-center justify-center cursor-pointer`}
+        className={`relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden shadow-2xl border-2 bg-gradient-to-br ${colorMap[color]} cursor-pointer`}
         animate={{
-          y: [0, -8, 0],
-          scale: [1, 1.02, 1],
+          y: [0, -10, 0],
         }}
         transition={{
-          duration: 3 + delay,
+          duration: 4,
           repeat: Infinity,
           ease: "easeInOut",
         }}
         whileHover={{
           scale: 1.1,
           rotate: [0, -5, 5, 0],
-          boxShadow: "0 0 30px rgba(236, 72, 153, 0.4)",
+          boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
         }}
+        whileTap={{ scale: 0.95 }}
       >
         {/* Inner glow ring */}
         <motion.div
@@ -102,7 +104,7 @@ export function CircleBubble({ children, delay = 0, color = 'pink' }: CircleBubb
         />
         
         {/* Content */}
-        <div className="relative z-10 text-center px-2">
+        <div className="relative z-10 flex flex-col items-center justify-center h-full w-full px-3">
           {children}
         </div>
       </motion.div>

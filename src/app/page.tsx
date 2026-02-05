@@ -9,6 +9,9 @@ import { GlitchText, TypewriterText } from "@/components/animated-text"
 import { BubbleCard, BubbleBadge } from "@/components/bubble-card"
 import { CircleBubble } from "@/components/circle-bubble"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { LetterHoverText } from "@/components/letter-hover-text"
+import { GmailLogo, WhatsAppLogo, GoogleMapsLogo, LinkedInLogo, PhoneLogo } from "@/components/contact-logos"
+import { CodeIcon, LaptopIcon, AIIcon, StarIcon } from "@/components/skill-icons"
 import { motion } from "framer-motion"
 
 export default function Home() {
@@ -36,11 +39,11 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative container mx-auto px-6 py-20 min-h-screen flex items-center">
         <AnimatedBackground />
-        <div className="relative z-10 max-w-6xl mx-auto w-full">
-          <div className="grid md:grid-cols-[1.2fr_1fr] gap-4 items-center">
+        <div className="relative z-10 w-full px-4 md:px-12">
+          <div className="flex flex-col md:flex-row gap-8 items-center">
             {/* Left Side - Profile Photo */}
             <motion.div 
-              className="flex justify-center md:justify-start md:-ml-8"
+              className="flex-shrink-0"
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
@@ -49,14 +52,14 @@ export default function Home() {
             </motion.div>
 
             {/* Right Side - Content */}
-            <div className="text-center md:text-left md:-ml-16">
+            <div className="text-center md:text-left flex-grow">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
               >
-                <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-slate-900 dark:text-white mb-6 whitespace-nowrap">
-                  <GlitchText text="OISHIK BISWAS" />
+                <h1 className="text-6xl md:text-7xl lg:text-8xl xl:text-[6.5rem] font-bold text-slate-900 dark:text-white mb-6 whitespace-nowrap overflow-visible tracking-tight">
+                  <LetterHoverText text="OISHIK BISWAS" />
                 </h1>
               </motion.div>
               
@@ -153,63 +156,87 @@ delay={0.1}
 
       {/* About Section */}
       <section id="about" className="container mx-auto px-6 py-20">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-16">About Me</h2>
-          <div className="flex justify-center">
-            <BubbleCard color="blue" delay={0}>
-              <div className="max-w-[260px]">
-                <p className="text-base text-slate-700 dark:text-slate-200 leading-relaxed">
-                  Curiosity drives me more than titles. I believe consistent effort beats talent. Always exploring & improving!
-                </p>
-              </div>
-            </BubbleCard>
-          </div>
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-8">About Me</h2>
+          <motion.p 
+            className="text-lg md:text-xl text-slate-600 dark:text-slate-300 leading-relaxed"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            Curiosity drives me more than titles or labels. I believe consistent effort beats talent in the long run. 
+            Always exploring, always improving. I'm passionate about solving complex problems and creating innovative solutions 
+            using cutting-edge technologies.
+          </motion.p>
         </div>
       </section>
 
       {/* Skills Section */}
       <section id="skills" className="container mx-auto px-6 py-20">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-16 text-center">Skills & Expertise</h2>
           
-          <div className="flex flex-wrap justify-center gap-10 md:gap-14">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
             <BubbleCard color="blue" delay={0.1}>
-              <h3 className="text-lg font-bold text-blue-600 dark:text-blue-400 mb-3">Core Technical</h3>
-              <div className="flex flex-wrap gap-2 justify-center max-w-[220px]">
-                <BubbleBadge delay={0.2}>Python</BubbleBadge>
-                <BubbleBadge delay={0.25}>AI Tools</BubbleBadge>
-                <BubbleBadge delay={0.3}>Prompt Eng</BubbleBadge>
-                <BubbleBadge delay={0.35}>API</BubbleBadge>
-                <BubbleBadge delay={0.4}>Automation</BubbleBadge>
+              <div className="text-center">
+                <div className="mb-3 text-blue-600 dark:text-blue-400">
+                  <CodeIcon className="w-12 h-12 mx-auto" />
+                </div>
+                <h3 className="text-xl font-bold text-blue-600 dark:text-blue-400 mb-4">Core Technical Skills</h3>
+                <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1">
+                  <li>Python Programming</li>
+                  <li>AI Tools & Applications</li>
+                  <li>Prompt Engineering</li>
+                  <li>API Integration</li>
+                  <li>Automation Scripts</li>
+                  <li>Problem Solving</li>
+                </ul>
               </div>
             </BubbleCard>
 
-            <BubbleCard color="green" delay={0.15}>
-              <h3 className="text-lg font-bold text-green-600 dark:text-green-400 mb-3">Development</h3>
-              <div className="flex flex-wrap gap-2 justify-center max-w-[220px]">
-                <BubbleBadge delay={0.3}>Web Dev</BubbleBadge>
-                <BubbleBadge delay={0.35}>HTML/CSS/JS</BubbleBadge>
-                <BubbleBadge delay={0.4}>Backend</BubbleBadge>
-                <BubbleBadge delay={0.45}>Git/GitHub</BubbleBadge>
+            <BubbleCard color="green" delay={0.2}>
+              <div className="text-center">
+                <div className="mb-3 text-green-600 dark:text-green-400">
+                  <LaptopIcon className="w-12 h-12 mx-auto" />
+                </div>
+                <h3 className="text-xl font-bold text-green-600 dark:text-green-400 mb-4">Development & Tech Skills</h3>
+                <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1">
+                  <li>Web Development (HTML, CSS, JavaScript)</li>
+                  <li>Basic Backend Concepts</li>
+                  <li>Git & GitHub</li>
+                  <li>Debugging & Code Optimization</li>
+                </ul>
               </div>
             </BubbleCard>
 
-            <BubbleCard color="purple" delay={0.2}>
-              <h3 className="text-lg font-bold text-purple-600 dark:text-purple-400 mb-3">AI & Tools</h3>
-              <div className="flex flex-wrap gap-2 justify-center max-w-[220px]">
-                <BubbleBadge delay={0.35}>ChatGPT</BubbleBadge>
-                <BubbleBadge delay={0.4}>Auto Tools</BubbleBadge>
-                <BubbleBadge delay={0.45}>AI Workflow</BubbleBadge>
+            <BubbleCard color="purple" delay={0.3}>
+              <div className="text-center">
+                <div className="mb-3 text-purple-600 dark:text-purple-400">
+                  <AIIcon className="w-12 h-12 mx-auto" />
+                </div>
+                <h3 className="text-xl font-bold text-purple-600 dark:text-purple-400 mb-4">AI & Productivity Tools</h3>
+                <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1">
+                  <li>ChatGPT & AI Assistants</li>
+                  <li>Content Automation Tools</li>
+                  <li>AI-Based Workflows</li>
+                </ul>
               </div>
             </BubbleCard>
 
-            <BubbleCard color="orange" delay={0.25}>
-              <h3 className="text-lg font-bold text-orange-600 dark:text-orange-400 mb-3">Professional</h3>
-              <div className="flex flex-wrap gap-2 justify-center max-w-[220px]">
-                <BubbleBadge delay={0.4}>Logic</BubbleBadge>
-                <BubbleBadge delay={0.45}>Self-Learn</BubbleBadge>
-                <BubbleBadge delay={0.5}>Detail</BubbleBadge>
-                <BubbleBadge delay={0.55}>Time Mgmt</BubbleBadge>
+            <BubbleCard color="orange" delay={0.4}>
+              <div className="text-center">
+                <div className="mb-3 text-orange-600 dark:text-orange-400">
+                  <StarIcon className="w-12 h-12 mx-auto" />
+                </div>
+                <h3 className="text-xl font-bold text-orange-600 dark:text-orange-400 mb-4">Professional Skills</h3>
+                <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1">
+                  <li>Logical Thinking</li>
+                  <li>Self-Learning</li>
+                  <li>Attention to Detail</li>
+                  <li>Time Management</li>
+                  <li>Communication Skills</li>
+                </ul>
               </div>
             </BubbleCard>
           </div>
@@ -221,7 +248,7 @@ delay={0.1}
         <div className="max-w-5xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-12 text-center">Hobbies & Interests</h2>
           
-          <div className="flex flex-wrap justify-center gap-8 md:gap-12">
+          <div className="flex flex-wrap justify-center gap-6 md:gap-10">
             <CircleBubble delay={0} color="pink">
               <div className="text-5xl mb-2">🎸</div>
               <p className="text-sm font-bold text-slate-800 dark:text-slate-200">Playing Guitar</p>
@@ -255,56 +282,46 @@ delay={0.1}
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-16 text-center">Get In Touch</h2>
           
-          <div className="flex flex-wrap justify-center gap-10 md:gap-14">
-            <BubbleCard color="cyan" delay={0.1}>
-              <div className="flex flex-col items-center text-center">
-                <MapPin className="w-8 h-8 text-red-500 mb-2" />
-                <h3 className="font-bold text-slate-900 dark:text-white text-sm">Location</h3>
-                <p className="text-slate-600 dark:text-slate-300 text-sm">KOLKATA, WB</p>
-              </div>
-            </BubbleCard>
+          <div className="flex flex-wrap justify-center gap-8 md:gap-12">
+            {/* Email */}
+            <a href="mailto:oishikthegreat@gmail.com" className="block">
+              <CircleBubble delay={0} color="blue">
+                <GmailLogo className="w-14 h-14 mb-2" />
+                <p className="text-xs font-bold text-slate-800 dark:text-slate-200">oishikthegreat<br/>@gmail.com</p>
+              </CircleBubble>
+            </a>
 
-            <BubbleCard color="blue" delay={0.15}>
-              <div className="flex flex-col items-center text-center">
-                <Mail className="w-8 h-8 text-blue-500 mb-2" />
-                <h3 className="font-bold text-slate-900 dark:text-white text-sm">Email</h3>
-                <a href="mailto:oishikthegreat@gmail.com" className="text-blue-600 hover:underline text-xs">
-                  oishikthegreat@gmail.com
-                </a>
-              </div>
-            </BubbleCard>
+            {/* Phone */}
+            <a href="tel:+917044952230" className="block">
+              <CircleBubble delay={0.1} color="green">
+                <PhoneLogo className="w-14 h-14 mb-2" />
+                <p className="text-sm font-bold text-slate-800 dark:text-slate-200">+91 7044952230</p>
+              </CircleBubble>
+            </a>
 
-            <BubbleCard color="green" delay={0.2}>
-              <div className="flex flex-col items-center text-center">
-                <Phone className="w-8 h-8 text-green-500 mb-2" />
-                <h3 className="font-bold text-slate-900 dark:text-white text-sm">Phone</h3>
-                <p className="text-slate-600 dark:text-slate-300 text-sm">+91 7044952230</p>
-              </div>
-            </BubbleCard>
+            {/* WhatsApp */}
+            <a href="https://wa.me/917044952230" target="_blank" rel="noopener noreferrer" className="block">
+              <CircleBubble delay={0.2} color="cyan">
+                <WhatsAppLogo className="w-14 h-14 mb-2" />
+                <p className="text-sm font-bold text-slate-800 dark:text-slate-200">WhatsApp</p>
+              </CircleBubble>
+            </a>
 
-            <BubbleCard color="green" delay={0.25}>
-              <div className="flex flex-col items-center text-center">
-                <MessageCircle className="w-8 h-8 text-green-600 mb-2" />
-                <h3 className="font-bold text-slate-900 dark:text-white text-sm">WhatsApp</h3>
-                <p className="text-slate-600 dark:text-slate-300 text-sm">7044952230</p>
-              </div>
-            </BubbleCard>
+            {/* LinkedIn */}
+            <a href="https://www.linkedin.com/in/oishik-biswas-1487003aa/" target="_blank" rel="noopener noreferrer" className="block">
+              <CircleBubble delay={0.3} color="purple">
+                <LinkedInLogo className="w-14 h-14 mb-2" />
+                <p className="text-xs font-bold text-slate-800 dark:text-slate-200">LinkedIn</p>
+              </CircleBubble>
+            </a>
 
-            <BubbleCard color="blue" delay={0.3}>
-              <div className="flex flex-col items-center text-center">
-                <Linkedin className="w-8 h-8 text-blue-700 mb-2" />
-                <h3 className="font-bold text-slate-900 dark:text-white text-sm">LinkedIn</h3>
-                <a 
-                  href="https://www.linkedin.com/in/oishik-biswas-1487003aa/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-blue-600 hover:underline flex items-center gap-1 text-xs"
-                >
-                  Oishik Biswas
-                  <ExternalLink className="w-3 h-3" />
-                </a>
-              </div>
-            </BubbleCard>
+            {/* Location - Last */}
+            <a href="https://www.google.com/maps/search/?api=1&query=Kolkata,West+Bengal,India" target="_blank" rel="noopener noreferrer" className="block">
+              <CircleBubble delay={0.4} color="pink">
+                <GoogleMapsLogo className="w-14 h-14 mb-2" />
+                <p className="text-sm font-bold text-slate-800 dark:text-slate-200">KOLKATA, WB</p>
+              </CircleBubble>
+            </a>
           </div>
 
           <div className="text-center mt-16">

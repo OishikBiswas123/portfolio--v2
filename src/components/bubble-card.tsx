@@ -91,9 +91,9 @@ export function BubbleCard({ children, className = '', delay = 0, color = 'blue'
         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
       />
 
-      {/* Main card */}
+      {/* Main card - Large circular shape */}
       <motion.div
-        className={`relative rounded-full px-10 py-8 bg-gradient-to-br ${colors.bg} backdrop-blur-md border-2 transition-all duration-300 min-w-[280px] min-h-[200px] flex items-center justify-center`}
+        className={`relative rounded-full w-[380px] h-[380px] md:w-[420px] md:h-[420px] bg-gradient-to-br ${colors.bg} backdrop-blur-md border-2 transition-all duration-300 flex items-center justify-center overflow-hidden`}
         animate={{
           y: [0, -8, 0],
           scale: [1, 1.01, 1],
@@ -106,12 +106,12 @@ export function BubbleCard({ children, className = '', delay = 0, color = 'blue'
         whileHover={{
           scale: 1.03,
           rotate: [0, -2, 2, 0],
-          boxShadow: `0 20px 50px -15px rgba(${color === 'blue' ? '59, 130, 246' : color === 'purple' ? '168, 85, 247' : color === 'green' ? '34, 197, 94' : color === 'orange' ? '249, 115, 22' : color === 'pink' ? '236, 72, 153' : '6, 182, 212'}, 0.4)`,
+          boxShadow: `0 20px 50px -15px rgba(${color === 'blue' ? '59, 130, 246' : color === 'purple' ? '168, 85, 247' : color === 'green' ? '34, 197, 94' : color === 'orange' ? '249, 115, 22' : color === 'pink' ? '236, 72, 153' : color === 'cyan' ? '6, 182, 212' : '234, 179, 8'}, 0.4)`,
         }}
       >
         {/* Inner glow ring */}
         <motion.div
-          className="absolute inset-4 rounded-full border border-white/20"
+          className="absolute inset-6 rounded-full border border-white/20"
           animate={{
             scale: [1, 1.02, 1],
             opacity: [0.3, 0.6, 0.3],
@@ -127,7 +127,7 @@ export function BubbleCard({ children, className = '', delay = 0, color = 'blue'
         <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
         
         {/* Content */}
-        <div className="relative z-10 text-center">
+        <div className="relative z-10 flex flex-col items-center justify-center w-full h-full px-8 py-6">
           {children}
         </div>
       </motion.div>
