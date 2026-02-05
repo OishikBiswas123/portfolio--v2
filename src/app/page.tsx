@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Mail, Phone, MessageCircle, Linkedin, MapPin, Github, ExternalLink } from "lucide-react"
 import { SmoothScroll } from "@/components/smooth-scroll"
 import { ProfileImage } from "@/components/profile-image"
-import { TechGridBackground } from "@/components/tech-grid-background"
+import { FuturisticBackground } from "@/components/futuristic-background"
 import { GlitchText, TypewriterText } from "@/components/animated-text"
 import { BubbleCard, BubbleBadge } from "@/components/bubble-card"
 import { CircleBubble } from "@/components/circle-bubble"
@@ -42,7 +42,7 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="relative w-full min-h-screen flex items-center overflow-hidden">
-        <TechGridBackground />
+        <FuturisticBackground />
         <div className="relative z-10 container mx-auto px-6 py-20">
           <div className="flex flex-col md:flex-row gap-8 items-center">
             {/* Left Side - Profile Photo */}
