@@ -44,7 +44,8 @@ export function FuturisticBackground() {
         this.pulse = 0
         this.pulseSpeed = Math.random() * 0.02 + 0.01
         
-        const colors = ['#3B82F6', '#8B5CF6', '#06B6D4', '#EC4899', '#10B981']
+        // Use darker, more saturated colors for visibility on light backgrounds
+        const colors = ['#2563EB', '#7C3AED', '#0891B2', '#DB2777', '#059669']
         this.color = colors[Math.floor(Math.random() * colors.length)]
       }
 
@@ -99,12 +100,12 @@ export function FuturisticBackground() {
           const distance = Math.sqrt(dx * dx + dy * dy)
 
           if (distance < maxDistance) {
-            const opacity = (1 - distance / maxDistance) * 0.4
+            const opacity = (1 - distance / maxDistance) * 0.6
             ctx.beginPath()
             ctx.moveTo(particles[i].x, particles[i].y)
             ctx.lineTo(particles[j].x, particles[j].y)
-            ctx.strokeStyle = `rgba(59, 130, 246, ${opacity})`
-            ctx.lineWidth = 0.5
+            ctx.strokeStyle = `rgba(37, 99, 235, ${opacity})`
+            ctx.lineWidth = 1
             ctx.stroke()
             connections++
           }
@@ -116,12 +117,12 @@ export function FuturisticBackground() {
         const distance = Math.sqrt(dx * dx + dy * dy)
         
         if (distance < 200) {
-          const opacity = (1 - distance / 200) * 0.6
+          const opacity = (1 - distance / 200) * 0.8
           ctx.beginPath()
           ctx.moveTo(particles[i].x, particles[i].y)
           ctx.lineTo(mouseX, mouseY)
-          ctx.strokeStyle = `rgba(139, 92, 246, ${opacity})`
-          ctx.lineWidth = 1
+          ctx.strokeStyle = `rgba(124, 58, 237, ${opacity})`
+          ctx.lineWidth = 1.5
           ctx.stroke()
         }
       }
@@ -139,20 +140,20 @@ export function FuturisticBackground() {
           
           const maxDist = 300
           const brightness = distFromMouse < maxDist 
-            ? (1 - distFromMouse / maxDist) * 0.3 
-            : 0.05
+            ? (1 - distFromMouse / maxDist) * 0.5 
+            : 0.15
 
           const pulse = Math.sin(time + x * 0.01 + y * 0.01) * 0.5 + 0.5
           
-          ctx.fillStyle = `rgba(59, 130, 246, ${brightness * pulse})`
+          ctx.fillStyle = `rgba(37, 99, 235, ${brightness * pulse})`
           ctx.fillRect(x - 1, y - 1, 2, 2)
         }
       }
     }
 
     const animate = () => {
-      ctx.fillStyle = 'rgba(15, 23, 42, 0.1)'
-      ctx.fillRect(0, 0, canvas.width, canvas.height)
+      // Clear canvas with transparent fade for trail effect
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
 
       drawGrid()
       
@@ -186,10 +187,7 @@ export function FuturisticBackground() {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 w-full h-full"
-      style={{ 
-        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)'
-      }}
+      className="absolute inset-0 w-full h-full pointer-events-none"
     />
   )
 }
