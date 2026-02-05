@@ -11,34 +11,41 @@ interface BubbleCardProps {
 }
 
 export function BubbleCard({ children, className = '', delay = 0, color = 'blue' }: BubbleCardProps) {
-  const colorMap: Record<string, { bg: string, orbiting: string[] }> = {
+  const colorMap: Record<string, { bg: string, orbiting: string[], border: string }> = {
     blue: { 
-      bg: 'from-blue-400/20 to-blue-600/20 border-blue-400/30',
-      orbiting: ['from-blue-400 to-cyan-400', 'from-cyan-400 to-blue-500', 'from-blue-300 to-purple-400']
+      bg: 'from-blue-200/40 via-blue-300/40 to-cyan-400/40',
+      orbiting: ['from-blue-400 to-cyan-400', 'from-cyan-400 to-blue-500', 'from-blue-300 to-purple-400'],
+      border: 'border-blue-300/30'
     },
     purple: { 
-      bg: 'from-purple-400/20 to-purple-600/20 border-purple-400/30',
-      orbiting: ['from-purple-400 to-pink-400', 'from-pink-400 to-purple-500', 'from-purple-300 to-indigo-400']
+      bg: 'from-purple-200/40 via-purple-300/40 to-indigo-400/40',
+      orbiting: ['from-purple-400 to-pink-400', 'from-pink-400 to-purple-500', 'from-purple-300 to-indigo-400'],
+      border: 'border-purple-300/30'
     },
     green: { 
-      bg: 'from-green-400/20 to-green-600/20 border-green-400/30',
-      orbiting: ['from-green-400 to-emerald-400', 'from-emerald-400 to-green-500', 'from-green-300 to-teal-400']
+      bg: 'from-emerald-200/40 via-emerald-300/40 to-teal-400/40',
+      orbiting: ['from-green-400 to-emerald-400', 'from-emerald-400 to-green-500', 'from-green-300 to-teal-400'],
+      border: 'border-emerald-300/30'
     },
     orange: { 
-      bg: 'from-orange-400/20 to-orange-600/20 border-orange-400/30',
-      orbiting: ['from-orange-400 to-yellow-400', 'from-yellow-400 to-orange-500', 'from-orange-300 to-red-400']
+      bg: 'from-orange-200/40 via-orange-300/40 to-red-400/40',
+      orbiting: ['from-orange-400 to-yellow-400', 'from-yellow-400 to-orange-500', 'from-orange-300 to-red-400'],
+      border: 'border-orange-300/30'
     },
     pink: { 
-      bg: 'from-pink-400/20 to-pink-600/20 border-pink-400/30',
-      orbiting: ['from-pink-400 to-rose-400', 'from-rose-400 to-pink-500', 'from-pink-300 to-purple-400']
+      bg: 'from-pink-200/40 via-pink-300/40 to-purple-400/40',
+      orbiting: ['from-pink-400 to-rose-400', 'from-rose-400 to-pink-500', 'from-pink-300 to-purple-400'],
+      border: 'border-pink-300/30'
     },
     cyan: { 
-      bg: 'from-cyan-400/20 to-cyan-600/20 border-cyan-400/30',
-      orbiting: ['from-cyan-400 to-blue-400', 'from-blue-400 to-cyan-500', 'from-cyan-300 to-teal-400']
+      bg: 'from-cyan-200/40 via-cyan-300/40 to-blue-400/40',
+      orbiting: ['from-cyan-400 to-blue-400', 'from-blue-400 to-cyan-500', 'from-cyan-300 to-teal-400'],
+      border: 'border-cyan-300/30'
     },
     yellow: { 
-      bg: 'from-yellow-400/20 to-yellow-600/20 border-yellow-400/30',
-      orbiting: ['from-yellow-400 to-orange-400', 'from-orange-400 to-yellow-500', 'from-yellow-300 to-amber-400']
+      bg: 'from-yellow-200/40 via-yellow-300/40 to-orange-400/40',
+      orbiting: ['from-yellow-400 to-orange-400', 'from-orange-400 to-yellow-500', 'from-yellow-300 to-amber-400'],
+      border: 'border-yellow-300/30'
     },
   }
 
@@ -93,7 +100,7 @@ export function BubbleCard({ children, className = '', delay = 0, color = 'blue'
 
       {/* Main card - Large circular shape */}
       <motion.div
-        className={`relative rounded-full w-[380px] h-[380px] md:w-[420px] md:h-[420px] bg-gradient-to-br ${colors.bg} backdrop-blur-md border-2 transition-all duration-300 flex items-center justify-center overflow-hidden`}
+        className={`relative rounded-full w-[380px] h-[380px] md:w-[420px] md:h-[420px] bg-gradient-to-br ${colors.bg} ${colors.border} border-2 transition-all duration-300 flex items-center justify-center overflow-hidden shadow-2xl`}
         animate={{
           y: [0, -8, 0],
           scale: [1, 1.01, 1],
@@ -104,14 +111,18 @@ export function BubbleCard({ children, className = '', delay = 0, color = 'blue'
           ease: "easeInOut",
         }}
         whileHover={{
-          scale: 1.03,
-          rotate: [0, -2, 2, 0],
-          boxShadow: `0 20px 50px -15px rgba(${color === 'blue' ? '59, 130, 246' : color === 'purple' ? '168, 85, 247' : color === 'green' ? '34, 197, 94' : color === 'orange' ? '249, 115, 22' : color === 'pink' ? '236, 72, 153' : color === 'cyan' ? '6, 182, 212' : '234, 179, 8'}, 0.4)`,
+          scale: [1, 1.08, 0.95, 1.03, 1],
+          rotate: [0, -4, 4, -2, 2, 0],
+          transition: {
+            duration: 0.6,
+            ease: "easeInOut",
+            times: [0, 0.2, 0.4, 0.6, 0.8, 1]
+          }
         }}
       >
         {/* Inner glow ring */}
         <motion.div
-          className="absolute inset-6 rounded-full border border-white/20"
+          className="absolute inset-6 rounded-full border border-white/30"
           animate={{
             scale: [1, 1.02, 1],
             opacity: [0.3, 0.6, 0.3],
@@ -122,9 +133,12 @@ export function BubbleCard({ children, className = '', delay = 0, color = 'blue'
             ease: "easeInOut",
           }}
         />
-        
-        {/* Inner gradient overlay */}
-        <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
+
+        {/* Gradient shine overlay */}
+        <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-white/20 via-transparent to-transparent pointer-events-none" />
+
+        {/* Second gradient layer for depth */}
+        <div className="absolute inset-0 rounded-full bg-gradient-to-bl from-transparent via-transparent to-black/10 pointer-events-none" />
         
         {/* Content */}
         <div className="relative z-10 flex flex-col items-center justify-center w-full h-full px-8 py-6">
