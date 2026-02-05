@@ -14,6 +14,8 @@ import { GmailLogo, WhatsAppLogo, GoogleMapsLogo, LinkedInLogo, PhoneLogo } from
 import { CodeIcon, LaptopIcon, AIIcon, StarIcon } from "@/components/skill-icons"
 import { WordHoverText } from "@/components/word-hover-text"
 import { JellyCard } from "@/components/jelly-card"
+import { FloatingParticles } from "@/components/floating-particles"
+import { FloatingBallsAround } from "@/components/floating-balls-around"
 import { motion } from "framer-motion"
 
 export default function Home() {
@@ -157,8 +159,9 @@ delay={0.1}
       </section>
 
       {/* About Section */}
-      <section id="about" className="container mx-auto px-6 py-20">
-        <div className="max-w-3xl mx-auto text-center">
+      <section id="about" className="container mx-auto px-6 py-20 relative">
+        <FloatingParticles />
+        <div className="max-w-3xl mx-auto text-center relative z-10">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-8">
             <WordHoverText text="About Me" />
           </h2>
@@ -177,8 +180,9 @@ delay={0.1}
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="container mx-auto px-6 py-20">
-        <div className="max-w-7xl mx-auto">
+      <section id="skills" className="container mx-auto px-6 py-20 relative">
+        <FloatingParticles />
+        <div className="max-w-7xl mx-auto relative z-10">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-16 text-center">
             <WordHoverText text="Skills & Expertise" />
           </h2>
@@ -250,8 +254,9 @@ delay={0.1}
       </section>
 
       {/* Hobbies Section */}
-      <section id="hobbies" className="container mx-auto px-6 py-20">
-        <div className="max-w-5xl mx-auto">
+      <section id="hobbies" className="container mx-auto px-6 py-20 relative">
+        <FloatingParticles />
+        <div className="max-w-5xl mx-auto relative z-10">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-12 text-center">
             <WordHoverText text="Hobbies & Interests" />
           </h2>
@@ -286,8 +291,9 @@ delay={0.1}
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="container mx-auto px-6 py-20">
-        <div className="max-w-6xl mx-auto">
+      <section id="contact" className="container mx-auto px-6 py-20 relative">
+        <FloatingParticles />
+        <div className="max-w-6xl mx-auto relative z-10">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-16 text-center">
             <WordHoverText text="Get In Touch" />
           </h2>
