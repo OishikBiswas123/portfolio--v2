@@ -52,7 +52,7 @@ export function FloatingTechIcons() {
       type: icon.type,
       x: Math.random() * 100,
       y: Math.random() * 100,
-      size: Math.random() * 1.5 + 1,
+      size: Math.random() * 2 + 1.5,
       duration: Math.random() * 15 + 10,
       delay: Math.random() * 3,
       rotate: Math.random() * 360,
@@ -66,7 +66,7 @@ export function FloatingTechIcons() {
       {icons.map((icon) => (
         <motion.div
           key={icon.id}
-          className="absolute font-mono font-bold text-slate-400/20 dark:text-slate-500/20 select-none"
+          className="absolute font-mono font-bold text-slate-600/70 dark:text-slate-300/70 select-none"
           style={{
             left: `${icon.x}%`,
             top: `${icon.y}%`,
@@ -74,11 +74,11 @@ export function FloatingTechIcons() {
           }}
           initial={{ opacity: 0, scale: 0 }}
           animate={{
-            opacity: [0.1, 0.3, 0.1],
-            scale: [0.8, 1.2, 0.8],
-            rotate: [icon.rotate, icon.rotate + 15, icon.rotate],
-            y: [0, -40, 0],
-            x: [0, Math.random() * 30 - 15, 0],
+            opacity: [0.4, 0.8, 0.4],
+            scale: [0.9, 1.3, 0.9],
+            rotate: [icon.rotate, icon.rotate + 20, icon.rotate],
+            y: [0, -50, 0],
+            x: [0, Math.random() * 40 - 20, 0],
           }}
           transition={{
             duration: icon.duration,
