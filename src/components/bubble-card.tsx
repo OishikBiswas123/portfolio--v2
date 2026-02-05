@@ -113,10 +113,10 @@ export function BubbleCard({ children, className = '', delay = 0, color = 'blue'
           }
         }}
         whileHover={{
-          scale: [1, 1.15, 0.9, 1.08, 0.95, 1],
-          rotate: [0, -8, 6, -4, 2, 0],
+          scale: [1, 1.25, 0.85, 1.15, 0.9, 1],
+          rotate: [0, -12, 10, -7, 4, 0],
           transition: {
-            duration: 0.8,
+            duration: 0.9,
             ease: "easeInOut",
             times: [0, 0.15, 0.35, 0.55, 0.75, 1]
           }
