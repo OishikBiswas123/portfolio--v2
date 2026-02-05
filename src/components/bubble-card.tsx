@@ -111,13 +111,13 @@ export function BubbleCard({ children, className = '', delay = 0, color = 'blue'
           ease: "easeInOut",
         }}
         whileHover={{
-          scale: [1, 1.08, 0.95, 1.03, 1],
-          rotate: [0, -4, 4, -2, 2, 0],
-          transition: {
-            duration: 0.6,
-            ease: "easeInOut",
-            times: [0, 0.2, 0.4, 0.6, 0.8, 1]
-          }
+          scale: 1.05,
+          rotate: [0, -3, 3, -2, 2, 0],
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 300,
+          damping: 10
         }}
       >
         {/* Inner glow ring */}
