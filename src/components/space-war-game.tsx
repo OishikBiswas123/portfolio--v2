@@ -414,6 +414,59 @@ export function SpaceWarGame({ isOpen, onClose }: SpaceWarGameProps) {
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Mobile Controls */}
+        {gameState === 'playing' && (
+          <div className="md:hidden absolute bottom-4 left-0 right-0 flex justify-between px-8 z-30">
+            {/* Left Button */}
+            <button
+              className="w-16 h-16 bg-white/20 active:bg-white/40 rounded-full flex items-center justify-center text-white text-2xl font-bold border-2 border-white/30"
+              onTouchStart={(e) => {
+                e.preventDefault()
+                keysRef.current['ArrowLeft'] = true
+              }}
+              onTouchEnd={(e) => {
+                e.preventDefault()
+                keysRef.current['ArrowLeft'] = false
+              }}
+              onMouseDown={() => keysRef.current['ArrowLeft'] = true}
+              onMouseUp={() => keysRef.current['ArrowLeft'] = false}
+              onMouseLeave={() => keysRef.current['ArrowLeft'] = false}
+            >
+              ←
+            </button>
+
+            {/* Shoot Button */}
+            <button
+              className="w-20 h-20 bg-red-500/60 active:bg-red-500/80 rounded-full flex items-center justify-center text-white border-4 border-red-400/50"
+              onTouchStart={(e) => {
+                e.preventDefault()
+                shoot()
+              }}
+              onClick={shoot}
+            >
+              <div className="w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-b-[16px] border-b-white" />
+            </button>
+
+            {/* Right Button */}
+            <button
+              className="w-16 h-16 bg-white/20 active:bg-white/40 rounded-full flex items-center justify-center text-white text-2xl font-bold border-2 border-white/30"
+              onTouchStart={(e) => {
+                e.preventDefault()
+                keysRef.current['ArrowRight'] = true
+              }}
+              onTouchEnd={(e) => {
+                e.preventDefault()
+                keysRef.current['ArrowRight'] = false
+              }}
+              onMouseDown={() => keysRef.current['ArrowRight'] = true}
+              onMouseUp={() => keysRef.current['ArrowRight'] = false}
+              onMouseLeave={() => keysRef.current['ArrowRight'] = false}
+            >
+              →
+            </button>
+          </div>
+        )}
       </div>
     </motion.div>
   )
