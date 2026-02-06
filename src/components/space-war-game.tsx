@@ -224,9 +224,8 @@ export function SpaceWarGame({ isOpen, onClose }: SpaceWarGameProps) {
     setBullets([])
     setEnemies([])
     setPlayerX(50)
-    // Reset ID counters - keep incrementing to ensure uniqueness
-    bulletIdRef.current = 0
-    enemyIdRef.current = 0
+    // Don't reset ID counters - keep incrementing to ensure uniqueness across games
+    // bulletIdRef.current and enemyIdRef.current will continue from where they left off
   }
 
   if (!isOpen) return null
