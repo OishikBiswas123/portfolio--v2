@@ -21,14 +21,10 @@ export function HeroBackgroundImage() {
     <>
       {/* Blank PNG background - covers left 60% of hero section in dark mode */}
       {isDark && (
-        <div 
-          className="absolute left-0 top-0 h-full w-3/5 z-[-1] pointer-events-none"
-          style={{
-            backgroundImage: 'url(/blank-bg.png)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-          }}
+        <img 
+          src="/blank-bg.png"
+          alt=""
+          className="absolute left-0 top-0 h-full w-3/5 object-cover -z-10 pointer-events-none"
         />
       )}
       
