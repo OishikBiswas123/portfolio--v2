@@ -12,10 +12,14 @@ export function FuturisticBackground() {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
+    // Check if mobile
+    const isMobile = window.innerWidth < 768
+
     let animationId: number
     let particles: Particle[] = []
     let mouseX = 0
     let mouseY = 0
+    let frameCount = 0
 
     const resize = () => {
       canvas.width = window.innerWidth
@@ -39,12 +43,11 @@ export function FuturisticBackground() {
         this.y = Math.random() * canvasHeight
         this.vx = (Math.random() - 0.5) * 0.5
         this.vy = (Math.random() - 0.5) * 0.5
-        this.size = Math.random() * 3 + 1
+        this.size = Math.random() * 2 + 0.5
         this.alpha = Math.random() * 0.5 + 0.3
         this.pulse = 0
         this.pulseSpeed = Math.random() * 0.02 + 0.01
         
-        // Use darker, more saturated colors for visibility on light backgrounds
         const colors = ['#2563EB', '#7C3AED', '#0891B2', '#DB2777', '#059669']
         this.color = colors[Math.floor(Math.random() * colors.length)]
       }
@@ -53,11 +56,9 @@ export function FuturisticBackground() {
         this.x += this.vx
         this.y += this.vy
 
-        // Bounce off edges
         if (this.x < 0 || this.x > canvasWidth) this.vx *= -1
         if (this.y < 0 || this.y > canvasHeight) this.vy *= -1
 
-        // Pulse effect
         this.pulse += this.pulseSpeed
         this.alpha = 0.3 + Math.sin(this.pulse) * 0.2
       }
@@ -69,18 +70,23 @@ export function FuturisticBackground() {
         ctx.globalAlpha = this.alpha
         ctx.fill()
         
-        // Glow effect
-        ctx.shadowBlur = 15
-        ctx.shadowColor = this.color
-        ctx.fill()
-        ctx.shadowBlur = 0
+        // Skip glow effect on mobile for performance
+        if (!isMobile) {
+          ctx.shadowBlur = 10
+          ctx.shadowColor = this.color
+          ctx.fill()
+          ctx.shadowBlur = 0
+        }
+        
         ctx.globalAlpha = 1
       }
     }
 
     const initParticles = () => {
       particles = []
-      const particleCount = Math.min(100, (canvas!.width * canvas!.height) / 15000)
+      // Much fewer particles on mobile
+      const baseCount = isMobile ? 25 : 80
+      const particleCount = Math.min(baseCount, (canvas!.width * canvas!.height) / 20000)
       for (let i = 0; i < particleCount; i++) {
         particles.push(new Particle(canvas!.width, canvas!.height))
       }
@@ -89,51 +95,57 @@ export function FuturisticBackground() {
     const drawConnections = () => {
       if (!ctx) return
       
-      const maxDistance = 150
+      const maxDistance = isMobile ? 100 : 150
+      const maxConnections = isMobile ? 2 : 3
       
       for (let i = 0; i < particles.length; i++) {
         let connections = 0
         
-        for (let j = i + 1; j < particles.length; j++) {
-          if (connections >= 3) break
+        // Only check subset on mobile for performance
+        const checkLimit = isMobile ? Math.min(i + 10, particles.length) : particles.length
+        
+        for (let j = i + 1; j < checkLimit; j++) {
+          if (connections >= maxConnections) break
           
           const dx = particles[i].x - particles[j].x
           const dy = particles[i].y - particles[j].y
           const distance = Math.sqrt(dx * dx + dy * dy)
 
           if (distance < maxDistance) {
-            const opacity = (1 - distance / maxDistance) * 0.6
+            const opacity = (1 - distance / maxDistance) * 0.4
             ctx.beginPath()
             ctx.moveTo(particles[i].x, particles[i].y)
             ctx.lineTo(particles[j].x, particles[j].y)
             ctx.strokeStyle = `rgba(37, 99, 235, ${opacity})`
-            ctx.lineWidth = 1
+            ctx.lineWidth = 0.5
             ctx.stroke()
             connections++
           }
         }
 
-        // Connect to mouse
-        const dx = particles[i].x - mouseX
-        const dy = particles[i].y - mouseY
-        const distance = Math.sqrt(dx * dx + dy * dy)
-        
-        if (distance < 200) {
-          const opacity = (1 - distance / 200) * 0.8
-          ctx.beginPath()
-          ctx.moveTo(particles[i].x, particles[i].y)
-          ctx.lineTo(mouseX, mouseY)
-          ctx.strokeStyle = `rgba(124, 58, 237, ${opacity})`
-          ctx.lineWidth = 1.5
-          ctx.stroke()
+        // Skip mouse connections on mobile
+        if (!isMobile) {
+          const dx = particles[i].x - mouseX
+          const dy = particles[i].y - mouseY
+          const distance = Math.sqrt(dx * dx + dy * dy)
+          
+          if (distance < 150) {
+            const opacity = (1 - distance / 150) * 0.5
+            ctx.beginPath()
+            ctx.moveTo(particles[i].x, particles[i].y)
+            ctx.lineTo(mouseX, mouseY)
+            ctx.strokeStyle = `rgba(124, 58, 237, ${opacity})`
+            ctx.lineWidth = 1
+            ctx.stroke()
+          }
         }
       }
     }
 
     const drawGrid = () => {
-      if (!canvas || !ctx) return
+      if (!canvas || !ctx || isMobile) return // Skip grid on mobile
       
-      const gridSize = 60
+      const gridSize = 80
       const time = Date.now() * 0.001
 
       for (let x = 0; x < canvas.width; x += gridSize) {
@@ -144,8 +156,8 @@ export function FuturisticBackground() {
           
           const maxDist = 300
           const brightness = distFromMouse < maxDist 
-            ? (1 - distFromMouse / maxDist) * 0.5 
-            : 0.15
+            ? (1 - distFromMouse / maxDist) * 0.3 
+            : 0.1
 
           const pulse = Math.sin(time + x * 0.01 + y * 0.01) * 0.5 + 0.5
           
@@ -158,7 +170,14 @@ export function FuturisticBackground() {
     const animate = () => {
       if (!canvas || !ctx) return
       
-      // Clear canvas with transparent fade for trail effect
+      frameCount++
+      
+      // Skip frames on mobile (run at 30fps instead of 60fps)
+      if (isMobile && frameCount % 2 !== 0) {
+        animationId = requestAnimationFrame(animate)
+        return
+      }
+      
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
       drawGrid()

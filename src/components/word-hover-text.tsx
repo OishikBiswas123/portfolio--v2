@@ -24,26 +24,8 @@ export function WordHoverText({ text, className }: { text: string, className?: s
           }}
           onMouseEnter={() => setHoveredIndex(index)}
           onMouseLeave={() => setHoveredIndex(null)}
-          onTouchStart={() => {
-            setHoveredIndex(index)
-          }}
-          onTouchMove={(e) => {
-            // Get the touch position
-            const touch = e.touches[0]
-            // Get element at touch position
-            const element = document.elementFromPoint(touch.clientX, touch.clientY)
-            // Check if we're over a word
-            if (element && element.getAttribute('data-word')) {
-              const idx = parseInt(element.getAttribute('data-word') || '-1')
-              if (idx !== -1) {
-                setHoveredIndex(idx)
-              }
-            }
-          }}
-          onTouchEnd={() => {
-            setTimeout(() => setHoveredIndex(null), 200)
-          }}
-          data-word={index}
+          onTouchStart={() => setHoveredIndex(index)}
+          onTouchEnd={() => setTimeout(() => setHoveredIndex(null), 300)}
           style={{ 
             WebkitTapHighlightColor: 'transparent'
           }}

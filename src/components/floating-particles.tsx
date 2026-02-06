@@ -17,6 +17,9 @@ export function FloatingParticles() {
   const [particles, setParticles] = useState<Particle[]>([])
 
   useEffect(() => {
+    // Check if mobile
+    const isMobile = window.innerWidth < 768
+    
     const colors = [
       'from-blue-400 to-cyan-400',
       'from-purple-400 to-pink-400', 
@@ -26,17 +29,22 @@ export function FloatingParticles() {
       'from-cyan-400 to-blue-400',
     ]
     
-    const newParticles = Array.from({ length: 150 }, (_, i) => ({
+    // Much fewer particles on mobile
+    const particleCount = isMobile ? 20 : 80
+    
+    const newParticles = Array.from({ length: particleCount }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
-      size: Math.random() * 6 + 2,
-      duration: Math.random() * 15 + 8,
-      delay: Math.random() * 8,
+      size: Math.random() * 4 + 1,
+      duration: Math.random() * 10 + 6,
+      delay: Math.random() * 5,
       color: colors[Math.floor(Math.random() * colors.length)],
     }))
     setParticles(newParticles)
   }, [])
+
+  if (particles.length === 0) return null
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
@@ -49,13 +57,11 @@ export function FloatingParticles() {
             top: `${particle.y}%`,
             width: particle.size,
             height: particle.size,
-            boxShadow: `0 0 ${particle.size * 3}px rgba(255, 255, 255, 0.4)`,
           }}
+          initial={{ opacity: 0.3 }}
           animate={{
-            y: [0, -100, 0],
-            x: [0, Math.random() * 60 - 30, 0],
-            opacity: [0.3, 0.8, 0.3],
-            scale: [1, 1.5, 1],
+            y: [0, -50, 0],
+            opacity: [0.3, 0.6, 0.3],
           }}
           transition={{
             duration: particle.duration,

@@ -8,54 +8,29 @@ export function LetterHoverText({ text, className }: { text: string, className?:
 
   return (
     <span className={`relative inline-flex ${className}`}>
-      {/* Glitch layers */}
-      <motion.span 
-        className="absolute inset-0 text-red-500 opacity-50 pointer-events-none select-none"
-        animate={{ 
-          x: [-2, 2, -2],
-          opacity: [0.5, 0.8, 0.5]
-        }}
-        transition={{ 
-          duration: 0.2,
-          repeat: Infinity,
-          repeatDelay: 3
+      {/* Glitch layers - simplified on mobile */}
+      <span 
+        className="absolute inset-0 text-red-500 opacity-50 pointer-events-none select-none hidden md:block"
+        style={{
+          transform: 'translateX(-2px)',
         }}
         aria-hidden
       >
         {text}
-      </motion.span>
-      <motion.span 
-        className="absolute inset-0 text-blue-500 opacity-50 pointer-events-none select-none"
-        animate={{ 
-          x: [2, -2, 2],
-          opacity: [0.5, 0.8, 0.5]
-        }}
-        transition={{ 
-          duration: 0.2,
-          repeat: Infinity,
-          repeatDelay: 3,
-          delay: 0.1
+      </span>
+      <span 
+        className="absolute inset-0 text-blue-500 opacity-50 pointer-events-none select-none hidden md:block"
+        style={{
+          transform: 'translateX(2px)',
         }}
         aria-hidden
       >
         {text}
-      </motion.span>
+      </span>
       
       {/* Main text with hover effect */}
       <motion.span
         className="relative z-10 inline-flex"
-        animate={{ 
-          textShadow: [
-            "2px 0 #ef4444, -2px 0 #3b82f6",
-            "-2px 0 #ef4444, 2px 0 #3b82f6",
-            "2px 0 #ef4444, -2px 0 #3b82f6"
-          ]
-        }}
-        transition={{ 
-          duration: 0.5,
-          repeat: Infinity,
-          repeatDelay: 5
-        }}
       >
         {text.split('').map((letter, index) => (
           <motion.span
@@ -74,26 +49,8 @@ export function LetterHoverText({ text, className }: { text: string, className?:
             }}
             onMouseEnter={() => setHoveredIndex(index)}
             onMouseLeave={() => setHoveredIndex(null)}
-            onTouchStart={(e) => {
-              setHoveredIndex(index)
-            }}
-            onTouchMove={(e) => {
-              // Get the touch position
-              const touch = e.touches[0]
-              // Get element at touch position
-              const element = document.elementFromPoint(touch.clientX, touch.clientY)
-              // Check if we're over a letter
-              if (element && element.getAttribute('data-letter')) {
-                const idx = parseInt(element.getAttribute('data-letter') || '-1')
-                if (idx !== -1) {
-                  setHoveredIndex(idx)
-                }
-              }
-            }}
-            onTouchEnd={() => {
-              setTimeout(() => setHoveredIndex(null), 200)
-            }}
-            data-letter={index}
+            onTouchStart={() => setHoveredIndex(index)}
+            onTouchEnd={() => setTimeout(() => setHoveredIndex(null), 300)}
             style={{ 
               display: 'inline-block',
               willChange: 'transform',

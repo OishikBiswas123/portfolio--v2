@@ -9,22 +9,12 @@ const techIcons = [
   { type: 'slash', path: '//' },
   { type: 'hash', path: '{}' },
   { type: 'code', path: '</>' },
-  { type: 'terminal', path: '>_ ' },
+  { type: 'terminal', path: '>_' },
   { type: 'binary', path: '01' },
   { type: 'asterisk', path: '**' },
-  { type: 'circuit', path: '&#124;&#124;' },
   { type: 'arrow', path: '=>' },
   { type: 'function', path: '()' },
   { type: 'array', path: '[]' },
-  { type: 'module', path: '::' },
-  { type: 'comment', path: '/*' },
-  { type: 'variable', path: '$_' },
-  { type: 'command', path: '$>' },
-  { type: 'tag', path: '<&#47;>' },
-  { type: 'link', path: '-->' },
-  { type: 'node', path: '(.)' },
-  { type: 'cloud', path: '&#123;&#125;' },
-  { type: 'api', path: 'API' },
 ]
 
 interface FloatingIcon {
@@ -43,8 +33,13 @@ export function FloatingTechIcons() {
   const [icons, setIcons] = useState<FloatingIcon[]>([])
 
   useEffect(() => {
+    // Check if mobile
+    const isMobile = window.innerWidth < 768
+    
     const shuffled = [...techIcons].sort(() => 0.5 - Math.random())
-    const selectedIcons = [...shuffled, ...shuffled].slice(0, 30)
+    // Fewer icons on mobile
+    const iconCount = isMobile ? 6 : 15
+    const selectedIcons = shuffled.slice(0, iconCount)
     
     const floatingIcons = selectedIcons.map((icon, index) => ({
       id: index,
@@ -52,33 +47,32 @@ export function FloatingTechIcons() {
       type: icon.type,
       x: Math.random() * 100,
       y: Math.random() * 100,
-      size: Math.random() * 2 + 1.5,
-      duration: Math.random() * 15 + 10,
-      delay: Math.random() * 3,
+      size: isMobile ? Math.random() * 1 + 0.8 : Math.random() * 1.5 + 1,
+      duration: Math.random() * 8 + 6,
+      delay: Math.random() * 2,
       rotate: Math.random() * 360,
     }))
     
     setIcons(floatingIcons)
   }, [])
 
+  if (icons.length === 0) return null
+
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
       {icons.map((icon) => (
         <motion.div
           key={icon.id}
-          className="absolute font-mono font-bold text-slate-600/70 dark:text-slate-300/70 select-none"
+          className="absolute font-mono font-bold text-slate-600/50 dark:text-slate-300/50 select-none"
           style={{
             left: `${icon.x}%`,
             top: `${icon.y}%`,
             fontSize: `${icon.size}rem`,
           }}
-          initial={{ opacity: 0, scale: 0 }}
+          initial={{ opacity: 0 }}
           animate={{
-            opacity: [0.4, 0.8, 0.4],
-            scale: [0.9, 1.3, 0.9],
-            rotate: [icon.rotate, icon.rotate + 20, icon.rotate],
-            y: [0, -50, 0],
-            x: [0, Math.random() * 40 - 20, 0],
+            opacity: [0.3, 0.5, 0.3],
+            y: [0, -30, 0],
           }}
           transition={{
             duration: icon.duration,
