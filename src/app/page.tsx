@@ -23,55 +23,68 @@ import { EasterEggButton } from "@/components/easter-egg-button"
 import { motion } from "framer-motion"
 
 export default function Home() {
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [audioError, setAudioError] = useState<string | null>(null)
-  const audioRef = useRef<HTMLAudioElement | null>(null)
+  // Audio state management
+  const [playingAudio, setPlayingAudio] = useState<string | null>(null)
+  const [audioErrors, setAudioErrors] = useState<{[key: string]: string | null}>({})
+  const audioRefs = useRef<{[key: string]: HTMLAudioElement | null}>({})
 
-  const playBeatbox = async () => {
+  const playAudio = async (audioKey: string, filePath: string) => {
     // Initialize audio on first click
-    if (!audioRef.current) {
-      audioRef.current = new Audio('/beatbox.ogg')
-      audioRef.current.preload = 'auto'
-      audioRef.current.volume = 0.7
+    if (!audioRefs.current[audioKey]) {
+      audioRefs.current[audioKey] = new Audio(filePath)
+      audioRefs.current[audioKey]!.preload = 'auto'
+      audioRefs.current[audioKey]!.volume = 0.7
       
-      audioRef.current.onended = () => {
-        setIsPlaying(false)
+      audioRefs.current[audioKey]!.onended = () => {
+        setPlayingAudio(null)
       }
       
-      audioRef.current.onerror = (e) => {
+      audioRefs.current[audioKey]!.onerror = (e) => {
         console.error('Audio error:', e)
-        setAudioError('Failed to load audio')
-        setIsPlaying(false)
+        setAudioErrors(prev => ({...prev, [audioKey]: 'Failed to load audio'}))
+        setPlayingAudio(null)
       }
     }
     
-    if (isPlaying) {
-      audioRef.current.pause()
-      audioRef.current.currentTime = 0
-      setIsPlaying(false)
+    const audio = audioRefs.current[audioKey]!
+    
+    // Stop any currently playing audio
+    if (playingAudio && playingAudio !== audioKey) {
+      const currentAudio = audioRefs.current[playingAudio]
+      if (currentAudio) {
+        currentAudio.pause()
+        currentAudio.currentTime = 0
+      }
+    }
+    
+    if (playingAudio === audioKey) {
+      // Toggle off
+      audio.pause()
+      audio.currentTime = 0
+      setPlayingAudio(null)
     } else {
       try {
         // Reset error
-        setAudioError(null)
+        setAudioErrors(prev => ({...prev, [audioKey]: null}))
         
         // Load if not loaded
-        if (audioRef.current.readyState === 0) {
-          await audioRef.current.load()
+        if (audio.readyState === 0) {
+          await audio.load()
         }
         
         // Play audio
-        await audioRef.current.play()
-        setIsPlaying(true)
+        await audio.play()
+        setPlayingAudio(audioKey)
       } catch (err) {
         console.error('Playback failed:', err)
-        setAudioError('Click to enable audio')
-        setIsPlaying(false)
+        setAudioErrors(prev => ({...prev, [audioKey]: 'Click to play'}))
+        setPlayingAudio(null)
         
         // Retry after user interaction
         setTimeout(() => {
-          audioRef.current?.play().then(() => {
-            setIsPlaying(true)
-            setAudioError(null)
+          audio.play().then(() => {
+            setPlayingAudio(audioKey)
+            setAudioErrors(prev => ({...prev, [audioKey]: null}))
           }).catch(() => {})
         }, 100)
       }
@@ -323,9 +336,14 @@ delay={0.1}
           </h2>
           
           <div className="flex flex-wrap justify-center gap-6 md:gap-10">
-            <JellyCard delay={0} color="pink">
+            <JellyCard delay={0} color="pink" onClick={() => playAudio('guitar', '/guitar.ogg')}>
               <div className="text-5xl mb-2">🎸</div>
-              <p className="text-sm font-bold text-slate-800 dark:text-slate-200">Playing Guitar</p>
+              <p className="text-sm font-bold text-slate-800 dark:text-slate-200">
+                {playingAudio === 'guitar' ? '🔊 Playing...' : audioErrors['guitar'] || 'Playing Guitar'}
+              </p>
+              {audioErrors['guitar'] && (
+                <p className="text-xs text-red-500 mt-1">Click to play</p>
+              )}
             </JellyCard>
 
             <JellyCard delay={0.1} color="blue">
@@ -343,12 +361,12 @@ delay={0.1}
               <p className="text-sm font-bold text-slate-800 dark:text-slate-200">Movies & Series</p>
             </JellyCard>
 
-            <JellyCard delay={0.4} color="green" onClick={playBeatbox}>
+            <JellyCard delay={0.4} color="green" onClick={() => playAudio('beatbox', '/beatbox.ogg')}>
               <div className="text-5xl mb-2">🎵</div>
               <p className="text-sm font-bold text-slate-800 dark:text-slate-200">
-                {isPlaying ? '🔊 Playing...' : audioError || 'Beatboxing'}
+                {playingAudio === 'beatbox' ? '🔊 Playing...' : audioErrors['beatbox'] || 'Beatboxing'}
               </p>
-              {audioError && (
+              {audioErrors['beatbox'] && (
                 <p className="text-xs text-red-500 mt-1">Click to play</p>
               )}
             </JellyCard>
