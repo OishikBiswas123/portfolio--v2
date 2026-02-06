@@ -19,7 +19,7 @@ export function HeroBackgroundImage() {
   
   return (
     <>
-      {/* Desktop Background - Right side */}
+      {/* Desktop: Right side background - HIDDEN ON MOBILE */}
       <motion.div 
         className="hidden md:block absolute right-0 top-0 h-full w-2/5 z-0 pointer-events-none"
         initial={{ opacity: 0, x: 100 }}
@@ -31,7 +31,7 @@ export function HeroBackgroundImage() {
             key={isDark ? 'dark' : 'light'}
             className="absolute inset-0"
             initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 0.5, scale: 1 }}
+            animate={{ opacity: 0.6, scale: 1 }}
             exit={{ opacity: 0, scale: 1.05 }}
             transition={{ duration: 0.6, ease: "easeInOut" }}
           >
@@ -44,13 +44,13 @@ export function HeroBackgroundImage() {
           </motion.div>
         </AnimatePresence>
         
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-l from-transparent via-slate-50/30 dark:via-slate-900/30 to-slate-50/90 dark:to-slate-900/90" />
+        {/* Desktop gradient */}
+        <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-slate-50/90 dark:to-slate-900/90" />
       </motion.div>
 
-      {/* Mobile Background - Bottom center, smaller */}
+      {/* Mobile: Bottom center background - HIDDEN ON DESKTOP */}
       <motion.div 
-        className="md:hidden absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] h-[40%] z-0 pointer-events-none"
+        className="md:hidden absolute bottom-0 left-1/2 -translate-x-1/2 w-[70%] h-[35%] z-0 pointer-events-none"
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.2, delay: 0.5 }}
@@ -60,7 +60,7 @@ export function HeroBackgroundImage() {
             key={isDark ? 'dark' : 'light'}
             className="absolute inset-0"
             initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 0.3, scale: 1 }}
+            animate={{ opacity: 0.35, scale: 1 }}
             exit={{ opacity: 0, scale: 1.05 }}
             transition={{ duration: 0.6, ease: "easeInOut" }}
           >
@@ -73,8 +73,8 @@ export function HeroBackgroundImage() {
           </motion.div>
         </AnimatePresence>
         
-        {/* Fade from bottom */}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-50/80 dark:from-slate-900/80 via-slate-50/40 dark:via-slate-900/40 to-transparent" />
+        {/* Mobile fade from bottom */}
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-50/70 dark:from-slate-900/70 via-transparent to-transparent" />
       </motion.div>
     </>
   )

@@ -117,26 +117,24 @@ export default function Home() {
       </div>
 
       {/* Hero Section */}
-      <section className="relative w-full min-h-screen flex flex-col md:flex-row items-start md:items-center overflow-hidden">
+      <section className="relative w-full min-h-screen flex items-center overflow-hidden">
         <FuturisticBackground />
         <FloatingTechIcons />
         <HeroBackgroundImage />
-        <div className="relative z-10 container mx-auto px-4 sm:px-6 py-16 md:py-20 w-full">
-          <div className="flex flex-col gap-4 md:gap-8 items-center">
-            {/* Profile Photo - Above name on mobile, left side on desktop */}
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 py-16 md:py-20">
+          <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-center">
+            {/* Left Side - Profile Photo - Smaller on mobile, above name */}
             <motion.div 
-              className="flex-shrink-0 md:absolute md:left-8 md:top-1/2 md:-translate-y-1/2 lg:left-12"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
+              className="flex-shrink-0 order-first md:order-none scale-75 md:scale-100"
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <div className="scale-75 md:scale-100">
-                <ProfileImage />
-              </div>
+              <ProfileImage />
             </motion.div>
 
-            {/* Content - Below photo on mobile, center/right on desktop */}
-            <div className="text-center flex flex-col items-center md:items-start md:ml-auto md:mr-12 lg:mr-20 md:max-w-2xl">
+            {/* Right Side - Content */}
+            <div className="text-center md:text-left flex-grow">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
