@@ -98,9 +98,9 @@ export function BubbleCard({ children, className = '', delay = 0, color = 'blue'
         transition={{ duration: 3, repeat: Infinity, repeatType: "reverse", ease: "easeInOut", delay: 0.5 }}
       />
 
-      {/* Main card - Large circular shape */}
+      {/* Main card - Responsive circular shape */}
       <motion.div
-        className={`relative rounded-full w-[380px] h-[380px] md:w-[420px] md:h-[420px] bg-gradient-to-br ${colors.bg} ${colors.border} border-2 transition-all duration-300 flex items-center justify-center overflow-hidden shadow-2xl cursor-pointer`}
+        className={`relative rounded-full w-[280px] h-[280px] sm:w-[320px] sm:h-[320px] md:w-[380px] md:h-[380px] lg:w-[420px] lg:h-[420px] bg-gradient-to-br ${colors.bg} ${colors.border} border-2 transition-all duration-300 flex items-center justify-center overflow-hidden shadow-2xl cursor-pointer`}
         animate={{
           y: [0, -8],
         }}

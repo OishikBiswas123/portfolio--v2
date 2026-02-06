@@ -99,15 +99,15 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
       <SmoothScroll />
       {/* Navigation - Floating without bar */}
-      <div className="absolute top-0 left-0 right-0 z-50 py-4">
-        <div className="container mx-auto px-6">
+      <div className="absolute top-0 left-0 right-0 z-50 py-3 md:py-4">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="flex justify-between items-center">
-            <h2 className="text-xl font-bold text-slate-900 dark:text-white drop-shadow-md">OB</h2>
-            <div className="flex items-center gap-6">
-              <div className="flex gap-6">
+            <h2 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white drop-shadow-md">OB</h2>
+            <div className="flex items-center gap-3 md:gap-6">
+              <div className="flex gap-3 md:gap-6 text-sm md:text-base">
                 <a href="#about" className="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors drop-shadow-md">About</a>
                 <a href="#skills" className="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors drop-shadow-md">Skills</a>
-                <a href="#hobbies" className="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors drop-shadow-md">Hobbies</a>
+                <a href="#hobbies" className="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors drop-shadow-md hidden sm:inline">Hobbies</a>
                 <a href="#contact" className="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors drop-shadow-md">Contact</a>
               </div>
               <ThemeToggle />
@@ -121,11 +121,11 @@ export default function Home() {
         <FuturisticBackground />
         <FloatingTechIcons />
         <HeroBackgroundImage />
-        <div className="relative z-10 container mx-auto px-6 py-20">
-          <div className="flex flex-col md:flex-row gap-8 items-center">
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 py-16 md:py-20">
+          <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-center">
             {/* Left Side - Profile Photo */}
             <motion.div 
-              className="flex-shrink-0"
+              className="flex-shrink-0 order-1 md:order-1"
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
@@ -140,13 +140,13 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
               >
-                <h1 className="text-6xl md:text-7xl lg:text-8xl xl:text-[6.5rem] font-bold text-slate-900 dark:text-white mb-6 whitespace-nowrap overflow-visible tracking-tight">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] font-bold text-slate-900 dark:text-white mb-4 md:mb-6 whitespace-normal md:whitespace-nowrap overflow-visible tracking-tight">
                   <LetterHoverText text="OISHIK BISWAS" />
                 </h1>
               </motion.div>
               
               <motion.div 
-                className="text-lg md:text-xl text-slate-600 dark:text-slate-300 mb-6 leading-relaxed"
+                className="text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-300 mb-4 md:mb-6 leading-relaxed px-2 md:px-0"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.5 }}
