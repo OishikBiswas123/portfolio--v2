@@ -30,11 +30,12 @@ export function HeroBackgroundImage() {
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: isDark ? 'url(/hero-bg-dark.png)' : 'url(/hero-bg.png)',
-            opacity: 0.5,
+            opacity: isDark ? 0.6 : 0.5,
             transform: isDark ? 'scaleX(-1)' : 'none',
+            mixBlendMode: isDark ? 'screen' : 'normal',
           }}
           initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 0.5, scale: 1 }}
+          animate={{ opacity: isDark ? 0.6 : 0.5, scale: 1 }}
           exit={{ opacity: 0, scale: 1.05 }}
           transition={{ duration: 0.6, ease: "easeInOut" }}
         />
