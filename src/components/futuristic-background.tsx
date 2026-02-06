@@ -84,9 +84,10 @@ export function FuturisticBackground() {
 
     const initParticles = () => {
       particles = []
-      // Much fewer particles on mobile
-      const baseCount = isMobile ? 25 : 80
-      const particleCount = Math.min(baseCount, (canvas!.width * canvas!.height) / 20000)
+      // Full particles on desktop, fewer on mobile
+      const baseCount = isMobile ? 25 : 100
+      const divisor = isMobile ? 20000 : 15000
+      const particleCount = Math.min(baseCount, (canvas!.width * canvas!.height) / divisor)
       for (let i = 0; i < particleCount; i++) {
         particles.push(new Particle(canvas!.width, canvas!.height))
       }
@@ -95,13 +96,16 @@ export function FuturisticBackground() {
     const drawConnections = () => {
       if (!ctx) return
       
+      // Desktop: full quality, Mobile: reduced
       const maxDistance = isMobile ? 100 : 150
-      const maxConnections = isMobile ? 2 : 3
+      const maxConnections = isMobile ? 2 : 5
+      const opacityMultiplier = isMobile ? 0.4 : 0.6
+      const lineWidth = isMobile ? 0.5 : 1
       
       for (let i = 0; i < particles.length; i++) {
         let connections = 0
         
-        // Only check subset on mobile for performance
+        // Only check subset on mobile for performance, all on desktop
         const checkLimit = isMobile ? Math.min(i + 10, particles.length) : particles.length
         
         for (let j = i + 1; j < checkLimit; j++) {
@@ -112,12 +116,12 @@ export function FuturisticBackground() {
           const distance = Math.sqrt(dx * dx + dy * dy)
 
           if (distance < maxDistance) {
-            const opacity = (1 - distance / maxDistance) * 0.4
+            const opacity = (1 - distance / maxDistance) * opacityMultiplier
             ctx.beginPath()
             ctx.moveTo(particles[i].x, particles[i].y)
             ctx.lineTo(particles[j].x, particles[j].y)
             ctx.strokeStyle = `rgba(37, 99, 235, ${opacity})`
-            ctx.lineWidth = 0.5
+            ctx.lineWidth = lineWidth
             ctx.stroke()
             connections++
           }
@@ -135,7 +139,7 @@ export function FuturisticBackground() {
             ctx.moveTo(particles[i].x, particles[i].y)
             ctx.lineTo(mouseX, mouseY)
             ctx.strokeStyle = `rgba(124, 58, 237, ${opacity})`
-            ctx.lineWidth = 1.5
+            ctx.lineWidth = 2
             ctx.stroke()
           }
         }
@@ -156,8 +160,8 @@ export function FuturisticBackground() {
           
           const maxDist = 300
           const brightness = distFromMouse < maxDist 
-            ? (1 - distFromMouse / maxDist) * 0.3 
-            : 0.1
+            ? (1 - distFromMouse / maxDist) * 0.5 
+            : 0.15
 
           const pulse = Math.sin(time + x * 0.01 + y * 0.01) * 0.5 + 0.5
           
