@@ -34,9 +34,9 @@ export function FuturisticBackground() {
       pulse: number
       pulseSpeed: number
 
-      constructor() {
-        this.x = Math.random() * canvas.width
-        this.y = Math.random() * canvas.height
+      constructor(canvasWidth: number, canvasHeight: number) {
+        this.x = Math.random() * canvasWidth
+        this.y = Math.random() * canvasHeight
         this.vx = (Math.random() - 0.5) * 0.5
         this.vy = (Math.random() - 0.5) * 0.5
         this.size = Math.random() * 3 + 1
@@ -49,20 +49,20 @@ export function FuturisticBackground() {
         this.color = colors[Math.floor(Math.random() * colors.length)]
       }
 
-      update() {
+      update(canvasWidth: number, canvasHeight: number) {
         this.x += this.vx
         this.y += this.vy
 
         // Bounce off edges
-        if (this.x < 0 || this.x > canvas.width) this.vx *= -1
-        if (this.y < 0 || this.y > canvas.height) this.vy *= -1
+        if (this.x < 0 || this.x > canvasWidth) this.vx *= -1
+        if (this.y < 0 || this.y > canvasHeight) this.vy *= -1
 
         // Pulse effect
         this.pulse += this.pulseSpeed
         this.alpha = 0.3 + Math.sin(this.pulse) * 0.2
       }
 
-      draw() {
+      draw(ctx: CanvasRenderingContext2D) {
         ctx.beginPath()
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2)
         ctx.fillStyle = this.color
@@ -80,13 +80,15 @@ export function FuturisticBackground() {
 
     const initParticles = () => {
       particles = []
-      const particleCount = Math.min(100, (canvas.width * canvas.height) / 15000)
+      const particleCount = Math.min(100, (canvas!.width * canvas!.height) / 15000)
       for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle())
+        particles.push(new Particle(canvas!.width, canvas!.height))
       }
     }
 
     const drawConnections = () => {
+      if (!ctx) return
+      
       const maxDistance = 150
       
       for (let i = 0; i < particles.length; i++) {
@@ -129,6 +131,8 @@ export function FuturisticBackground() {
     }
 
     const drawGrid = () => {
+      if (!canvas || !ctx) return
+      
       const gridSize = 60
       const time = Date.now() * 0.001
 
@@ -152,14 +156,16 @@ export function FuturisticBackground() {
     }
 
     const animate = () => {
+      if (!canvas || !ctx) return
+      
       // Clear canvas with transparent fade for trail effect
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
       drawGrid()
       
       particles.forEach(particle => {
-        particle.update()
-        particle.draw()
+        particle.update(canvas!.width, canvas!.height)
+        particle.draw(ctx!)
       })
       
       drawConnections()
