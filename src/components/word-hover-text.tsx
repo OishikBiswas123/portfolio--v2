@@ -38,6 +38,10 @@ export function WordHoverText({ text, className }: { text: string, className?: s
     <span 
       className={`inline-flex flex-wrap justify-center gap-x-2 ${className}`}
       ref={containerRef}
+      onTouchMove={handleTouchMove}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      style={{ touchAction: 'pan-x pan-y' }}
     >
       {words.map((word, index) => (
         <motion.span
@@ -59,8 +63,6 @@ export function WordHoverText({ text, className }: { text: string, className?: s
             e.stopPropagation()
             setHoveredIndex(index)
           }}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
         >
           {word}
         </motion.span>

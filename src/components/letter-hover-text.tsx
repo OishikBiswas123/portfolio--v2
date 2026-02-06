@@ -34,7 +34,14 @@ export function LetterHoverText({ text, className }: { text: string, className?:
   }
 
   return (
-    <span className={`relative inline-flex ${className}`} ref={containerRef}>
+    <span 
+      className={`relative inline-flex ${className}`} 
+      ref={containerRef}
+      onTouchMove={handleTouchMove}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      style={{ touchAction: 'pan-x pan-y' }}
+    >
       {/* Glitch layers */}
       <motion.span 
         className="absolute inset-0 text-red-500 opacity-50 pointer-events-none select-none"
@@ -70,7 +77,7 @@ export function LetterHoverText({ text, className }: { text: string, className?:
       
       {/* Main text with hover effect */}
       <motion.span
-        className="relative z-10 inline-flex touch-none"
+        className="relative z-10 inline-flex"
         animate={{ 
           textShadow: [
             "2px 0 #ef4444, -2px 0 #3b82f6",
@@ -83,9 +90,6 @@ export function LetterHoverText({ text, className }: { text: string, className?:
           repeat: Infinity,
           repeatDelay: 5
         }}
-        onTouchMove={handleTouchMove}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
       >
         {text.split('').map((letter, index) => (
           <motion.span
