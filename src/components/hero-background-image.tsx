@@ -27,11 +27,10 @@ export function HeroBackgroundImage() {
       <AnimatePresence mode="wait">
         <motion.div 
           key={isDark ? 'dark' : 'light'}
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className={`absolute inset-0 bg-cover bg-center bg-no-repeat ${isDark ? '[transform:scaleX(-1)]' : ''}`}
           style={{
             backgroundImage: isDark ? 'url(/hero-bg-dark.png)' : 'url(/hero-bg.png)',
             opacity: 0.5,
-            transform: isDark ? 'scaleX(-1)' : 'none',
           }}
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 0.5, scale: 1 }}
