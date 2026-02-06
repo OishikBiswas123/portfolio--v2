@@ -17,9 +17,11 @@ export function HeroBackgroundImage() {
           opacity: 0.5,
         }}
       />
-      {/* Gradient overlay for better text readability */}
+      {/* Gradient overlay for better text readability - left fade */}
       <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-slate-50/90 dark:to-slate-900/90" />
-      <div className="absolute inset-0 bg-gradient-to-t from-slate-50/50 dark:from-slate-900/50 via-transparent to-transparent" />
+      
+      {/* Top to bottom fade - more visible at top, fade out at bottom */}
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-50/20 dark:from-slate-900/20 via-transparent to-slate-50/80 dark:to-slate-900/80" />
     </motion.div>
   )
 }
