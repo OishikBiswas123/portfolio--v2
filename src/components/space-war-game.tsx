@@ -129,7 +129,7 @@ export function SpaceWarGame({ isOpen, onClose }: SpaceWarGameProps) {
         
         if (hitPlayerIndex !== -1) {
           setLives(l => {
-            const newLives = l - 1
+            const newLives = Math.max(0, l - 1)
             if (newLives <= 0) {
               setGameState('gameOver')
             }
@@ -264,7 +264,7 @@ export function SpaceWarGame({ isOpen, onClose }: SpaceWarGameProps) {
         <div className="absolute top-4 left-4 right-4 flex justify-between text-white font-mono z-20">
           <div className="flex gap-4">
             <span className="text-yellow-400">SCORE: {score}</span>
-            <span className="text-red-400">LIVES: {'❤️'.repeat(lives)}</span>
+            <span className="text-red-400">LIVES: {'❤️'.repeat(Math.max(0, lives))}</span>
           </div>
           <span className="text-purple-400">TARGET: 5000</span>
         </div>
