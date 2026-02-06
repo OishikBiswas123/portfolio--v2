@@ -18,6 +18,7 @@ import { FloatingParticles } from "@/components/floating-particles"
 import { FloatingBallsAround } from "@/components/floating-balls-around"
 import { FloatingTechIcons } from "@/components/floating-tech-icons"
 import { HeroBackgroundImage } from "@/components/hero-background-image"
+import { EasterEggButton } from "@/components/easter-egg-button"
 import { motion } from "framer-motion"
 
 export default function Home() {
@@ -370,6 +371,9 @@ delay={0.1}
           </div>
         </div>
       </footer>
+
+      {/* Easter Egg Button */}
+      <EasterEggButton />
     </div>
   );
 }
