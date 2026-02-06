@@ -74,6 +74,8 @@ export function LetterHoverText({ text, className }: { text: string, className?:
             }}
             onMouseEnter={() => setHoveredIndex(index)}
             onMouseLeave={() => setHoveredIndex(null)}
+            onTouchStart={() => setHoveredIndex(index)}
+            onTouchEnd={() => setTimeout(() => setHoveredIndex(null), 300)}
             style={{ 
               display: 'inline-block',
               willChange: 'transform'

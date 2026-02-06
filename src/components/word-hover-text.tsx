@@ -24,6 +24,8 @@ export function WordHoverText({ text, className }: { text: string, className?: s
           }}
           onMouseEnter={() => setHoveredIndex(index)}
           onMouseLeave={() => setHoveredIndex(null)}
+          onTouchStart={() => setHoveredIndex(index)}
+          onTouchEnd={() => setTimeout(() => setHoveredIndex(null), 300)}
         >
           {word}
         </motion.span>
