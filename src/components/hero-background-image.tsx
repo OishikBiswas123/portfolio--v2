@@ -27,16 +27,19 @@ export function HeroBackgroundImage() {
       <AnimatePresence mode="wait">
         <motion.div 
           key={isDark ? 'dark' : 'light'}
-          className={`absolute inset-0 bg-cover bg-center bg-no-repeat ${isDark ? '[transform:scaleX(-1)]' : ''}`}
-          style={{
-            backgroundImage: isDark ? 'url(/hero-bg-dark.png)' : 'url(/hero-bg.png)',
-            opacity: 0.5,
-          }}
+          className="absolute inset-0"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 0.5, scale: 1 }}
           exit={{ opacity: 0, scale: 1.05 }}
           transition={{ duration: 0.6, ease: "easeInOut" }}
-        />
+        >
+          <div 
+            className={`absolute inset-0 bg-cover bg-center bg-no-repeat ${isDark ? 'scale-x-[-1]' : ''}`}
+            style={{
+              backgroundImage: isDark ? 'url(/hero-bg-dark.png)' : 'url(/hero-bg.png)',
+            }}
+          />
+        </motion.div>
       </AnimatePresence>
       
       {/* Gradient overlay for better text readability - left fade */}
