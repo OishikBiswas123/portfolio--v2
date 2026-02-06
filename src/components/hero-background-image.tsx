@@ -30,16 +30,21 @@ export function HeroBackgroundImage() {
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: isDark ? 'url(/hero-bg-dark.png)' : 'url(/hero-bg.png)',
-            opacity: isDark ? 0.6 : 0.5,
+            opacity: isDark ? 0.55 : 0.5,
             transform: isDark ? 'scaleX(-1)' : 'none',
-            mixBlendMode: isDark ? 'screen' : 'normal',
           }}
           initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: isDark ? 0.6 : 0.5, scale: 1 }}
+          animate={{ opacity: isDark ? 0.55 : 0.5, scale: 1 }}
           exit={{ opacity: 0, scale: 1.05 }}
           transition={{ duration: 0.6, ease: "easeInOut" }}
         />
       </AnimatePresence>
+      
+      {/* Edge mask for dark mode to blend photo edges */}
+      <div className={`absolute inset-0 ${isDark ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500`}>
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-slate-900/50" />
+      </div>
       
       {/* Gradient overlay for better text readability - left fade */}
       <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-slate-50/90 dark:to-slate-900/90" />
