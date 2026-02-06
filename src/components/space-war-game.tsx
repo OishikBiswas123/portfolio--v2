@@ -44,9 +44,15 @@ export function SpaceWarGame({ isOpen, onClose }: SpaceWarGameProps) {
   const starIdRef = useRef(0)
   const keysRef = useRef<{ [key: string]: boolean }>({})
 
-  // Generate unique IDs
-  const getBulletId = () => ++bulletIdRef.current
-  const getEnemyId = () => ++enemyIdRef.current
+  // Generate unique IDs - use timestamp + counter to ensure uniqueness
+  const getBulletId = () => {
+    bulletIdRef.current += 1
+    return Date.now() + bulletIdRef.current
+  }
+  const getEnemyId = () => {
+    enemyIdRef.current += 1
+    return Date.now() + 1000000 + enemyIdRef.current
+  }
 
   // Initialize stars background
   useEffect(() => {
@@ -218,7 +224,7 @@ export function SpaceWarGame({ isOpen, onClose }: SpaceWarGameProps) {
     setBullets([])
     setEnemies([])
     setPlayerX(50)
-    // Reset ID counters
+    // Reset ID counters - keep incrementing to ensure uniqueness
     bulletIdRef.current = 0
     enemyIdRef.current = 0
   }
