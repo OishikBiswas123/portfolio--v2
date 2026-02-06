@@ -1,52 +1,17 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useState, useRef, useCallback } from 'react'
+import { useState } from 'react'
 
 export function WordHoverText({ text, className }: { text: string, className?: string }) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
-  const containerRef = useRef<HTMLSpanElement>(null)
-  const isTouchingRef = useRef(false)
   const words = text.split(' ')
 
-  const handleTouchMove = useCallback((e: React.TouchEvent) => {
-    if (!isTouchingRef.current || !containerRef.current) return
-    
-    const touch = e.touches[0]
-    const element = document.elementFromPoint(touch.clientX, touch.clientY)
-    
-    // Find the closest word span
-    const wordSpan = element?.closest('[data-word-index]')
-    if (wordSpan) {
-      const index = parseInt(wordSpan.getAttribute('data-word-index') || '-1')
-      if (index !== -1) {
-        setHoveredIndex(index)
-      }
-    }
-  }, [])
-
-  const handleTouchStart = () => {
-    isTouchingRef.current = true
-  }
-
-  const handleTouchEnd = () => {
-    isTouchingRef.current = false
-    setTimeout(() => setHoveredIndex(null), 300)
-  }
-
   return (
-    <span 
-      className={`inline-flex flex-wrap justify-center gap-x-2 ${className}`}
-      ref={containerRef}
-      onTouchMove={handleTouchMove}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-      style={{ touchAction: 'pan-x pan-y' }}
-    >
+    <span className={`inline-flex flex-wrap justify-center gap-x-2 ${className}`}>
       {words.map((word, index) => (
         <motion.span
           key={index}
-          data-word-index={index}
           className="inline-block cursor-pointer select-none"
           animate={{
             scale: hoveredIndex === index ? 1.2 : 1,
@@ -59,9 +24,28 @@ export function WordHoverText({ text, className }: { text: string, className?: s
           }}
           onMouseEnter={() => setHoveredIndex(index)}
           onMouseLeave={() => setHoveredIndex(null)}
-          onTouchStart={(e) => {
-            e.stopPropagation()
+          onTouchStart={() => {
             setHoveredIndex(index)
+          }}
+          onTouchMove={(e) => {
+            // Get the touch position
+            const touch = e.touches[0]
+            // Get element at touch position
+            const element = document.elementFromPoint(touch.clientX, touch.clientY)
+            // Check if we're over a word
+            if (element && element.getAttribute('data-word')) {
+              const idx = parseInt(element.getAttribute('data-word') || '-1')
+              if (idx !== -1) {
+                setHoveredIndex(idx)
+              }
+            }
+          }}
+          onTouchEnd={() => {
+            setTimeout(() => setHoveredIndex(null), 200)
+          }}
+          data-word={index}
+          style={{ 
+            WebkitTapHighlightColor: 'transparent'
           }}
         >
           {word}

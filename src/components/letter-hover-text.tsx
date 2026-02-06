@@ -1,47 +1,13 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useState, useRef, useCallback } from 'react'
+import { useState } from 'react'
 
 export function LetterHoverText({ text, className }: { text: string, className?: string }) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
-  const containerRef = useRef<HTMLSpanElement>(null)
-  const isTouchingRef = useRef(false)
-
-  const handleTouchMove = useCallback((e: React.TouchEvent) => {
-    if (!isTouchingRef.current || !containerRef.current) return
-    
-    const touch = e.touches[0]
-    const element = document.elementFromPoint(touch.clientX, touch.clientY)
-    
-    // Find the closest letter span
-    const letterSpan = element?.closest('[data-letter-index]')
-    if (letterSpan) {
-      const index = parseInt(letterSpan.getAttribute('data-letter-index') || '-1')
-      if (index !== -1) {
-        setHoveredIndex(index)
-      }
-    }
-  }, [])
-
-  const handleTouchStart = () => {
-    isTouchingRef.current = true
-  }
-
-  const handleTouchEnd = () => {
-    isTouchingRef.current = false
-    setTimeout(() => setHoveredIndex(null), 300)
-  }
 
   return (
-    <span 
-      className={`relative inline-flex ${className}`} 
-      ref={containerRef}
-      onTouchMove={handleTouchMove}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-      style={{ touchAction: 'pan-x pan-y' }}
-    >
+    <span className={`relative inline-flex ${className}`}>
       {/* Glitch layers */}
       <motion.span 
         className="absolute inset-0 text-red-500 opacity-50 pointer-events-none select-none"
@@ -94,7 +60,6 @@ export function LetterHoverText({ text, className }: { text: string, className?:
         {text.split('').map((letter, index) => (
           <motion.span
             key={index}
-            data-letter-index={index}
             className="inline-block cursor-pointer select-none"
             animate={{
               scale: hoveredIndex === index ? 1.5 : 1,
@@ -110,12 +75,29 @@ export function LetterHoverText({ text, className }: { text: string, className?:
             onMouseEnter={() => setHoveredIndex(index)}
             onMouseLeave={() => setHoveredIndex(null)}
             onTouchStart={(e) => {
-              e.stopPropagation()
               setHoveredIndex(index)
             }}
+            onTouchMove={(e) => {
+              // Get the touch position
+              const touch = e.touches[0]
+              // Get element at touch position
+              const element = document.elementFromPoint(touch.clientX, touch.clientY)
+              // Check if we're over a letter
+              if (element && element.getAttribute('data-letter')) {
+                const idx = parseInt(element.getAttribute('data-letter') || '-1')
+                if (idx !== -1) {
+                  setHoveredIndex(idx)
+                }
+              }
+            }}
+            onTouchEnd={() => {
+              setTimeout(() => setHoveredIndex(null), 200)
+            }}
+            data-letter={index}
             style={{ 
               display: 'inline-block',
-              willChange: 'transform'
+              willChange: 'transform',
+              WebkitTapHighlightColor: 'transparent'
             }}
           >
             {letter === ' ' ? '\u00A0' : letter}
