@@ -344,7 +344,7 @@ delay={0.1}
             <WordHoverText text="Hobbies & Interests" />
           </h2>
           
-          <div className="flex flex-wrap justify-center gap-6 md:gap-10">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 md:gap-6 justify-items-center">
             <JellyCard delay={0} color="pink" onClick={() => playAudio('guitar', '/guitar.ogg')}>
               <div className="text-5xl mb-2">🎸</div>
               <p className="text-sm font-bold text-slate-800 dark:text-slate-200">
@@ -406,7 +406,7 @@ delay={0.1}
             <WordHoverText text="Get In Touch" />
           </h2>
           
-          <div className="flex flex-wrap justify-center gap-8 md:gap-12">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 md:gap-6 justify-items-center">
             {/* Email */}
             <a href="mailto:oishikthegreat@gmail.com" className="block">
               <JellyCard delay={0} color="blue">
