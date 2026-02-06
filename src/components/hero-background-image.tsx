@@ -63,7 +63,7 @@ export function HeroBackgroundImage() {
             key={isDark ? 'dark' : 'light'}
             className="absolute inset-0"
             initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 0.5, scale: 1 }}
+            animate={{ opacity: 0.7, scale: 1 }}
             exit={{ opacity: 0, scale: 1.05 }}
             transition={{ duration: 0.6, ease: "easeInOut" }}
           >
@@ -77,10 +77,10 @@ export function HeroBackgroundImage() {
         </AnimatePresence>
         
         {/* Gradient overlay for better text readability - left to right fade */}
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-50/60 dark:from-slate-900/60 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-50/40 dark:from-slate-900/40 via-transparent to-transparent" />
         
         {/* Fade from bottom of background image */}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-50/60 dark:from-slate-900/60 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-50/30 dark:from-slate-900/30 via-transparent to-transparent" />
       </motion.div>
     </>
   )
