@@ -1,13 +1,40 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useState, useRef, useCallback } from 'react'
 
 export function LetterHoverText({ text, className }: { text: string, className?: string }) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  const containerRef = useRef<HTMLSpanElement>(null)
+  const isTouchingRef = useRef(false)
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    if (!isTouchingRef.current || !containerRef.current) return
+    
+    const touch = e.touches[0]
+    const element = document.elementFromPoint(touch.clientX, touch.clientY)
+    
+    // Find the closest letter span
+    const letterSpan = element?.closest('[data-letter-index]')
+    if (letterSpan) {
+      const index = parseInt(letterSpan.getAttribute('data-letter-index') || '-1')
+      if (index !== -1) {
+        setHoveredIndex(index)
+      }
+    }
+  }, [])
+
+  const handleTouchStart = () => {
+    isTouchingRef.current = true
+  }
+
+  const handleTouchEnd = () => {
+    isTouchingRef.current = false
+    setTimeout(() => setHoveredIndex(null), 300)
+  }
 
   return (
-    <span className={`relative inline-flex ${className}`}>
+    <span className={`relative inline-flex ${className}`} ref={containerRef}>
       {/* Glitch layers */}
       <motion.span 
         className="absolute inset-0 text-red-500 opacity-50 pointer-events-none select-none"
@@ -43,7 +70,7 @@ export function LetterHoverText({ text, className }: { text: string, className?:
       
       {/* Main text with hover effect */}
       <motion.span
-        className="relative z-10 inline-flex"
+        className="relative z-10 inline-flex touch-none"
         animate={{ 
           textShadow: [
             "2px 0 #ef4444, -2px 0 #3b82f6",
@@ -56,11 +83,15 @@ export function LetterHoverText({ text, className }: { text: string, className?:
           repeat: Infinity,
           repeatDelay: 5
         }}
+        onTouchMove={handleTouchMove}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
       >
         {text.split('').map((letter, index) => (
           <motion.span
             key={index}
-            className="inline-block cursor-pointer"
+            data-letter-index={index}
+            className="inline-block cursor-pointer select-none"
             animate={{
               scale: hoveredIndex === index ? 1.5 : 1,
               y: hoveredIndex === index ? -10 : 0,
@@ -74,8 +105,10 @@ export function LetterHoverText({ text, className }: { text: string, className?:
             }}
             onMouseEnter={() => setHoveredIndex(index)}
             onMouseLeave={() => setHoveredIndex(null)}
-            onTouchStart={() => setHoveredIndex(index)}
-            onTouchEnd={() => setTimeout(() => setHoveredIndex(null), 300)}
+            onTouchStart={(e) => {
+              e.stopPropagation()
+              setHoveredIndex(index)
+            }}
             style={{ 
               display: 'inline-block',
               willChange: 'transform'
