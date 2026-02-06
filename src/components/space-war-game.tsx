@@ -281,7 +281,14 @@ export function SpaceWarGame({ isOpen, onClose }: SpaceWarGameProps) {
         <X className="w-6 h-6" />
       </button>
 
-      <div className="relative w-full max-w-4xl aspect-[4/3] bg-slate-950 rounded-xl overflow-hidden border-2 border-purple-500/50 shadow-2xl shadow-purple-500/20">
+      <div 
+        className="relative w-full max-w-4xl aspect-[4/3] bg-slate-950 rounded-xl overflow-hidden border-2 border-purple-500/50 shadow-2xl shadow-purple-500/20"
+        onClick={() => {
+          if (gameState === 'playing') {
+            shoot()
+          }
+        }}
+      >
         {/* Static stars background */}
         <div className="absolute inset-0">
           {STATIC_STARS.map(star => (
@@ -415,52 +422,56 @@ export function SpaceWarGame({ isOpen, onClose }: SpaceWarGameProps) {
           )}
         </AnimatePresence>
 
-        {/* Mobile Controls */}
+        {/* Mobile Controls - Movement only, tap anywhere to shoot */}
         {gameState === 'playing' && (
-          <div className="md:hidden absolute bottom-4 left-0 right-0 flex justify-between px-8 z-30">
+          <div className="md:hidden absolute bottom-4 left-0 right-0 flex justify-between px-16 z-30 pointer-events-none">
             {/* Left Button */}
             <button
-              className="w-16 h-16 bg-white/20 active:bg-white/40 rounded-full flex items-center justify-center text-white text-2xl font-bold border-2 border-white/30"
+              className="w-16 h-16 bg-white/20 active:bg-white/40 rounded-full flex items-center justify-center text-white text-2xl font-bold border-2 border-white/30 pointer-events-auto"
               onTouchStart={(e) => {
                 e.preventDefault()
+                e.stopPropagation()
                 keysRef.current['ArrowLeft'] = true
               }}
               onTouchEnd={(e) => {
                 e.preventDefault()
+                e.stopPropagation()
                 keysRef.current['ArrowLeft'] = false
               }}
-              onMouseDown={() => keysRef.current['ArrowLeft'] = true}
-              onMouseUp={() => keysRef.current['ArrowLeft'] = false}
+              onMouseDown={(e) => {
+                e.stopPropagation()
+                keysRef.current['ArrowLeft'] = true
+              }}
+              onMouseUp={(e) => {
+                e.stopPropagation()
+                keysRef.current['ArrowLeft'] = false
+              }}
               onMouseLeave={() => keysRef.current['ArrowLeft'] = false}
             >
               ←
             </button>
 
-            {/* Shoot Button */}
-            <button
-              className="w-20 h-20 bg-red-500/60 active:bg-red-500/80 rounded-full flex items-center justify-center text-white border-4 border-red-400/50"
-              onTouchStart={(e) => {
-                e.preventDefault()
-                shoot()
-              }}
-              onClick={shoot}
-            >
-              <div className="w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-b-[16px] border-b-white" />
-            </button>
-
             {/* Right Button */}
             <button
-              className="w-16 h-16 bg-white/20 active:bg-white/40 rounded-full flex items-center justify-center text-white text-2xl font-bold border-2 border-white/30"
+              className="w-16 h-16 bg-white/20 active:bg-white/40 rounded-full flex items-center justify-center text-white text-2xl font-bold border-2 border-white/30 pointer-events-auto"
               onTouchStart={(e) => {
                 e.preventDefault()
+                e.stopPropagation()
                 keysRef.current['ArrowRight'] = true
               }}
               onTouchEnd={(e) => {
                 e.preventDefault()
+                e.stopPropagation()
                 keysRef.current['ArrowRight'] = false
               }}
-              onMouseDown={() => keysRef.current['ArrowRight'] = true}
-              onMouseUp={() => keysRef.current['ArrowRight'] = false}
+              onMouseDown={(e) => {
+                e.stopPropagation()
+                keysRef.current['ArrowRight'] = true
+              }}
+              onMouseUp={(e) => {
+                e.stopPropagation()
+                keysRef.current['ArrowRight'] = false
+              }}
               onMouseLeave={() => keysRef.current['ArrowRight'] = false}
             >
               →
