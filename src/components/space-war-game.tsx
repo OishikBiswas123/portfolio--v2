@@ -44,6 +44,10 @@ export function SpaceWarGame({ isOpen, onClose }: SpaceWarGameProps) {
   const starIdRef = useRef(0)
   const keysRef = useRef<{ [key: string]: boolean }>({})
 
+  // Generate unique IDs
+  const getBulletId = () => ++bulletIdRef.current
+  const getEnemyId = () => ++enemyIdRef.current
+
   // Initialize stars background
   useEffect(() => {
     if (!isOpen) return
@@ -62,11 +66,12 @@ export function SpaceWarGame({ isOpen, onClose }: SpaceWarGameProps) {
 
   // Shoot function - defined early to avoid dependency issues
   const shoot = useCallback(() => {
-    setBullets(prev => [...prev, {
-      id: bulletIdRef.current++,
+    const newBullet: Bullet = {
+      id: getBulletId(),
       x: playerX,
       y: 85
-    }])
+    }
+    setBullets(prev => [...prev, newBullet])
   }, [playerX])
 
   // Keyboard controls
@@ -145,12 +150,13 @@ export function SpaceWarGame({ isOpen, onClose }: SpaceWarGameProps) {
       
       // Spawn enemies
       if (Math.random() < 0.03) {
-        setEnemies(prev => [...prev, {
-          id: enemyIdRef.current++,
+        const newEnemy: Enemy = {
+          id: getEnemyId(),
           x: Math.random() * 90 + 5,
           y: -5,
           speed: Math.random() * 1.5 + 0.5
-        }])
+        }
+        setEnemies(prev => [...prev, newEnemy])
       }
     }, 50)
     
@@ -212,6 +218,9 @@ export function SpaceWarGame({ isOpen, onClose }: SpaceWarGameProps) {
     setBullets([])
     setEnemies([])
     setPlayerX(50)
+    // Reset ID counters
+    bulletIdRef.current = 0
+    enemyIdRef.current = 0
   }
 
   if (!isOpen) return null
