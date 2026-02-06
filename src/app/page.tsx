@@ -370,9 +370,14 @@ delay={0.1}
               )}
             </JellyCard>
 
-            <JellyCard delay={0.3} color="yellow">
+            <JellyCard delay={0.3} color="yellow" onClick={() => playAudio('movies', '/movies.ogg')}>
               <div className="text-5xl mb-2">🎬</div>
-              <p className="text-sm font-bold text-slate-800 dark:text-slate-200">Movies & Series</p>
+              <p className="text-sm font-bold text-slate-800 dark:text-slate-200">
+                {playingAudio === 'movies' ? '🔊 Playing...' : audioErrors['movies'] || 'Movies & Series'}
+              </p>
+              {audioErrors['movies'] && (
+                <p className="text-xs text-red-500 mt-1">Click to play</p>
+              )}
             </JellyCard>
 
             <JellyCard delay={0.4} color="green" onClick={() => playAudio('beatbox', '/beatbox.ogg')}>
