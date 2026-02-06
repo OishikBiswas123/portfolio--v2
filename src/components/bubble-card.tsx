@@ -98,9 +98,9 @@ export function BubbleCard({ children, className = '', delay = 0, color = 'blue'
         transition={{ duration: 3, repeat: Infinity, repeatType: "reverse", ease: "easeInOut", delay: 0.5 }}
       />
 
-      {/* Main card - Responsive circular shape */}
+      {/* Main card - Responsive circular shape (mobile: hobby card size, desktop: larger) */}
       <motion.div
-        className={`relative rounded-full w-[280px] h-[280px] sm:w-[320px] sm:h-[320px] md:w-[380px] md:h-[380px] lg:w-[420px] lg:h-[420px] bg-gradient-to-br ${colors.bg} ${colors.border} border-2 transition-all duration-300 flex items-center justify-center overflow-hidden shadow-2xl cursor-pointer`}
+        className={`relative rounded-full w-[180px] h-[180px] sm:w-[220px] sm:h-[220px] md:w-[340px] md:h-[340px] lg:w-[400px] lg:h-[400px] bg-gradient-to-br ${colors.bg} ${colors.border} border-2 transition-all duration-300 flex items-center justify-center overflow-hidden shadow-2xl cursor-pointer`}
         animate={{
           y: [0, -8],
         }}
@@ -147,7 +147,7 @@ export function BubbleCard({ children, className = '', delay = 0, color = 'blue'
         <div className="absolute inset-0 rounded-full bg-gradient-to-bl from-transparent via-transparent to-black/10 pointer-events-none" />
         
         {/* Content */}
-        <div className="relative z-10 flex flex-col items-center justify-center w-full h-full px-8 py-6">
+        <div className="relative z-10 flex flex-col items-center justify-center w-full h-full px-3 py-2 sm:px-4 sm:py-3 md:px-6 md:py-4">
           {children}
         </div>
       </motion.div>

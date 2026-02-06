@@ -265,19 +265,22 @@ delay={0.1}
             <WordHoverText text="Skills & Expertise" />
           </h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+          <div className="grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-8 lg:gap-12">
             <BubbleCard color="blue" delay={0.1}>
               <div className="text-center">
-                <div className="mb-3 text-blue-700 dark:text-blue-300">
-                  <CodeIcon className="w-12 h-12 mx-auto" />
+                <div className="mb-1 md:mb-3 text-blue-700 dark:text-blue-300">
+                  <CodeIcon className="w-6 h-6 md:w-10 md:h-10 lg:w-12 lg:h-12 mx-auto" />
                 </div>
-                <h3 className="text-2xl font-extrabold text-blue-800 dark:text-blue-200 mb-4 drop-shadow-sm">Core Technical Skills</h3>
-                <ul className="text-base font-bold text-slate-800 dark:text-slate-200 space-y-2">
-                  <li className="drop-shadow-sm">Python Programming</li>
-                  <li className="drop-shadow-sm">AI Tools & Applications</li>
-                  <li className="drop-shadow-sm">Prompt Engineering</li>
-                  <li className="drop-shadow-sm">API Integration</li>
-                  <li className="drop-shadow-sm">Automation Scripts</li>
+                <h3 className="text-[10px] sm:text-xs md:text-xl lg:text-2xl font-extrabold text-blue-800 dark:text-blue-200 mb-1 md:mb-4 drop-shadow-sm leading-tight">Core Technical<br className="md:hidden"/> Skills</h3>
+                <ul className="text-[8px] sm:text-[10px] md:text-sm lg:text-base font-bold text-slate-800 dark:text-slate-200 space-y-0.5 md:space-y-2">
+                  <li className="drop-shadow-sm">Python</li>
+                  <li className="drop-shadow-sm">AI Tools</li>
+                  <li className="drop-shadow-sm hidden sm:block">Prompt Engineering</li>
+                  <li className="drop-shadow-sm sm:hidden">Prompts</li>
+                  <li className="drop-shadow-sm hidden md:block">API Integration</li>
+                  <li className="drop-shadow-sm md:hidden">APIs</li>
+                  <li className="drop-shadow-sm hidden sm:block">Automation Scripts</li>
+                  <li className="drop-shadow-sm sm:hidden">Automation</li>
                   <li className="drop-shadow-sm">Problem Solving</li>
                 </ul>
               </div>
@@ -285,45 +288,47 @@ delay={0.1}
 
             <BubbleCard color="green" delay={0.2}>
               <div className="text-center">
-                <div className="mb-3 text-green-700 dark:text-green-300">
-                  <LaptopIcon className="w-12 h-12 mx-auto" />
+                <div className="mb-1 md:mb-3 text-green-700 dark:text-green-300">
+                  <LaptopIcon className="w-6 h-6 md:w-10 md:h-10 lg:w-12 lg:h-12 mx-auto" />
                 </div>
-                <h3 className="text-2xl font-extrabold text-green-800 dark:text-green-200 mb-4 drop-shadow-sm">Development & Tech Skills</h3>
-                <ul className="text-base font-bold text-slate-800 dark:text-slate-200 space-y-2">
-                  <li className="drop-shadow-sm">Web Development (HTML, CSS, JavaScript)</li>
-                  <li className="drop-shadow-sm">Basic Backend Concepts</li>
+                <h3 className="text-[10px] sm:text-xs md:text-xl lg:text-2xl font-extrabold text-green-800 dark:text-green-200 mb-1 md:mb-4 drop-shadow-sm leading-tight">Development<br className="md:hidden"/> Skills</h3>
+                <ul className="text-[8px] sm:text-[10px] md:text-sm lg:text-base font-bold text-slate-800 dark:text-slate-200 space-y-0.5 md:space-y-2">
+                  <li className="drop-shadow-sm">Web Dev</li>
+                  <li className="drop-shadow-sm hidden sm:block">Backend Concepts</li>
+                  <li className="drop-shadow-sm sm:hidden">Backend</li>
                   <li className="drop-shadow-sm">Git & GitHub</li>
-                  <li className="drop-shadow-sm">Debugging & Code Optimization</li>
+                  <li className="drop-shadow-sm">Debugging</li>
                 </ul>
               </div>
             </BubbleCard>
 
             <BubbleCard color="purple" delay={0.3}>
               <div className="text-center">
-                <div className="mb-3 text-purple-700 dark:text-purple-300">
-                  <AIIcon className="w-12 h-12 mx-auto" />
+                <div className="mb-1 md:mb-3 text-purple-700 dark:text-purple-300">
+                  <AIIcon className="w-6 h-6 md:w-10 md:h-10 lg:w-12 lg:h-12 mx-auto" />
                 </div>
-                <h3 className="text-2xl font-extrabold text-purple-800 dark:text-purple-200 mb-4 drop-shadow-sm">AI & Productivity Tools</h3>
-                <ul className="text-base font-bold text-slate-800 dark:text-slate-200 space-y-2">
-                  <li className="drop-shadow-sm">ChatGPT & AI Assistants</li>
-                  <li className="drop-shadow-sm">Content Automation Tools</li>
-                  <li className="drop-shadow-sm">AI-Based Workflows</li>
+                <h3 className="text-[10px] sm:text-xs md:text-xl lg:text-2xl font-extrabold text-purple-800 dark:text-purple-200 mb-1 md:mb-4 drop-shadow-sm leading-tight">AI &<br className="md:hidden"/> Productivity</h3>
+                <ul className="text-[8px] sm:text-[10px] md:text-sm lg:text-base font-bold text-slate-800 dark:text-slate-200 space-y-0.5 md:space-y-2">
+                  <li className="drop-shadow-sm">ChatGPT</li>
+                  <li className="drop-shadow-sm">Automation</li>
+                  <li className="drop-shadow-sm">AI Workflows</li>
                 </ul>
               </div>
             </BubbleCard>
 
             <BubbleCard color="orange" delay={0.4}>
               <div className="text-center">
-                <div className="mb-3 text-orange-700 dark:text-orange-300">
-                  <StarIcon className="w-12 h-12 mx-auto" />
+                <div className="mb-1 md:mb-3 text-orange-700 dark:text-orange-300">
+                  <StarIcon className="w-6 h-6 md:w-10 md:h-10 lg:w-12 lg:h-12 mx-auto" />
                 </div>
-                <h3 className="text-2xl font-extrabold text-orange-800 dark:text-orange-200 mb-4 drop-shadow-sm">Professional Skills</h3>
-                <ul className="text-base font-bold text-slate-800 dark:text-slate-200 space-y-2">
-                  <li className="drop-shadow-sm">Logical Thinking</li>
+                <h3 className="text-[10px] sm:text-xs md:text-xl lg:text-2xl font-extrabold text-orange-800 dark:text-orange-200 mb-1 md:mb-4 drop-shadow-sm leading-tight">Professional<br className="md:hidden"/> Skills</h3>
+                <ul className="text-[8px] sm:text-[10px] md:text-sm lg:text-base font-bold text-slate-800 dark:text-slate-200 space-y-0.5 md:space-y-2">
+                  <li className="drop-shadow-sm">Logic</li>
                   <li className="drop-shadow-sm">Self-Learning</li>
-                  <li className="drop-shadow-sm">Attention to Detail</li>
-                  <li className="drop-shadow-sm">Time Management</li>
-                  <li className="drop-shadow-sm">Communication Skills</li>
+                  <li className="drop-shadow-sm hidden sm:block">Attention to Detail</li>
+                  <li className="drop-shadow-sm sm:hidden">Detail-Oriented</li>
+                  <li className="drop-shadow-sm">Time Mgmt</li>
+                  <li className="drop-shadow-sm hidden md:block">Communication</li>
                 </ul>
               </div>
             </BubbleCard>
