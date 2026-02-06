@@ -46,6 +46,9 @@ export function HeroBackgroundImage() {
         
         {/* Gradient overlay for better text readability */}
         <div className="absolute inset-0 bg-gradient-to-r from-slate-50/80 dark:from-slate-900/80 via-slate-50/30 dark:via-slate-900/30 to-transparent" />
+        
+        {/* Fade from bottom of background image */}
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-50/60 dark:from-slate-900/60 via-transparent to-transparent" />
       </motion.div>
 
       {/* Mobile: Bottom center background - HIDDEN ON DESKTOP */}
@@ -75,6 +78,9 @@ export function HeroBackgroundImage() {
         
         {/* Gradient overlay for better text readability - left to right fade */}
         <div className="absolute inset-0 bg-gradient-to-r from-slate-50/60 dark:from-slate-900/60 via-transparent to-transparent" />
+        
+        {/* Fade from bottom of background image */}
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-50/60 dark:from-slate-900/60 via-transparent to-transparent" />
       </motion.div>
     </>
   )
