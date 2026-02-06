@@ -60,6 +60,15 @@ export function SpaceWarGame({ isOpen, onClose }: SpaceWarGameProps) {
     setStars(initialStars)
   }, [isOpen])
 
+  // Shoot function - defined early to avoid dependency issues
+  const shoot = useCallback(() => {
+    setBullets(prev => [...prev, {
+      id: bulletIdRef.current++,
+      x: playerX,
+      y: 85
+    }])
+  }, [playerX])
+
   // Keyboard controls
   useEffect(() => {
     if (!isOpen) return
@@ -83,7 +92,7 @@ export function SpaceWarGame({ isOpen, onClose }: SpaceWarGameProps) {
       window.removeEventListener('keydown', handleKeyDown)
       window.removeEventListener('keyup', handleKeyUp)
     }
-  }, [isOpen])
+  }, [isOpen, shoot])
 
   // Game loop
   useEffect(() => {
@@ -103,17 +112,17 @@ export function SpaceWarGame({ isOpen, onClose }: SpaceWarGameProps) {
         prev.map(b => ({ ...b, y: b.y - 5 })).filter(b => b.y > -5)
       )
       
-      // Move enemies
+      // Move enemies and check player collision
       setEnemies(prev => {
         const moved = prev.map(e => ({ ...e, y: e.y + e.speed }))
         const filtered = moved.filter(e => e.y < 105)
         
         // Check collision with player
-        const hitPlayer = filtered.some(e => 
+        const hitPlayerIndex = filtered.findIndex(e => 
           Math.abs(e.x - playerX) < 8 && e.y > 85
         )
         
-        if (hitPlayer) {
+        if (hitPlayerIndex !== -1) {
           setLives(l => {
             const newLives = l - 1
             if (newLives <= 0) {
@@ -121,7 +130,7 @@ export function SpaceWarGame({ isOpen, onClose }: SpaceWarGameProps) {
             }
             return newLives
           })
-          return filtered.filter(e => !(Math.abs(e.x - playerX) < 8 && e.y > 85))
+          filtered.splice(hitPlayerIndex, 1)
         }
         
         return filtered
@@ -134,26 +143,6 @@ export function SpaceWarGame({ isOpen, onClose }: SpaceWarGameProps) {
         )
       )
       
-      // Check bullet-enemy collisions
-      setBullets(prevBullets => {
-        setEnemies(prevEnemies => {
-          const remainingEnemies = [...prevEnemies]
-          const remainingBullets = prevBullets.filter(bullet => {
-            const hitIndex = remainingEnemies.findIndex(enemy => 
-              Math.abs(enemy.x - bullet.x) < 6 && Math.abs(enemy.y - bullet.y) < 6
-            )
-            if (hitIndex !== -1) {
-              remainingEnemies.splice(hitIndex, 1)
-              setScore(s => s + 100)
-              return false
-            }
-            return true
-          })
-          return remainingEnemies
-        })
-        return prevBullets
-      })
-      
       // Spawn enemies
       if (Math.random() < 0.03) {
         setEnemies(prev => [...prev, {
@@ -163,23 +152,58 @@ export function SpaceWarGame({ isOpen, onClose }: SpaceWarGameProps) {
           speed: Math.random() * 1.5 + 0.5
         }])
       }
-      
-      // Victory condition
-      if (score >= 5000) {
-        setGameState('victory')
-      }
     }, 50)
     
     return () => clearInterval(gameLoop)
-  }, [isOpen, gameState, playerX, score])
+  }, [isOpen, gameState, playerX])
 
-  const shoot = useCallback(() => {
-    setBullets(prev => [...prev, {
-      id: bulletIdRef.current++,
-      x: playerX,
-      y: 85
-    }])
-  }, [playerX])
+  // Check bullet-enemy collisions and victory in game loop
+  useEffect(() => {
+    if (!isOpen || gameState !== 'playing') return
+    
+    const collisionCheck = setInterval(() => {
+      setBullets(prevBullets => {
+        const remainingBullets: Bullet[] = []
+        let hitCount = 0
+        
+        // Get current enemies state
+        setEnemies(prevEnemies => {
+          const remainingEnemies = [...prevEnemies]
+          
+          for (const bullet of prevBullets) {
+            const hitIndex = remainingEnemies.findIndex(enemy => 
+              Math.abs(enemy.x - bullet.x) < 6 && Math.abs(enemy.y - bullet.y) < 6
+            )
+            
+            if (hitIndex !== -1) {
+              remainingEnemies.splice(hitIndex, 1)
+              hitCount++
+            } else {
+              remainingBullets.push(bullet)
+            }
+          }
+          
+          return remainingEnemies
+        })
+        
+        if (hitCount > 0) {
+          setScore(s => s + hitCount * 100)
+        }
+        
+        return remainingBullets
+      })
+      
+      // Check victory
+      setScore(currentScore => {
+        if (currentScore >= 5000) {
+          setGameState('victory')
+        }
+        return currentScore
+      })
+    }, 50)
+    
+    return () => clearInterval(collisionCheck)
+  }, [isOpen, gameState])
 
   const restartGame = () => {
     setGameState('playing')
