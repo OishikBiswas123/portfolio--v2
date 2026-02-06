@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useRef } from 'react'
 import { Button } from "@/components/ui/button"
 import { Mail, Phone, MessageCircle, Linkedin, MapPin, Github, ExternalLink } from "lucide-react"
 import { SmoothScroll } from "@/components/smooth-scroll"
@@ -22,6 +23,31 @@ import { EasterEggButton } from "@/components/easter-egg-button"
 import { motion } from "framer-motion"
 
 export default function Home() {
+  const [isPlaying, setIsPlaying] = useState(false)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+
+  const playBeatbox = () => {
+    if (!audioRef.current) {
+      audioRef.current = new Audio('/beatbox.mp3')
+    }
+    
+    if (isPlaying) {
+      audioRef.current.pause()
+      audioRef.current.currentTime = 0
+      setIsPlaying(false)
+    } else {
+      audioRef.current.play().catch(err => {
+        console.error('Error playing audio:', err)
+      })
+      setIsPlaying(true)
+      
+      // Reset when audio ends
+      audioRef.current.onended = () => {
+        setIsPlaying(false)
+      }
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
       <SmoothScroll />
@@ -287,9 +313,11 @@ delay={0.1}
               <p className="text-sm font-bold text-slate-800 dark:text-slate-200">Movies & Series</p>
             </JellyCard>
 
-            <JellyCard delay={0.4} color="green">
+            <JellyCard delay={0.4} color="green" onClick={playBeatbox}>
               <div className="text-5xl mb-2">🎵</div>
-              <p className="text-sm font-bold text-slate-800 dark:text-slate-200">Beatboxing</p>
+              <p className="text-sm font-bold text-slate-800 dark:text-slate-200">
+                {isPlaying ? '🔊 Playing...' : 'Beatboxing'}
+              </p>
             </JellyCard>
           </div>
         </div>

@@ -8,9 +8,10 @@ interface JellyCardProps {
   className?: string
   delay?: number
   color?: string
+  onClick?: () => void
 }
 
-export function JellyCard({ children, className = '', delay = 0, color = 'pink' }: JellyCardProps) {
+export function JellyCard({ children, className = '', delay = 0, color = 'pink', onClick }: JellyCardProps) {
   const colorMap: Record<string, { bg: string, border: string, orbiting: string[] }> = {
     pink: { 
       bg: 'from-pink-200/40 via-pink-300/40 to-purple-400/40',
@@ -87,6 +88,7 @@ export function JellyCard({ children, className = '', delay = 0, color = 'pink' 
       {/* Main card with jelly wiggle effect */}
       <motion.div
         className={`relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden shadow-2xl border-2 bg-gradient-to-br ${colors.bg} ${colors.border} cursor-pointer`}
+        onClick={onClick}
         animate={{
           y: [0, -10],
         }}
