@@ -44,8 +44,6 @@ export function HeroBackgroundImage() {
           </motion.div>
         </AnimatePresence>
         
-        {/* Desktop gradient */}
-        <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-slate-50/90 dark:to-slate-900/90" />
       </motion.div>
 
       {/* Mobile: Bottom center background - HIDDEN ON DESKTOP */}
@@ -60,7 +58,7 @@ export function HeroBackgroundImage() {
             key={isDark ? 'dark' : 'light'}
             className="absolute inset-0"
             initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 0.35, scale: 1 }}
+            animate={{ opacity: 0.5, scale: 1 }}
             exit={{ opacity: 0, scale: 1.05 }}
             transition={{ duration: 0.6, ease: "easeInOut" }}
           >
@@ -72,9 +70,6 @@ export function HeroBackgroundImage() {
             />
           </motion.div>
         </AnimatePresence>
-        
-        {/* Mobile fade from bottom */}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-50/70 dark:from-slate-900/70 via-transparent to-transparent" />
       </motion.div>
     </>
   )
