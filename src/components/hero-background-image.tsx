@@ -48,7 +48,7 @@ export function HeroBackgroundImage() {
 
       {/* Mobile: Bottom center background - HIDDEN ON DESKTOP */}
       <motion.div 
-        className="md:hidden absolute bottom-0 left-1/2 -translate-x-1/2 w-[160%] h-[80%] z-0 pointer-events-none"
+        className="md:hidden absolute bottom-0 left-1/2 -translate-x-1/2 w-[140%] h-[70%] z-0 pointer-events-none"
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.2, delay: 0.5 }}
