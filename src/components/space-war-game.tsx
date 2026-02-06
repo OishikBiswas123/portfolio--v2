@@ -75,13 +75,17 @@ export function SpaceWarGame({ isOpen, onClose }: SpaceWarGameProps) {
   const scoreRef = useRef(0)
   const playerXRef = useRef(50)
   const gameStateRef = useRef(gameState)
+  const bulletsRef = useRef<Bullet[]>([])
+  const enemiesRef = useRef<Enemy[]>([])
   
   // Keep refs in sync
   useEffect(() => {
     scoreRef.current = score
     playerXRef.current = playerX
     gameStateRef.current = gameState
-  }, [score, playerX, gameState])
+    bulletsRef.current = bullets
+    enemiesRef.current = enemies
+  }, [score, playerX, gameState, bullets, enemies])
 
   const getBulletId = () => {
     bulletIdRef.current += 1
@@ -152,76 +156,92 @@ export function SpaceWarGame({ isOpen, onClose }: SpaceWarGameProps) {
           setPlayerX(newX)
         }
         
-        // Move bullets and check collisions in one pass
-        setBullets(prevBullets => {
-          const movedBullets = prevBullets.map(b => ({ ...b, y: b.y - 6 })).filter(b => b.y > -5)
+        // Move bullets and check collisions using refs for current state
+        const currentBullets = bulletsRef.current
+        const currentEnemies = enemiesRef.current
+        
+        let hitCount = 0
+        const remainingEnemies: Enemy[] = []
+        const remainingBullets: Bullet[] = []
+        
+        // Move enemies first and filter out off-screen ones
+        for (const enemy of currentEnemies) {
+          const newY = enemy.y + enemy.speed
+          if (newY < 105) {
+            remainingEnemies.push({ ...enemy, y: newY })
+          }
+        }
+        
+        // Move bullets and check collisions
+        for (const bullet of currentBullets) {
+          const newY = bullet.y - 6
           
-          // Check collisions
-          let hitCount = 0
-          setEnemies(prevEnemies => {
-            const remainingEnemies = [...prevEnemies]
-            const remainingBullets: Bullet[] = []
-            
-            for (const bullet of movedBullets) {
-              const hitIndex = remainingEnemies.findIndex(enemy => 
-                Math.abs(enemy.x - bullet.x) < 7 && Math.abs(enemy.y - bullet.y) < 7
-              )
-              
-              if (hitIndex !== -1) {
-                remainingEnemies.splice(hitIndex, 1)
-                hitCount++
-              } else {
-                remainingBullets.push(bullet)
-              }
-            }
-            
-            return remainingEnemies
-          })
-          
-          if (hitCount > 0) {
-            const newScore = scoreRef.current + hitCount * 100
-            scoreRef.current = newScore
-            setScore(newScore)
-            
-            if (newScore >= 5000) {
-              setGameState('victory')
-            }
+          if (newY <= -5) {
+            // Bullet off screen
+            continue
           }
           
-          return hitCount > 0 ? remainingBullets : movedBullets
-        })
-        
-        // Move enemies and check player collision
-        setEnemies(prev => {
-          const moved = prev.map(e => ({ ...e, y: e.y + e.speed }))
-          const filtered = moved.filter(e => e.y < 105)
+          const movedBullet = { ...bullet, y: newY }
           
-          const hitPlayerIndex = filtered.findIndex(e => 
-            Math.abs(e.x - playerXRef.current) < 8 && e.y > 85
+          // Check collision with any enemy
+          const hitIndex = remainingEnemies.findIndex(enemy => 
+            Math.abs(enemy.x - movedBullet.x) < 7 && Math.abs(enemy.y - movedBullet.y) < 7
           )
           
-          if (hitPlayerIndex !== -1) {
-            filtered.splice(hitPlayerIndex, 1)
-            setLives(l => {
-              const newLives = Math.max(0, l - 1)
-              if (newLives <= 0) {
-                setGameState('gameOver')
-              }
-              return newLives
-            })
+          if (hitIndex !== -1) {
+            remainingEnemies.splice(hitIndex, 1)
+            hitCount++
+          } else {
+            remainingBullets.push(movedBullet)
           }
+        }
+        
+        // Update all states at once
+        setEnemies(remainingEnemies)
+        setBullets(remainingBullets)
+        bulletsRef.current = remainingBullets
+        enemiesRef.current = remainingEnemies
+        
+        if (hitCount > 0) {
+          const newScore = scoreRef.current + hitCount * 100
+          scoreRef.current = newScore
+          setScore(newScore)
           
-          return filtered
-        })
+          if (newScore >= 5000) {
+            setGameState('victory')
+          }
+        }
+        
+        // Check player collision with enemies
+        const hitPlayerIndex = remainingEnemies.findIndex(e => 
+          Math.abs(e.x - playerXRef.current) < 8 && e.y > 85
+        )
+        
+        if (hitPlayerIndex !== -1) {
+          remainingEnemies.splice(hitPlayerIndex, 1)
+          setEnemies(remainingEnemies)
+          enemiesRef.current = remainingEnemies
+          
+          setLives(l => {
+            const newLives = Math.max(0, l - 1)
+            if (newLives <= 0) {
+              setGameState('gameOver')
+            }
+            return newLives
+          })
+        }
         
         // Spawn enemies (reduced spawn rate)
         if (Math.random() < 0.025) {
-          setEnemies(prev => [...prev, {
+          const newEnemy: Enemy = {
             id: getEnemyId(),
             x: Math.random() * 90 + 5,
             y: -5,
             speed: Math.random() * 1.2 + 0.5
-          }])
+          }
+          const updatedEnemies = [...remainingEnemies, newEnemy]
+          setEnemies(updatedEnemies)
+          enemiesRef.current = updatedEnemies
         }
       }
       
@@ -239,6 +259,8 @@ export function SpaceWarGame({ isOpen, onClose }: SpaceWarGameProps) {
     setLives(3)
     setBullets([])
     setEnemies([])
+    bulletsRef.current = []
+    enemiesRef.current = []
     setPlayerX(50)
     playerXRef.current = 50
   }
