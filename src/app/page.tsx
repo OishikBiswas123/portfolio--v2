@@ -28,7 +28,7 @@ export default function Home() {
 
   const playBeatbox = () => {
     if (!audioRef.current) {
-      audioRef.current = new Audio('/beatbox.mp3')
+      audioRef.current = new Audio('/beatbox.ogg')
     }
     
     if (isPlaying) {
