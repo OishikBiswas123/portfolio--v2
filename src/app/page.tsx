@@ -20,6 +20,7 @@ import { FloatingBallsAround } from "@/components/floating-balls-around"
 import { FloatingTechIcons } from "@/components/floating-tech-icons"
 import { HeroBackgroundImage } from "@/components/hero-background-image"
 import { EasterEggButton } from "@/components/easter-egg-button"
+import { VideoModal } from "@/components/video-modal"
 import { motion } from "framer-motion"
 
 export default function Home() {
@@ -27,6 +28,9 @@ export default function Home() {
   const [playingAudio, setPlayingAudio] = useState<string | null>(null)
   const [audioErrors, setAudioErrors] = useState<{[key: string]: string | null}>({})
   const audioRefs = useRef<{[key: string]: HTMLAudioElement | null}>({})
+
+  // Video modal state
+  const [isVideoOpen, setIsVideoOpen] = useState(false)
 
   const playAudio = async (audioKey: string, filePath: string) => {
     // Initialize audio on first click
@@ -346,9 +350,14 @@ delay={0.1}
               )}
             </JellyCard>
 
-            <JellyCard delay={0.1} color="blue">
+            <JellyCard 
+              delay={0.1} 
+              color="blue"
+              onDoubleClick={() => setIsVideoOpen(true)}
+            >
               <div className="text-5xl mb-2">🕺</div>
               <p className="text-sm font-bold text-slate-800 dark:text-slate-200">Dancing</p>
+              <p className="text-xs text-slate-500 mt-1">Double-click to watch</p>
             </JellyCard>
 
             <JellyCard delay={0.2} color="purple">
@@ -453,6 +462,14 @@ delay={0.1}
 
       {/* Easter Egg Button */}
       <EasterEggButton />
+
+      {/* Video Modal for Dancing */}
+      <VideoModal
+        isOpen={isVideoOpen}
+        onClose={() => setIsVideoOpen(false)}
+        videoSrc="/dancing.mp4"
+        title="🕺 Dancing Video"
+      />
     </div>
   );
 }

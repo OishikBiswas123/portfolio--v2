@@ -9,9 +9,10 @@ interface JellyCardProps {
   delay?: number
   color?: string
   onClick?: () => void
+  onDoubleClick?: () => void
 }
 
-export function JellyCard({ children, className = '', delay = 0, color = 'pink', onClick }: JellyCardProps) {
+export function JellyCard({ children, className = '', delay = 0, color = 'pink', onClick, onDoubleClick }: JellyCardProps) {
   const colorMap: Record<string, { bg: string, border: string, orbiting: string[] }> = {
     pink: { 
       bg: 'from-pink-200/40 via-pink-300/40 to-purple-400/40',
@@ -91,6 +92,10 @@ export function JellyCard({ children, className = '', delay = 0, color = 'pink',
         onClick={(e) => {
           e.stopPropagation()
           onClick?.()
+        }}
+        onDoubleClick={(e) => {
+          e.stopPropagation()
+          onDoubleClick?.()
         }}
         animate={{
           y: [0, -10],
