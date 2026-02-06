@@ -44,6 +44,8 @@ export function HeroBackgroundImage() {
           </motion.div>
         </AnimatePresence>
         
+        {/* Gradient overlay for better text readability */}
+        <div className="absolute inset-0 bg-gradient-to-l from-transparent via-slate-50/30 dark:via-slate-900/30 to-slate-50/80 dark:to-slate-900/80" />
       </motion.div>
 
       {/* Mobile: Bottom center background - HIDDEN ON DESKTOP */}
@@ -70,6 +72,9 @@ export function HeroBackgroundImage() {
             />
           </motion.div>
         </AnimatePresence>
+        
+        {/* Gradient overlay for better text readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-50/80 dark:from-slate-900/80 via-slate-50/40 dark:via-slate-900/40 to-transparent" />
       </motion.div>
     </>
   )
