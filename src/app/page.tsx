@@ -96,6 +96,34 @@ export default function Home() {
   }
 
   return (
+    <>
+      {/* JSON-LD Structured Data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Oishik Biswas",
+            "url": "https://portfolio--v2.vercel.app",
+            "image": "https://portfolio--v2.vercel.app/profile.jpg",
+            "sameAs": [
+              "https://github.com/OishikBiswas123",
+              "https://www.linkedin.com/in/oishik-biswas-1487003aa/"
+            ],
+            "jobTitle": "Python Developer",
+            "description": "Python programmer, AI tools expert, and web developer",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Kolkata",
+              "addressRegion": "West Bengal",
+              "addressCountry": "India"
+            },
+            "email": "oishikthegreat@gmail.com",
+            "telephone": "+917044952230"
+          })
+        }}
+      />
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
       <SmoothScroll />
       {/* Navigation - Floating without bar */}
@@ -486,5 +514,6 @@ delay={0.1}
         title="🕺 Dancing Video"
       />
     </div>
+    </>
   );
 }
