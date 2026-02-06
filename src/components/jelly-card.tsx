@@ -88,7 +88,10 @@ export function JellyCard({ children, className = '', delay = 0, color = 'pink',
       {/* Main card with jelly wiggle effect */}
       <motion.div
         className={`relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden shadow-2xl border-2 bg-gradient-to-br ${colors.bg} ${colors.border} cursor-pointer`}
-        onClick={onClick}
+        onClick={(e) => {
+          e.stopPropagation()
+          onClick?.()
+        }}
         animate={{
           y: [0, -10],
         }}

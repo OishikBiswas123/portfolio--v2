@@ -24,11 +24,25 @@ import { motion } from "framer-motion"
 
 export default function Home() {
   const [isPlaying, setIsPlaying] = useState(false)
+  const [audioError, setAudioError] = useState<string | null>(null)
   const audioRef = useRef<HTMLAudioElement | null>(null)
 
-  const playBeatbox = () => {
+  const playBeatbox = async () => {
+    // Initialize audio on first click
     if (!audioRef.current) {
       audioRef.current = new Audio('/beatbox.ogg')
+      audioRef.current.preload = 'auto'
+      audioRef.current.volume = 0.7
+      
+      audioRef.current.onended = () => {
+        setIsPlaying(false)
+      }
+      
+      audioRef.current.onerror = (e) => {
+        console.error('Audio error:', e)
+        setAudioError('Failed to load audio')
+        setIsPlaying(false)
+      }
     }
     
     if (isPlaying) {
@@ -36,14 +50,30 @@ export default function Home() {
       audioRef.current.currentTime = 0
       setIsPlaying(false)
     } else {
-      audioRef.current.play().catch(err => {
-        console.error('Error playing audio:', err)
-      })
-      setIsPlaying(true)
-      
-      // Reset when audio ends
-      audioRef.current.onended = () => {
+      try {
+        // Reset error
+        setAudioError(null)
+        
+        // Load if not loaded
+        if (audioRef.current.readyState === 0) {
+          await audioRef.current.load()
+        }
+        
+        // Play audio
+        await audioRef.current.play()
+        setIsPlaying(true)
+      } catch (err) {
+        console.error('Playback failed:', err)
+        setAudioError('Click to enable audio')
         setIsPlaying(false)
+        
+        // Retry after user interaction
+        setTimeout(() => {
+          audioRef.current?.play().then(() => {
+            setIsPlaying(true)
+            setAudioError(null)
+          }).catch(() => {})
+        }, 100)
       }
     }
   }
@@ -316,8 +346,11 @@ delay={0.1}
             <JellyCard delay={0.4} color="green" onClick={playBeatbox}>
               <div className="text-5xl mb-2">🎵</div>
               <p className="text-sm font-bold text-slate-800 dark:text-slate-200">
-                {isPlaying ? '🔊 Playing...' : 'Beatboxing'}
+                {isPlaying ? '🔊 Playing...' : audioError || 'Beatboxing'}
               </p>
+              {audioError && (
+                <p className="text-xs text-red-500 mt-1">Click to play</p>
+              )}
             </JellyCard>
           </div>
         </div>
