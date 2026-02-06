@@ -129,13 +129,13 @@ export function FuturisticBackground() {
           const dy = particles[i].y - mouseY
           const distance = Math.sqrt(dx * dx + dy * dy)
           
-          if (distance < 150) {
-            const opacity = (1 - distance / 150) * 0.5
+          if (distance < 200) {
+            const opacity = (1 - distance / 200) * 0.8
             ctx.beginPath()
             ctx.moveTo(particles[i].x, particles[i].y)
             ctx.lineTo(mouseX, mouseY)
             ctx.strokeStyle = `rgba(124, 58, 237, ${opacity})`
-            ctx.lineWidth = 1
+            ctx.lineWidth = 1.5
             ctx.stroke()
           }
         }
