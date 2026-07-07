@@ -1,7 +1,14 @@
 "use client"
 
-import { useRef } from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
+import { useCallback, useEffect, useRef, useState } from "react"
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+  useInView,
+} from "framer-motion"
+import { onLenisScroll } from "@/components/smooth-scroll-provider"
 
 const items = [
   {
@@ -42,33 +49,20 @@ const items = [
   },
 ]
 
-function Card({
-  item,
-  index,
-  activeIndex,
-}: {
-  item: (typeof items)[number]
-  index: number
-  activeIndex: ReturnType<typeof useScroll>["scrollYProgress"]
-}) {
-  const scale = useTransform(activeIndex, (active) => {
-    const dist = Math.abs(index - active)
-    return 1 - Math.min(dist / 2.5, 1) * 0.25
-  })
+const ease: [number, number, number, number] = [0.22, 1, 0.36, 1]
 
-  const opacity = useTransform(activeIndex, (active) => {
-    const dist = Math.abs(index - active)
-    return 1 - Math.min(dist / 2.5, 1) * 0.5
-  })
-
-  const y = useTransform(activeIndex, (active) => {
-    const dist = index - active
-    return Math.max(-6, Math.min(6, dist * 3))
-  })
+function Card({ item, index }: { item: (typeof items)[number]; index: number }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { margin: "-48% 0px -48% 0px" })
 
   return (
     <motion.div
-      style={{ scale, opacity, y }}
+      ref={ref}
+      animate={{
+        scale: inView ? 1 : 0.88,
+        opacity: inView ? 1 : 0.4,
+      }}
+      transition={{ duration: 0.5, ease }}
       className="w-full py-1 border-b border-text-muted/40 last:border-b-0"
     >
       <div className="grid grid-cols-[auto_1fr_300px] gap-x-6 gap-y-0">
@@ -90,33 +84,62 @@ function Card({
 }
 
 export function WhatIDo() {
-  const cardsRef = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const [viewportH, setViewportH] = useState(0)
+  const rawProgress = useMotionValue(0)
 
-  const { scrollYProgress } = useScroll({
-    container: cardsRef,
+  useEffect(() => {
+    setViewportH(window.innerHeight)
+    const onResize = () => setViewportH(window.innerHeight)
+    window.addEventListener("resize", onResize)
+    return () => window.removeEventListener("resize", onResize)
+  }, [])
+
+  useEffect(() => {
+    return onLenisScroll((scrollY) => {
+      if (!sectionRef.current || !viewportH) return
+      const top = sectionRef.current.offsetTop
+      const height = sectionRef.current.offsetHeight
+      const sectionStart = top - viewportH
+      const sectionEnd = top + height
+      const progress = Math.max(
+        0,
+        Math.min(1, (scrollY - sectionStart) / (sectionEnd - sectionStart)),
+      )
+      rawProgress.set(progress)
+    })
+  }, [viewportH])
+
+  const smoothProgress = useSpring(rawProgress, {
+    stiffness: 60,
+    damping: 25,
+    restDelta: 0.001,
   })
 
-  const activeIndex = useTransform(scrollYProgress, [0, 1], [0, items.length - 1])
-
-  const dreamScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.6, 1.2, 2.5])
-  const dreamOpacity = useTransform(
-    scrollYProgress,
-    [0, 0.15, 0.85, 1],
-    [0, 0.04, 0.04, 0],
-  )
+  const dreamScale = useTransform(smoothProgress, [0, 0.5, 1], [0.72, 1, 1.32])
+  const dreamOpacity = useTransform(smoothProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0])
+  const displayOpacity = useTransform(dreamOpacity, (v) => v * 0.13)
 
   return (
-    <section id="what-i-do" className="relative h-screen">
+    <section
+      ref={sectionRef}
+      id="what-i-do"
+      className="relative py-section"
+    >
       <motion.span
-        style={{ scale: dreamScale, opacity: dreamOpacity, letterSpacing: "-0.05em" }}
-        className="fixed inset-0 flex items-center justify-center text-[20vw] sm:text-[18vw] font-black text-text-primary leading-none select-none pointer-events-none"
+        style={{
+          scale: dreamScale,
+          opacity: displayOpacity,
+          letterSpacing: "-0.05em",
+        }}
+        className="fixed inset-0 flex items-center justify-center text-[25vw] font-black text-text-primary leading-none select-none pointer-events-none z-0"
       >
-        dream
+        dream.
       </motion.span>
 
-      <div className="flex h-full relative z-10">
-        <div className="w-[35%] flex items-center justify-end pl-16 pr-0 py-12">
-          <div className="max-w-sm">
+      <div className="mx-auto max-w-6xl px-6 relative z-10">
+        <div className="grid grid-cols-[minmax(200px,280px)_1fr] gap-x-8 gap-y-0">
+          <aside className="sticky top-[20vh] self-start">
             <span className="text-xs uppercase tracking-[0.25em] text-text-muted">
               what i do
             </span>
@@ -127,25 +150,12 @@ export function WhatIDo() {
               Research, design, and the code to ship it — one set of hands, no
               handoffs, from the first user interview to production.
             </p>
-          </div>
-        </div>
+          </aside>
 
-        <div
-          ref={cardsRef}
-          className="flex-1 overflow-y-auto"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" } as React.CSSProperties}
-        >
-          <div className="flex flex-col pl-12 pr-8 pt-[25vh] pb-[50vh]">
-            <div className="w-full max-w-xl">
-              {items.map((item, i) => (
-                <Card
-                  key={item.num}
-                  item={item}
-                  index={i}
-                  activeIndex={activeIndex}
-                />
-              ))}
-            </div>
+          <div>
+            {items.map((item, i) => (
+              <Card key={item.num} item={item} index={i} />
+            ))}
           </div>
         </div>
       </div>

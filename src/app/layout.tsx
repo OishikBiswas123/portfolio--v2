@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
+import { SmoothScrollProvider } from "@/components/smooth-scroll-provider"
 import "./globals.css"
 
 const inter = Inter({
@@ -44,7 +45,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} theme-day`}>
       <body className="min-h-screen font-sans antialiased">
-        {children}
+        <SmoothScrollProvider>
+          {children}
+        </SmoothScrollProvider>
       </body>
     </html>
   )
