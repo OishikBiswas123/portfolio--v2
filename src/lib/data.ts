@@ -124,5 +124,6 @@ export const personalInfo = {
   social: {
     github: "https://github.com/OishikBiswas123",
     linkedin: "https://www.linkedin.com/in/oishik-biswas-1487003aa/",
+    whatsapp: "https://wa.me/917044952230",
   },
 }

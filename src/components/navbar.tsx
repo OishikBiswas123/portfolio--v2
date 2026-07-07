@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
@@ -18,18 +18,60 @@ const navLinks = [
   { href: "/#contact", label: "Contact" },
 ]
 
+const SECTION_TO_HASH: Record<string, string> = {
+  hero: "",
+  projects: "#projects",
+  contact: "#contact",
+}
+
 export function Navbar() {
   const pathname = usePathname()
   const [hash, setHash] = useState("")
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const skipObserve = useRef(false)
 
   useEffect(() => {
-    const onHashChange = () => setHash(window.location.hash)
+    const onHashChange = () => {
+      const newHash = window.location.hash
+      setHash(newHash)
+      skipObserve.current = true
+      setTimeout(() => { skipObserve.current = false }, 800)
+    }
     setHash(window.location.hash)
     window.addEventListener("hashchange", onHashChange)
     return () => window.removeEventListener("hashchange", onHashChange)
   }, [])
+
+  // Scroll spy
+  useEffect(() => {
+    if (pathname !== "/") return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (skipObserve.current) return
+        let bestHash: string | null = null
+        let bestRatio = 0
+        for (const entry of entries) {
+          if (entry.intersectionRatio > bestRatio) {
+            bestRatio = entry.intersectionRatio
+            const sectionId = entry.target.id
+            const mapped = SECTION_TO_HASH[sectionId]
+            if (mapped !== undefined) bestHash = mapped
+          }
+        }
+        if (bestHash !== null) setHash(bestHash)
+      },
+      { threshold: [0.1, 0.2, 0.3, 0.4, 0.5] }
+    )
+
+    Object.keys(SECTION_TO_HASH).forEach((id) => {
+      const el = document.getElementById(id)
+      if (el) observer.observe(el)
+    })
+
+    return () => observer.disconnect()
+  }, [pathname])
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/" && !hash

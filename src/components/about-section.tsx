@@ -5,7 +5,7 @@ import { skills, personalInfo } from "@/lib/data"
 
 export function AboutSection() {
   return (
-    <section className="border-t border-border-light">
+    <section id="about">
       <div className="mx-auto max-w-6xl px-6 py-24">
         <h2 className="text-xs uppercase tracking-[0.25em] text-text-muted mb-6">
           About
@@ -132,22 +132,22 @@ export function AboutSection() {
             Languages
           </h2>
           <div className="flex flex-wrap gap-3">
-            <span className="px-4 py-2 border border-border-light text-sm text-text-secondary">English (Fluent)</span>
-            <span className="px-4 py-2 border border-border-light text-sm text-text-secondary">Hindi (Fluent)</span>
-            <span className="px-4 py-2 border border-border-light text-sm text-text-secondary">Bengali (Native)</span>
-            <span className="px-4 py-2 border border-border-light text-sm text-text-secondary">Tamil (Conversational)</span>
+            <span className="px-4 py-2 bg-white/10 dark:bg-white/5 backdrop-blur-xl border border-white/20 rounded-xl text-sm text-text-secondary">English (Fluent)</span>
+            <span className="px-4 py-2 bg-white/10 dark:bg-white/5 backdrop-blur-xl border border-white/20 rounded-xl text-sm text-text-secondary">Hindi (Fluent)</span>
+            <span className="px-4 py-2 bg-white/10 dark:bg-white/5 backdrop-blur-xl border border-white/20 rounded-xl text-sm text-text-secondary">Bengali (Native)</span>
+            <span className="px-4 py-2 bg-white/10 dark:bg-white/5 backdrop-blur-xl border border-white/20 rounded-xl text-sm text-text-secondary">Tamil (Conversational)</span>
           </div>
 
           <h2 className="text-xs uppercase tracking-[0.25em] text-text-muted mt-10 mb-6">
             Interests
           </h2>
           <div className="flex flex-wrap gap-3">
-            <span className="px-4 py-2 border border-border-light text-sm text-text-secondary">Singing</span>
-            <span className="px-4 py-2 border border-border-light text-sm text-text-secondary">Playing Guitar</span>
-            <span className="px-4 py-2 border border-border-light text-sm text-text-secondary">Dancing</span>
-            <span className="px-4 py-2 border border-border-light text-sm text-text-secondary">Travelling</span>
-            <span className="px-4 py-2 border border-border-light text-sm text-text-secondary">Adventure Activities</span>
-            <span className="px-4 py-2 border border-border-light text-sm text-text-secondary">Watching Movies</span>
+            <span className="px-4 py-2 bg-white/10 dark:bg-white/5 backdrop-blur-xl border border-white/20 rounded-xl text-sm text-text-secondary">Singing</span>
+            <span className="px-4 py-2 bg-white/10 dark:bg-white/5 backdrop-blur-xl border border-white/20 rounded-xl text-sm text-text-secondary">Playing Guitar</span>
+            <span className="px-4 py-2 bg-white/10 dark:bg-white/5 backdrop-blur-xl border border-white/20 rounded-xl text-sm text-text-secondary">Dancing</span>
+            <span className="px-4 py-2 bg-white/10 dark:bg-white/5 backdrop-blur-xl border border-white/20 rounded-xl text-sm text-text-secondary">Travelling</span>
+            <span className="px-4 py-2 bg-white/10 dark:bg-white/5 backdrop-blur-xl border border-white/20 rounded-xl text-sm text-text-secondary">Adventure Activities</span>
+            <span className="px-4 py-2 bg-white/10 dark:bg-white/5 backdrop-blur-xl border border-white/20 rounded-xl text-sm text-text-secondary">Watching Movies</span>
           </div>
         </div>
       </div>

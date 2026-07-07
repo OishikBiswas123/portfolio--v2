@@ -4,7 +4,7 @@ import { ContactForm } from "@/components/contact-form"
 import { StatusBar } from "@/components/status-bar"
 import { ProjectCard } from "@/components/project-card"
 import { projects, personalInfo } from "@/lib/data"
-import { Mail, MapPin, Phone, ExternalLink } from "lucide-react"
+import { Mail, MapPin, Phone, ExternalLink, MessageCircle } from "lucide-react"
 import Link from "next/link"
 
 export default function Home() {
@@ -12,7 +12,7 @@ export default function Home() {
     <>
       <HeroSection />
 
-      <section id="projects" className="border-t border-border-light">
+      <section id="projects">
         <div className="mx-auto max-w-6xl px-6 py-24">
           <div className="flex items-center justify-between mb-12">
             <h2 className="text-xs uppercase tracking-[0.25em] text-text-muted">
@@ -30,7 +30,7 @@ export default function Home() {
       <AboutSection />
 
 
-      <section id="contact" className="border-t border-border-light">
+      <section id="contact">
         <div className="mx-auto max-w-6xl px-6 py-24 sm:py-32">
           <div className="max-w-2xl">
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-text-primary leading-tight">
@@ -58,7 +58,7 @@ export default function Home() {
                 href={personalInfo.social.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 text-sm text-text-secondary border border-white/20 rounded-full hover:bg-white/10 dark:hover:bg-white/5 hover:text-text-primary transition-all"
+                className="inline-flex items-center gap-2 px-5 py-2.5 text-sm text-text-secondary bg-white/10 dark:bg-white/5 backdrop-blur-xl border border-white/20 rounded-full hover:bg-white/20 dark:hover:bg-white/10 hover:text-text-primary transition-all"
               >
                 GitHub ↗
               </a>
@@ -66,9 +66,25 @@ export default function Home() {
                 href={personalInfo.social.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 text-sm text-text-secondary border border-white/20 rounded-full hover:bg-white/10 dark:hover:bg-white/5 hover:text-text-primary transition-all"
+                className="inline-flex items-center gap-2 px-5 py-2.5 text-sm text-text-secondary bg-white/10 dark:bg-white/5 backdrop-blur-xl border border-white/20 rounded-full hover:bg-white/20 dark:hover:bg-white/10 hover:text-text-primary transition-all"
               >
                 LinkedIn ↗
+              </a>
+              <a
+                href={personalInfo.social.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 text-sm text-text-secondary bg-white/10 dark:bg-white/5 backdrop-blur-xl border border-white/20 rounded-full hover:bg-white/20 dark:hover:bg-white/10 hover:text-text-primary transition-all"
+              >
+                <MessageCircle size={16} />
+                WhatsApp
+              </a>
+              <a
+                href={`tel:${personalInfo.phone}`}
+                className="inline-flex items-center gap-2 px-5 py-2.5 text-sm text-text-secondary bg-white/10 dark:bg-white/5 backdrop-blur-xl border border-white/20 rounded-full hover:bg-white/20 dark:hover:bg-white/10 hover:text-text-primary transition-all"
+              >
+                <Phone size={16} />
+                Call
               </a>
             </div>
 

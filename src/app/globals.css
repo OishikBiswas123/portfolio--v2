@@ -57,14 +57,14 @@ body {
 
 /* ── Sky Theme: Dawn ── */
 .theme-dawn {
-  --sky1: #e8a87c;
-  --sky2: #d4a373;
-  --sky3: #f0d5b0;
-  --sun-core: #ffdd99;
-  --sun-mid: #f5c27a;
-  --sun-glow: rgba(255, 180, 100, 0.5);
-  --sun-ray: rgba(255, 160, 80, 0.25);
-  --cloud-color: rgba(255, 230, 210, 0.45);
+  --sky1: #7EB9D9;
+  --sky2: #C6D1C8;
+  --sky3: #ddd0b0;
+  --sky4: #F3D09F;
+  --sun-core: #fff6e4;
+  --sun-mid: #ffd79c;
+  --sun-glow: rgba(255, 246, 228, 0.5);
+  --sun-ray: rgba(255, 215, 156, 0.2);
 
   --text-primary: #2c2420;
   --text-secondary: #6b5a4f;
@@ -75,6 +75,7 @@ body {
   --border-light: #e0d8ce;
   --accent: #eee5d8;
   --accent-hover: #e4d9c9;
+  --hero-shadow: none;
 }
 
 /* ── Sky Theme: Day ── */
@@ -82,11 +83,11 @@ body {
   --sky1: #2f6cb8;
   --sky2: #5a93cf;
   --sky3: #8cbce9;
+  --sky4: #b9dcf4;
   --sun-core: #fff3c4;
   --sun-mid: #ffd95b;
   --sun-glow: rgba(255, 220, 100, 0.6);
   --sun-ray: rgba(255, 220, 100, 0.25);
-  --cloud-color: rgba(255, 255, 255, 0.5);
 
   --text-primary: #f0ece6;
   --text-secondary: #c8d4e0;
@@ -97,18 +98,19 @@ body {
   --border-light: #3a5f8a;
   --accent: #2a4e78;
   --accent-hover: #3460a0;
+  --hero-shadow: 0 2px 16px rgba(0,0,0,0.25);
 }
 
 /* ── Sky Theme: Golden Hour ── */
 .theme-golden {
-  --sky1: #d4893a;
-  --sky2: #e8a96a;
-  --sky3: #f0c8a0;
-  --sun-core: #ffcc66;
-  --sun-mid: #f0b84d;
-  --sun-glow: rgba(255, 180, 60, 0.6);
-  --sun-ray: rgba(255, 160, 50, 0.35);
-  --cloud-color: rgba(255, 220, 180, 0.45);
+  --sky1: #a89ecb;
+  --sky2: #c8a9c8;
+  --sky3: #eec0a0;
+  --sky4: #f7dcc2;
+  --sun-core: #fff5ea;
+  --sun-mid: #f2c49c;
+  --sun-glow: rgba(255, 245, 234, 0.5);
+  --sun-ray: rgba(242, 196, 156, 0.2);
 
   --text-primary: #2c2420;
   --text-secondary: #6b5a4f;
@@ -119,18 +121,19 @@ body {
   --border-light: #e0d8ce;
   --accent: #eee5d8;
   --accent-hover: #e4d9c9;
+  --hero-shadow: none;
 }
 
 /* ── Sky Theme: Night ── */
 .theme-night {
-  --sky1: #1a2744;
-  --sky2: #2b3a55;
-  --sky3: #3d4f6b;
-  --sun-core: #c8d0e0;
-  --sun-mid: #b0bcd8;
-  --sun-glow: rgba(180, 200, 230, 0.4);
-  --sun-ray: rgba(180, 200, 230, 0.1);
-  --cloud-color: rgba(180, 195, 220, 0.2);
+  --sky1: #2b3a55;
+  --sky2: #3d4f6b;
+  --sky3: #6b7689;
+  --sky4: #9aa1a8;
+  --sun-core: #dfe7ff;
+  --sun-mid: #aab6dd;
+  --sun-glow: rgba(223, 231, 255, 0.4);
+  --sun-ray: rgba(170, 182, 221, 0.12);
 
   --text-primary: #e8ecf0;
   --text-secondary: #b0bcc8;
@@ -141,6 +144,7 @@ body {
   --border-light: #2a3550;
   --accent: #1a2438;
   --accent-hover: #253050;
+  --hero-shadow: 0 2px 16px rgba(0,0,0,0.35);
 }
 
 /* ── Animations ── */
@@ -148,11 +152,6 @@ body {
 @keyframes pulse-slow {
   0%, 100% { opacity: 0.6; transform: scale(1); }
   50% { opacity: 0.9; transform: scale(1.08); }
-}
-
-@keyframes twinkle {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 1; }
 }
 
 @keyframes sway {
@@ -171,6 +170,81 @@ body {
   0%, 100% { transform: rotate(0deg); }
   25% { transform: rotate(-2deg); }
   75% { transform: rotate(2deg); }
+}
+
+/* ── Bees / Fireflies ── */
+
+.bees-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  overflow: hidden;
+}
+.bee {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 62px;
+  will-change: transform;
+  cursor: pointer;
+}
+.bee-art {
+  position: relative;
+  display: block;
+  width: 100%;
+  will-change: transform;
+}
+.bee-body {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 4px 6px rgba(20,18,16,.16));
+}
+.bee-wing {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: auto;
+  animation: beeFan .12s ease-in-out infinite alternate;
+}
+.bee-fly {
+  position: absolute;
+  left: 27px;
+  top: 27px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: none;
+  background: radial-gradient(circle, #fffbdc 0%, #ffe07a 38%, rgba(255,210,90,0) 72%);
+  box-shadow: 0 0 14px 5px rgba(255,214,110,.6);
+  animation: fireflyPulse 2.6s ease-in-out infinite;
+}
+.bees-wrap.night .bee-body,
+.bees-wrap.night .bee-wing {
+  display: none;
+}
+.bees-wrap.night .bee-fly {
+  display: block;
+}
+
+@keyframes beeFan {
+  from { transform: scaleY(.8) rotate(-4deg); }
+  to { transform: scaleY(1.04) rotate(4deg); }
+}
+@keyframes fireflyPulse {
+  0%, 100% { opacity: .3; transform: scale(.65); }
+  50% { opacity: 1; transform: scale(1.12); }
+}
+
+/* ── Light Motes ── */
+
+@keyframes sfMote {
+  0% { transform: translateY(8px); opacity: 0; }
+  12% { opacity: .9; }
+  88% { opacity: .9; }
+  100% { transform: translateY(-130px) translateX(16px); opacity: 0; }
 }
 
 /* ── Grass / Meadow ── */
@@ -196,8 +270,9 @@ body {
   animation-delay: -0.5s;
 }
 
-/* ── PFP burst overlay ── */
-.pfp-burst-overlay {
+/* ── PFP sticker burst ── */
+
+.pfp-sticker-overlay {
   background: transparent;
 }
 
@@ -213,137 +288,31 @@ body {
   100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
 }
 
-/* ── PFP cycling animations ── */
+/* ── PFP click → zoom transition ── */
 
-/* 1. Flip 3D */
-@keyframes pfpExitFlip {
-  0% { transform: rotateY(0deg); opacity: 1; }
-  100% { transform: rotateY(90deg); opacity: 0; }
+.pfp-exit-click {
+  animation: pfpExitClick 0.35s ease-in forwards;
 }
-@keyframes pfpEnterFlip {
-  0% { transform: rotateY(-90deg); opacity: 0; }
-  100% { transform: rotateY(0deg); opacity: 1; }
+.pfp-enter-zoom {
+  animation: pfpEnterZoom 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-.pfp-exit-flip { animation: pfpExitFlip 0.5s ease-in-out forwards; transform-style: preserve-3d; perspective: 400px; }
-.pfp-enter-flip { animation: pfpEnterFlip 0.5s ease-in-out forwards; transform-style: preserve-3d; perspective: 400px; }
 
-/* 2. Scale */
-@keyframes pfpExitScale {
+@keyframes pfpExitClick {
   0% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(0.3); opacity: 0; }
+  100% { transform: scale(0.7); opacity: 0; }
 }
-@keyframes pfpEnterScale {
-  0% { transform: scale(1.3); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
-}
-.pfp-exit-scale { animation: pfpExitScale 0.45s ease-in forwards; }
-.pfp-enter-scale { animation: pfpEnterScale 0.45s ease-out forwards; }
-
-/* 3. Slide */
-@keyframes pfpExitSlide {
-  0% { transform: translateX(0); opacity: 1; }
-  100% { transform: translateX(-30px); opacity: 0; }
-}
-@keyframes pfpEnterSlide {
-  0% { transform: translateX(30px); opacity: 0; }
-  100% { transform: translateX(0); opacity: 1; }
-}
-.pfp-exit-slide { animation: pfpExitSlide 0.4s ease-in forwards; }
-.pfp-enter-slide { animation: pfpEnterSlide 0.4s ease-out forwards; }
-
-/* 4. Blur */
-@keyframes pfpExitBlur {
-  0% { filter: blur(0px); opacity: 1; }
-  100% { filter: blur(12px); opacity: 0; }
-}
-@keyframes pfpEnterBlur {
-  0% { filter: blur(12px); opacity: 0; }
-  100% { filter: blur(0px); opacity: 1; }
-}
-.pfp-exit-blur { animation: pfpExitBlur 0.5s ease-in forwards; }
-.pfp-enter-blur { animation: pfpEnterBlur 0.5s ease-out forwards; }
-
-/* 5. Spin */
-@keyframes pfpExitSpin {
-  0% { transform: rotate(0deg) scale(1); opacity: 1; }
-  100% { transform: rotate(180deg) scale(0.4); opacity: 0; }
-}
-@keyframes pfpEnterSpin {
-  0% { transform: rotate(-180deg) scale(0.4); opacity: 0; }
-  100% { transform: rotate(0deg) scale(1); opacity: 1; }
-}
-.pfp-exit-spin { animation: pfpExitSpin 0.5s ease-in forwards; }
-.pfp-enter-spin { animation: pfpEnterSpin 0.5s ease-out forwards; }
-
-/* 6. Shrink */
-@keyframes pfpExitShrink {
-  0% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(0); opacity: 0; }
-}
-@keyframes pfpEnterShrink {
-  0% { transform: scale(0); opacity: 0; }
+@keyframes pfpEnterZoom {
+  0% { transform: scale(0.3); opacity: 0; }
   60% { transform: scale(1.08); opacity: 1; }
   100% { transform: scale(1); opacity: 1; }
 }
-.pfp-exit-shrink { animation: pfpExitShrink 0.35s ease-in forwards; }
-.pfp-enter-shrink { animation: pfpEnterShrink 0.45s ease-out forwards; }
 
-/* 7. Wipe */
-@keyframes pfpExitWipe {
-  0% { clip-path: inset(0 0 0 0); }
-  100% { clip-path: inset(0 0 0 100%); }
-}
-@keyframes pfpEnterWipe {
-  0% { clip-path: inset(0 100% 0 0); }
-  100% { clip-path: inset(0 0 0 0); }
-}
-.pfp-exit-wipe { animation: pfpExitWipe 0.45s ease-in forwards; }
-.pfp-enter-wipe { animation: pfpEnterWipe 0.45s ease-out forwards; }
+/* ── PFP burst particles ── */
 
-/* 8. Elastic bounce */
-@keyframes pfpExitElastic {
-  0% { transform: scale(1); opacity: 1; }
-  40% { transform: scale(0.85); opacity: 0.6; }
-  100% { transform: scale(0.3); opacity: 0; }
+@keyframes burstParticle {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--tx), var(--ty)) scale(0.3); opacity: 0; }
 }
-@keyframes pfpEnterElastic {
-  0% { transform: scale(0.3); opacity: 0; }
-  50% { transform: scale(1.12); opacity: 0.8; }
-  70% { transform: scale(0.92); opacity: 0.95; }
-  100% { transform: scale(1); opacity: 1; }
-}
-.pfp-exit-elastic { animation: pfpExitElastic 0.4s ease-in forwards; }
-.pfp-enter-elastic { animation: pfpEnterElastic 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
-
-/* 9. Fade */
-@keyframes pfpExitFade {
-  0% { opacity: 1; }
-  100% { opacity: 0; }
-}
-@keyframes pfpEnterFade {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
-}
-.pfp-exit-fade { animation: pfpExitFade 0.3s ease-in forwards; }
-.pfp-enter-fade { animation: pfpEnterFade 0.3s ease-out forwards; }
-
-/* 10. Glitch */
-@keyframes pfpExitGlitch {
-  0% { transform: translate(0) skew(0deg); opacity: 1; filter: brightness(1); }
-  20% { transform: translate(-4px, 2px) skew(2deg); opacity: 0.8; filter: brightness(1.3); }
-  40% { transform: translate(4px, -1px) skew(-3deg); opacity: 0.6; filter: brightness(0.7); }
-  60% { transform: translate(-2px, 3px) skew(1deg); opacity: 0.4; filter: brightness(1.5); }
-  80% { transform: translate(3px, -2px) skew(-1deg); opacity: 0.2; filter: brightness(0.5); }
-  100% { transform: translate(0) skew(0deg); opacity: 0; filter: brightness(1); }
-}
-@keyframes pfpEnterGlitch {
-  0% { opacity: 0; filter: brightness(0.3); }
-  30% { opacity: 0.7; filter: brightness(1.4); transform: translate(3px, -2px) skew(2deg); }
-  60% { opacity: 0.9; filter: brightness(0.8); transform: translate(-2px, 1px) skew(-1deg); }
-  100% { opacity: 1; filter: brightness(1); transform: translate(0) skew(0deg); }
-}
-.pfp-exit-glitch { animation: pfpExitGlitch 0.5s ease-out forwards; }
-.pfp-enter-glitch { animation: pfpEnterGlitch 0.5s ease-out forwards; }
 
 /* ── Terminal cursor blink ── */
 @keyframes blink {

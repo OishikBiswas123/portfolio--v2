@@ -25,16 +25,37 @@ const stickerGifs = [
   "/Gif/sticker-5.gif",
 ]
 
-type AnimKey = "flip" | "scale" | "slide" | "blur" | "spin" | "shrink" | "wipe" | "elastic" | "fade" | "glitch"
-const ANIMS: AnimKey[] = ["flip", "scale", "slide", "blur", "spin", "shrink", "wipe", "elastic", "fade", "glitch"]
+const BURST_COLORS = ["#FFD700", "#FF6B6B", "#4ECDC4", "#45B7D1", "#96CEB4", "#FFEAA7", "#DDA0DD", "#FF9FF3", "#F368E0", "#FFD93D"]
+
+function triggerBurst(x: number, y: number) {
+  const overlay = document.createElement("div")
+  overlay.style.cssText = "position:fixed;inset:0;z-index:9999;pointer-events:none;"
+  const count = 20 + Math.floor(Math.random() * 16)
+  for (let i = 0; i < count; i++) {
+    const p = document.createElement("div")
+    const angle = (i / count) * 360 + (Math.random() - 0.5) * 40
+    const rad = angle * (Math.PI / 180)
+    const dist = 40 + Math.random() * 140
+    const size = 4 + Math.random() * 8
+    const round = Math.random() > 0.5
+    p.style.cssText = `
+      position:absolute;left:${x}px;top:${y}px;
+      width:${size}px;height:${size}px;
+      border-radius:${round ? "50%" : "2px"};
+      background:${BURST_COLORS[i % BURST_COLORS.length]};
+      animation:burstParticle ${0.35 + Math.random() * 0.35}s ease-out forwards;
+      --tx:${Math.cos(rad) * dist}px;--ty:${Math.sin(rad) * dist}px;
+    `
+    overlay.appendChild(p)
+  }
+  document.body.appendChild(overlay)
+  setTimeout(() => overlay.remove(), 900)
+}
 
 export function PfpSwitcher() {
   const btnRef = useRef<HTMLButtonElement>(null)
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => setMounted(true), [])
   const [current, setCurrent] = useState(0)
   const [next, setNext] = useState<number | null>(null)
-  const [anim, setAnim] = useState<AnimKey | null>(null)
   const [phase, setPhase] = useState<"idle" | "exiting" | "entering">("idle")
   const [gifIdx, setGifIdx] = useState(0)
   const [burst, setBurst] = useState<{ idx: number; x: number; y: number } | null>(null)
@@ -44,7 +65,6 @@ export function PfpSwitcher() {
   const resetToDefault = useCallback(() => {
     setCurrent(0)
     setNext(null)
-    setAnim(null)
     setPhase("idle")
     setBurst(null)
   }, [])
@@ -67,22 +87,19 @@ export function PfpSwitcher() {
       const cx = rect.left + rect.width / 2
       const cy = rect.top + rect.height / 2
       const n = (current + 1) % images.length
-      const a = ANIMS[n % ANIMS.length]
-      const g = gifIdx % stickerGifs.length
 
       setNext(n)
-      setAnim(a)
-      setGifIdx((i) => i + 1)
       setPhase("exiting")
-      setBurst({ idx: g, x: cx, y: cy })
+      setBurst({ idx: gifIdx % stickerGifs.length, x: cx, y: cy })
+      setGifIdx((i) => i + 1)
+      triggerBurst(cx, cy)
 
-      setTimeout(() => setPhase("entering"), 250)
+      setTimeout(() => setPhase("entering"), 400)
       setTimeout(() => {
         setCurrent(n)
         setNext(null)
-        setAnim(null)
         setPhase("idle")
-      }, 550)
+      }, 750)
       setTimeout(() => setBurst(null), 1200)
     },
     [current, phase, gifIdx],
@@ -90,9 +107,9 @@ export function PfpSwitcher() {
 
   return (
     <>
-      {mounted && burst !== null && createPortal(
+      {burst !== null && createPortal(
         <div
-          className="pfp-burst-overlay"
+          className="pfp-sticker-overlay"
           style={{ position: "fixed", inset: 0, zIndex: 9999, pointerEvents: "none" }}
         >
           <img
@@ -125,9 +142,9 @@ export function PfpSwitcher() {
           alt={images[current].alt}
           className={cn(
             "absolute inset-0 w-full h-full object-cover rounded-xl select-none pointer-events-none",
-            phase === "exiting" && anim && `pfp-exit-${anim}`,
+            phase === "exiting" && "pfp-exit-click",
           )}
-          style={{ zIndex: phase === "idle" || phase === "exiting" ? 1 : 0 }}
+          style={{ zIndex: phase === "idle" || phase === "exiting" ? 1 : 0, willChange: "transform, opacity" }}
         />
 
         {next !== null && (
@@ -136,9 +153,9 @@ export function PfpSwitcher() {
             alt={images[next].alt}
             className={cn(
               "absolute inset-0 w-full h-full object-cover rounded-xl select-none pointer-events-none",
-              phase === "entering" && anim && `pfp-enter-${anim}`,
+              phase === "entering" && "pfp-enter-zoom",
             )}
-            style={{ zIndex: 2 }}
+            style={{ zIndex: 2, willChange: "transform, opacity" }}
           />
         )}
       </button>
