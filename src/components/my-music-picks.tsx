@@ -6,7 +6,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import { musicTracks } from "@/lib/entertainment-data"
 
 export function MyMusicPicks() {
-  const [centerIndex, setCenterIndex] = useState(0)
+  const [centerIndex, setCenterIndex] = useState(Math.floor(musicTracks.length / 2))
 
   const goTo = useCallback((index: number) => {
     setCenterIndex(Math.max(0, Math.min(index, musicTracks.length - 1)))

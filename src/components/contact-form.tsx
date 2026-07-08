@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, type FormEvent, useRef } from "react"
+import { useState, type FormEvent } from "react"
 import emailjs from "@emailjs/browser"
 import { Send } from "lucide-react"
 
@@ -12,14 +12,13 @@ export function ContactForm() {
     setStatus("sending")
 
     const form = e.currentTarget
-    const formData = new FormData(form)
 
     try {
       await emailjs.sendForm(
-        "service_id",
-        "template_id",
+        "service_3xizjmq",
+        "template_jof55jf",
         form,
-        "public_key"
+        "GiO4aO5srG5Ym8XkW"
       )
       setStatus("success")
       form.reset()
@@ -64,17 +63,17 @@ export function ContactForm() {
       </div>
 
       <div>
-        <label
-          htmlFor="subject"
-          className="block text-xs uppercase tracking-widest text-text-muted mb-2"
-        >
-          Subject
-        </label>
-        <input
-          type="text"
-          name="subject"
-          id="subject"
-          required
+          <label
+            htmlFor="title"
+            className="block text-xs uppercase tracking-widest text-text-muted mb-2"
+          >
+            Subject
+          </label>
+          <input
+            type="text"
+            name="title"
+            id="title"
+            required
           className="w-full px-4 py-3 bg-transparent border border-border-light text-text-primary text-sm focus:outline-none focus:border-text-muted transition-colors"
         />
       </div>

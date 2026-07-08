@@ -6,7 +6,7 @@ import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react"
 import { moviePicks } from "@/lib/entertainment-data"
 
 export function MyMoviePicks() {
-  const [centerIndex, setCenterIndex] = useState(0)
+  const [centerIndex, setCenterIndex] = useState(Math.floor(moviePicks.length / 2))
 
   const goTo = useCallback((index: number) => {
     setCenterIndex(Math.max(0, Math.min(index, moviePicks.length - 1)))
