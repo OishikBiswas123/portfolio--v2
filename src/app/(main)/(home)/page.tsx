@@ -4,6 +4,7 @@ import { WhatIDo } from "@/components/what-i-do"
 import { BeyondScreen } from "@/components/beyond-screen"
 import { MyMoviePicks } from "@/components/my-movie-picks"
 import { MyMusicPicks } from "@/components/my-music-picks"
+import { HobbiesSection } from "@/components/hobbies-section"
 import { ContactForm } from "@/components/contact-form"
 import { StatusBar } from "@/components/status-bar"
 import { ProjectCard } from "@/components/project-card"
@@ -40,6 +41,8 @@ export default function Home() {
       <MyMoviePicks />
 
       <MyMusicPicks />
+
+      <HobbiesSection />
 
       <section id="contact">
         <div className="mx-auto max-w-6xl px-6 py-24 sm:py-32">

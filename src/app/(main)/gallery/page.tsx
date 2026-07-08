@@ -2,6 +2,7 @@ import { GalleryGrid } from "@/components/gallery-grid"
 import { galleryItems } from "@/lib/data"
 
 export default function GalleryPage() {
+
   return (
     <div className="pt-24 pb-24">
       <div className="mx-auto max-w-6xl px-6 pt-16 pb-12">
