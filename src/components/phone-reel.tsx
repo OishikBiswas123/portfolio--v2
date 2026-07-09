@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useRef, useEffect, useCallback } from "react"
-import { createPortal } from "react-dom"
 import { motion } from "framer-motion"
 import { Volume2, VolumeX, Lock } from "lucide-react"
 
@@ -230,21 +229,23 @@ export function PhoneReel({
 
   useEffect(() => {
     const update = () => {
+      if (!locked) return
       const now = new Date()
       setTime(now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false }))
     }
     update()
     const id = setInterval(update, 1000)
     return () => clearInterval(id)
-  }, [])
+  }, [locked])
 
   useEffect(() => {
+    if (!locked) return
     setQuote(quotes[Math.floor(Math.random() * quotes.length)])
     const id = setInterval(() => {
       setQuote(quotes[Math.floor(Math.random() * quotes.length)])
     }, 4000)
     return () => clearInterval(id)
-  }, [])
+  }, [locked])
 
   const initDone = useRef(false)
 
@@ -358,7 +359,7 @@ export function PhoneReel({
 
   const prevHideContent = useRef(hideContent)
   useEffect(() => {
-    if (prevHideContent.current && !hideContent) {
+    if (prevHideContent.current && !hideContent && !locked) {
       const el = videoRefs.current[currentIndexRef.current]
       if (el && !pausedByUser.current.has(currentIndexRef.current)) {
         el.currentTime = 0
@@ -366,7 +367,7 @@ export function PhoneReel({
       }
     }
     prevHideContent.current = hideContent
-  }, [hideContent])
+  }, [hideContent, locked])
 
   return (
     <>
@@ -408,9 +409,9 @@ export function PhoneReel({
               </p>
             </div>
             <motion.span
-              animate={{ opacity: [0.3, 0.8, 0.3] }}
+              animate={{ opacity: [0.7, 1, 0.7] }}
               transition={{ duration: 2, repeat: Infinity }}
-              className="text-[10px] text-white/80 tracking-widest uppercase"
+              className="text-xs text-white tracking-widest uppercase font-medium drop-shadow-lg mt-6"
             >
               tap to unlock
             </motion.span>
@@ -421,7 +422,7 @@ export function PhoneReel({
             <div
               ref={reelRef}
               className="phone-reel w-full h-full"
-              style={{ overflowY: "auto", overflowX: "hidden", scrollbarWidth: "none", msOverflowStyle: "none" }}
+              style={{ overflowY: "hidden", overflowX: "hidden", scrollbarWidth: "none", msOverflowStyle: "none" }}
             >
             {allVideos.map((video, i) => (
               <div
@@ -507,12 +508,12 @@ export function PhoneReel({
         </>
       )}
 
-      {showOverlay && !locked && typeof document !== "undefined" && createPortal(
+      {showOverlay && !locked && (
         <motion.div
           ref={overlayRef}
           className="pointer-events-auto overflow-hidden"
           style={{
-            position: "fixed",
+            position: "absolute",
             width: PHONE_H,
             height: PHONE_W,
             left: "50%",
@@ -550,8 +551,7 @@ export function PhoneReel({
             muted={isMuted}
             onClick={() => togglePlay(ROTATED_INDEX)}
           />
-        </motion.div>,
-        document.body
+        </motion.div>
       )}
     </>
   )
