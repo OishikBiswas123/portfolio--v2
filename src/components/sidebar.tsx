@@ -20,12 +20,11 @@ const navItems = [
   { href: "/", label: "Home", icon: Home },
   { href: "/about", label: "About", icon: User },
   { href: "/#projects", label: "Projects", icon: FolderOpen },
-  { href: "/gallery", label: "Gallery", icon: Image },
+  { href: "/gallery", label: "Spotlight", icon: Image },
   { href: "/blog", label: "Blog", icon: PenLine },
   { href: "/#contact", label: "Contact", icon: Mail },
 ]
 
-// Map section ids on the home page to their nav hash
 const SECTION_TO_HASH: Record<string, string> = {
   hero: "",
   projects: "#projects",
@@ -49,7 +48,6 @@ export function Sidebar() {
     return () => window.removeEventListener("hashchange", onHashChange)
   }, [])
 
-  // Scroll spy: highlight nav items when scrolling on the home page
   useEffect(() => {
     if (pathname !== "/") return
 
@@ -88,7 +86,6 @@ export function Sidebar() {
 
   return (
     <>
-      {/* Desktop: right sidebar */}
       <aside className="hidden md:flex fixed right-6 top-1/2 -translate-y-1/2 w-64 bg-white/10 dark:bg-white/5 backdrop-blur-2xl border border-white/20 rounded-3xl z-50 flex-col justify-between py-8 px-6 shadow-xl shadow-black/5">
         <div className="flex items-center gap-3">
           <PfpSwitcher />
@@ -130,7 +127,6 @@ export function Sidebar() {
         </div>
       </aside>
 
-      {/* Mobile: floating glass bottom nav */}
       <nav className="md:hidden fixed bottom-4 inset-x-0 mx-auto w-max px-4 py-2.5 bg-white/10 dark:bg-white/5 backdrop-blur-2xl border border-white/20 rounded-2xl z-50 flex items-center gap-1 shadow-xl shadow-black/5">
         {navItems.map((item) => {
           const Icon = item.icon
