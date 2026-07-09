@@ -100,9 +100,8 @@ export default function GalleryPage() {
 
   const phoneScale = useMemo(() => {
     if (!isMobile) return 1
-    if (isRotated) return 0.3
     return phoneLocked ? 0.3 : 0.5
-  }, [isMobile, isRotated, phoneLocked])
+  }, [isMobile, phoneLocked])
 
   const animateTarget = useMemo((): any => {
     if (!isMobile) {
