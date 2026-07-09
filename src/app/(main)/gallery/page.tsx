@@ -14,7 +14,7 @@ export default function GalleryPage() {
   const [phoneLeft, setPhoneLeft] = useState(0)
   const contentRef = useRef<HTMLDivElement>(null)
   const phoneTop = useMotionValue(0)
-  const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" && window.innerWidth < 768)
+  const [isMobile, setIsMobile] = useState(false)
 
   const updatePhoneLeft = useCallback(() => {
     if (contentRef.current) {
@@ -24,22 +24,22 @@ export default function GalleryPage() {
   }, [])
 
   useEffect(() => {
+    setIsMobile(window.innerWidth < 768)
     phoneTop.set(window.innerHeight / 2)
     updatePhoneLeft()
     window.addEventListener("resize", updatePhoneLeft)
-    return () => window.removeEventListener("resize", updatePhoneLeft)
+    const mq = window.matchMedia("(max-width: 767px)")
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
+    mq.addEventListener("change", handler)
+    return () => {
+      window.removeEventListener("resize", updatePhoneLeft)
+      mq.removeEventListener("change", handler)
+    }
   }, [updatePhoneLeft, phoneTop])
 
   useEffect(() => {
     requestAnimationFrame(updatePhoneLeft)
   }, [isRotated, updatePhoneLeft])
-
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 767px)")
-    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
-    mq.addEventListener("change", handler)
-    return () => mq.removeEventListener("change", handler)
-  }, [])
 
   useEffect(() => {
     if (isRotated) {
