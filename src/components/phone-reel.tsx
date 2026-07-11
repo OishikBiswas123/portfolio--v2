@@ -505,11 +505,55 @@ export function PhoneReel({
               muted={isMuted}
               onClick={() => togglePlay(ROTATED_INDEX)}
             />
+            {isMobile && !locked && (
+              <>
+                <motion.button
+                  onClick={() => setIsMuted((m) => !m)}
+                  className="flex items-center justify-center cursor-pointer"
+                  style={{
+                    position: "absolute",
+                    right: 10,
+                    bottom: 10,
+                    width: 36,
+                    height: 36,
+                    borderRadius: 10,
+                    background: "rgba(255,255,255,0.15)",
+                    backdropFilter: "blur(16px)",
+                    WebkitBackdropFilter: "blur(16px)",
+                    border: "1px solid rgba(255,255,255,0.2)",
+                    color: "white",
+                    zIndex: 70,
+                  }}
+                >
+                  {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+                </motion.button>
+                <motion.button
+                  onClick={handleLock}
+                  className="flex items-center justify-center cursor-pointer"
+                  style={{
+                    position: "absolute",
+                    right: 10,
+                    bottom: 52,
+                    width: 36,
+                    height: 36,
+                    borderRadius: 10,
+                    background: "rgba(255,255,255,0.15)",
+                    backdropFilter: "blur(16px)",
+                    WebkitBackdropFilter: "blur(16px)",
+                    border: "1px solid rgba(255,255,255,0.2)",
+                    color: "white",
+                    zIndex: 70,
+                  }}
+                >
+                  <Lock size={18} />
+                </motion.button>
+              </>
+            )}
           </motion.div>
         )}
       </motion.div>
 
-      {!locked && (
+      {!locked && !(isMobile && isRotated) && (
         <>
           <motion.button
             onClick={() => setIsMuted((m) => !m)}
