@@ -27,6 +27,20 @@ const stickerGifs = [
 
 const BURST_COLORS = ["#FFD700", "#FF6B6B", "#4ECDC4", "#45B7D1", "#96CEB4", "#FFEAA7", "#DDA0DD", "#FF9FF3", "#F368E0", "#FFD93D"]
 
+function playClick() {
+  const ctx = new AudioContext()
+  const osc = ctx.createOscillator()
+  const gain = ctx.createGain()
+  osc.type = "sine"
+  osc.connect(gain)
+  gain.connect(ctx.destination)
+  osc.frequency.value = 1000
+  gain.gain.setValueAtTime(0.12, ctx.currentTime)
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.035)
+  osc.start(ctx.currentTime)
+  osc.stop(ctx.currentTime + 0.035)
+}
+
 function triggerBurst(x: number, y: number) {
   const overlay = document.createElement("div")
   overlay.style.cssText = "position:fixed;inset:0;z-index:9999;pointer-events:none;"
@@ -82,6 +96,8 @@ export function PfpSwitcher() {
   const handleClick = useCallback(
     (e: React.MouseEvent) => {
       if (phase !== "idle") return
+
+      playClick()
 
       const rect = e.currentTarget.getBoundingClientRect()
       const cx = rect.left + rect.width / 2

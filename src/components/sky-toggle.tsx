@@ -27,7 +27,7 @@ export function SkyToggle() {
               "w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-200",
               isActive
                 ? "bg-accent text-text-primary scale-110"
-                : "text-text-muted hover:text-text-primary hover:bg-accent",
+                : "text-text-secondary hover:text-text-primary hover:bg-accent",
             )}
             title={t.label}
           >
@@ -44,7 +44,7 @@ export function SkyToggle() {
           "w-8 h-8 rounded-lg flex items-center justify-center text-xs transition-all duration-200 font-mono",
           autoTheme
             ? "bg-accent text-text-primary"
-            : "text-text-muted hover:text-text-primary hover:bg-accent",
+            : "text-text-secondary hover:text-text-primary hover:bg-accent",
         )}
         title={autoTheme ? "Auto (on)" : "Auto (off)"}
       >

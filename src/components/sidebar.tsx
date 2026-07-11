@@ -18,8 +18,8 @@ import {
 
 const navItems = [
   { href: "/", label: "Home", icon: Home },
-  { href: "/about", label: "About", icon: User },
   { href: "/#projects", label: "Projects", icon: FolderOpen },
+  { href: "/about", label: "About", icon: User },
   { href: "/gallery", label: "Spotlight", icon: Image },
   { href: "/blog", label: "Blog", icon: PenLine },
   { href: "/#contact", label: "Contact", icon: Mail },
@@ -86,7 +86,7 @@ export function Sidebar() {
 
   return (
     <>
-      <aside className="hidden md:flex fixed right-6 top-1/2 -translate-y-1/2 w-64 bg-white/10 dark:bg-white/5 backdrop-blur-2xl border border-white/20 rounded-3xl z-50 flex-col justify-between py-8 px-6 shadow-xl shadow-black/5">
+      <aside className="hidden md:flex fixed right-6 top-1/2 -translate-y-1/2 w-64 bg-white/10 dark:bg-white/5 backdrop-blur-2xl border border-white/20 rounded-3xl z-50 flex-col justify-between py-7 px-6 shadow-xl shadow-black/5">
         <div className="flex items-center gap-3">
           <PfpSwitcher />
           <Link
@@ -97,7 +97,7 @@ export function Sidebar() {
           </Link>
         </div>
 
-        <nav className="flex flex-col gap-1 mt-8">
+        <nav className="flex flex-col gap-1 mt-6">
           {navItems.map((item) => {
             const Icon = item.icon
             const active = isActive(item.href)
