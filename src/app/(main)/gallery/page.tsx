@@ -119,7 +119,7 @@ export default function GalleryPage() {
   const positionStyle = useMemo((): any => {
     if (!isMobile) return { top: phoneTop }
     if (isRotated) return { bottom: 120, left: "calc(50% + 20px)", transformOrigin: "center center" }
-    return { bottom: phoneLocked ? 200 : 360, right: 20, transformOrigin: "bottom right" }
+    return { bottom: phoneLocked ? 200 : 460, right: 20, transformOrigin: "bottom right" }
   }, [isMobile, isRotated, phoneLocked, phoneTop])
 
   const mobileTransition = useMemo((): any => {
