@@ -33,7 +33,7 @@ export function HeroSection() {
   }, [])
 
   return (
-    <section id="hero" className="relative min-h-screen flex flex-col justify-center px-8 md:px-16 lg:px-24">
+    <section id="hero" className="relative min-h-screen flex flex-col justify-center px-8 md:px-16 lg:px-24 scroll-mt-16">
       <LightMotes />
       <Bees />
       <div ref={meadowRef} className="absolute z-0 pointer-events-none select-none" style={{ left: 0, width: '100vw', bottom: '-2%' }}>
@@ -62,7 +62,7 @@ export function HeroSection() {
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
-          className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tight text-text-primary leading-none whitespace-nowrap"
+          className="text-4xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tight text-text-primary leading-none"
           style={{ textShadow: "var(--hero-shadow)" }}
         >
           <LetterHoverText text="Oishik Biswas" />

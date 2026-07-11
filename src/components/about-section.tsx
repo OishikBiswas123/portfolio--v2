@@ -5,7 +5,7 @@ import { skills, personalInfo } from "@/lib/data"
 
 export function AboutSection() {
   return (
-    <section id="about">
+    <section id="about" className="scroll-mt-20">
       <div className="mx-auto max-w-6xl px-6 py-24">
         <h2 className="text-xs uppercase tracking-[0.25em] text-text-muted mb-6">
           About

@@ -32,12 +32,15 @@ export function SmoothScrollProvider({
     if (initRef.current) return
     initRef.current = true
 
+    const prefersReduced = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    if (prefersReduced) return
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => 1 - Math.pow(1 - t, 3),
       smoothWheel: true,
       wheelMultiplier: 1,
-      touchMultiplier: 1.5,
+      touchMultiplier: 1,
     })
 
     lenisInstance = lenis

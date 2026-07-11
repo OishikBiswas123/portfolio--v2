@@ -127,7 +127,7 @@ export function Sidebar() {
         </div>
       </aside>
 
-      <nav className="md:hidden fixed bottom-4 inset-x-0 mx-auto w-max px-4 py-2.5 bg-white/10 dark:bg-white/5 backdrop-blur-2xl border border-white/20 rounded-2xl z-50 flex items-center gap-1 shadow-xl shadow-black/5">
+      <nav className="md:hidden fixed bottom-4 inset-x-0 mx-auto w-auto max-w-[calc(100vw-32px)] overflow-x-auto px-4 py-2.5 bg-white/10 dark:bg-white/5 backdrop-blur-2xl border border-white/20 rounded-2xl z-50 flex items-center gap-1 shadow-xl shadow-black/5">
         {navItems.map((item) => {
           const Icon = item.icon
           const active = isActive(item.href)

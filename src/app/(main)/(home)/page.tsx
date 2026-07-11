@@ -16,7 +16,7 @@ export default function Home() {
 
       <StatsStrip />
 
-      <section id="projects">
+      <section id="projects" className="scroll-mt-20">
         <div className="mx-auto max-w-6xl px-6 py-24">
           <div className="flex items-center justify-between mb-12">
             <h2 className="text-xs uppercase tracking-[0.25em] text-text-muted">

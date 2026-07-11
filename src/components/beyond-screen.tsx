@@ -14,7 +14,7 @@ const interests = [
 export function BeyondScreen() {
   return (
     <section className="py-24 sm:py-32 overflow-hidden">
-      <div className="mx-auto max-w-6xl px-16">
+      <div className="mx-auto max-w-6xl px-6 sm:px-16">
         <div className="text-center">
           <span className="text-sm uppercase tracking-[0.25em] text-text-primary font-semibold">
             Beyond the Screen

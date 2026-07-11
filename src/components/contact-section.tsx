@@ -49,7 +49,7 @@ export function ContactSection() {
     <section
       ref={sectionRef}
       id="contact"
-      className="relative py-24 sm:py-32"
+      className="scroll-mt-20 relative py-24 sm:py-32"
     >
       <motion.span
         style={{

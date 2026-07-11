@@ -65,7 +65,7 @@ function Card({ item, index }: { item: (typeof items)[number]; index: number }) 
       transition={{ duration: 0.5, ease }}
       className="w-full py-1 border-b border-text-muted/40 last:border-b-0"
     >
-      <div className="grid grid-cols-[auto_1fr_300px] gap-x-6 gap-y-0">
+      <div className="grid grid-cols-1 md:grid-cols-[auto_1fr_300px] gap-x-6 gap-y-2 md:gap-y-0">
         <span className="col-[1] row-[1/3] text-base font-black text-text-muted/30 leading-none pt-1 select-none">
           {item.num}
         </span>
@@ -138,7 +138,7 @@ export function WhatIDo() {
       </motion.span>
 
       <div className="mx-auto max-w-6xl px-6 relative z-10">
-        <div className="grid grid-cols-[minmax(200px,280px)_1fr] gap-x-8 gap-y-0">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(200px,280px)_1fr] gap-x-8 gap-y-6 lg:gap-y-0">
           <aside className="sticky top-[20vh] self-start">
             <span className="text-xs uppercase tracking-[0.25em] text-text-muted">
               what i do

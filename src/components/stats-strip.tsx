@@ -59,7 +59,7 @@ export function StatsStrip() {
                 : { duration: 0.35, ease: "easeOut" }
             }
           >
-            <span className="text-5xl sm:text-6xl lg:text-7xl font-black text-text-primary leading-none tracking-tighter whitespace-nowrap">
+            <span className="text-3xl sm:text-6xl lg:text-7xl font-black text-text-primary leading-none tracking-tighter">
               {stat.type === "count" ? (
                 <>
                   <AnimatedNumber to={stat.value} inView={inView} />
