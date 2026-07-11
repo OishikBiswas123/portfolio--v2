@@ -174,6 +174,7 @@ export default function GalleryPage() {
       {mounted && (
         <motion.div
           className="fixed z-50"
+          initial={false}
           animate={animateTarget}
           style={positionStyle}
           transition={mobileTransition}
