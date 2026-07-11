@@ -472,7 +472,7 @@ export function PhoneReel({
               height: PHONE_W,
               left: "50%",
               top: "50%",
-              transform: "translate(-50%, -50%)",
+              transform: "translate(-50%, -50%) rotate(-90deg)",
               borderRadius: 36,
               border: "3px solid rgba(255,255,255,0.15)",
               boxShadow: "0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05) inset",
