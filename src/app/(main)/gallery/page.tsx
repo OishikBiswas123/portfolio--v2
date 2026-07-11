@@ -15,6 +15,9 @@ export default function GalleryPage() {
   const contentRef = useRef<HTMLDivElement>(null)
   const phoneTop = useMotionValue(0)
   const [isMobile, setIsMobile] = useState(false)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => setMounted(true), [])
 
   const updatePhoneLeft = useCallback(() => {
     if (contentRef.current) {
@@ -169,14 +172,16 @@ export default function GalleryPage() {
         </div>
       </div>
 
-      <motion.div
-        className="fixed z-50"
-        animate={animateTarget}
-        style={positionStyle}
-        transition={mobileTransition}
-      >
-        <PhoneReel {...phoneProps} />
-      </motion.div>
+      {mounted && (
+        <motion.div
+          className="fixed z-50"
+          animate={animateTarget}
+          style={positionStyle}
+          transition={mobileTransition}
+        >
+          <PhoneReel {...phoneProps} />
+        </motion.div>
+      )}
     </div>
   )
 }
