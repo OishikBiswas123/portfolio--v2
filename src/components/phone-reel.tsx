@@ -527,7 +527,7 @@ export function PhoneReel({
               zIndex: 70,
               ...(isMobile
                 ? isRotated
-                  ? { bottom: 10, right: 10, left: "auto", top: "auto", transform: "none" }
+                  ? { top: 10, left: 10, right: "auto", bottom: "auto", transform: "none" }
                   : { top: 10, right: 10, left: "auto", bottom: "auto", transform: "none" }
                 : {
                     left: isRotated ? -(PHONE_H / 2 - PHONE_W / 2 + 56) : PHONE_W + 16,
@@ -556,7 +556,7 @@ export function PhoneReel({
               zIndex: 70,
               ...(isMobile
                 ? isRotated
-                  ? { bottom: 52, right: 10, left: "auto", top: "auto", transform: "none" }
+                  ? { top: 52, left: 10, right: "auto", bottom: "auto", transform: "none" }
                   : { top: 52, right: 10, left: "auto", bottom: "auto", transform: "none" }
                 : {
                     left: isRotated ? -(PHONE_H / 2 - PHONE_W / 2 + 56) : PHONE_W + 16,
