@@ -9,7 +9,7 @@ export function MyMoviePicks() {
   const [centerIndex, setCenterIndex] = useState(Math.floor(moviePicks.length / 2))
 
   const goTo = useCallback((index: number) => {
-    setCenterIndex(Math.max(0, Math.min(index, moviePicks.length - 1)))
+    setCenterIndex(((index % moviePicks.length) + moviePicks.length) % moviePicks.length)
   }, [])
 
   const handleCardClick = useCallback((index: number) => {
@@ -86,8 +86,7 @@ export function MyMoviePicks() {
         <div className="mt-8 flex items-center justify-center gap-4">
           <button
             onClick={() => goTo(centerIndex - 1)}
-            disabled={centerIndex === 0}
-            className="flex items-center justify-center w-10 h-10 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 text-white/70 hover:text-white hover:bg-white/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+            className="flex items-center justify-center w-10 h-10 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 text-white/70 hover:text-white hover:bg-white/20 transition-all"
             aria-label="Previous"
           >
             <ChevronLeft size={18} />
@@ -97,8 +96,7 @@ export function MyMoviePicks() {
           </span>
           <button
             onClick={() => goTo(centerIndex + 1)}
-            disabled={centerIndex === moviePicks.length - 1}
-            className="flex items-center justify-center w-10 h-10 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 text-white/70 hover:text-white hover:bg-white/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+            className="flex items-center justify-center w-10 h-10 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 text-white/70 hover:text-white hover:bg-white/20 transition-all"
             aria-label="Next"
           >
             <ChevronRight size={18} />
