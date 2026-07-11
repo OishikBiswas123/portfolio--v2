@@ -22,7 +22,7 @@ export default async function ProjectDetailPage({
     <div className="pt-24 pb-24">
       <div className="mx-auto max-w-6xl px-6">
         <Link
-          href="/projects"
+          href="/"
           className="inline-flex items-center gap-2 text-sm text-text-muted hover:text-text-primary transition-colors mb-12"
         >
           <ArrowLeft size={16} />

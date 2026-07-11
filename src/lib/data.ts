@@ -68,6 +68,34 @@ export const projects: Project[] = [
       "End-to-end service showcase with project portfolio",
     ],
   },
+  {
+    slug: "abs-cafe",
+    title: "AB's Cafe",
+    description:
+      "A full-stack restaurant management mobile app with real-time ordering, table management, payment processing, and an admin dashboard — built for a local cafe.",
+    fullDescription:
+      "AB's Cafe is a complete restaurant management solution I built from scratch for a local cafe. It features a Kotlin-based Android app for customers and staff, paired with a Node.js/Express backend handling authentication, table assignments, menu browsing, order processing, payment integration, and admin reporting. Real-time order sync between front-of-house and kitchen is powered by Socket.IO. The backend uses PostgreSQL for persistence and JWT-based authentication with role-based access control.",
+    category: "Mobile App",
+    techStack: [
+      "Kotlin",
+      "Android",
+      "Node.js",
+      "Express",
+      "TypeScript",
+      "PostgreSQL",
+      "Socket.IO",
+      "JWT",
+    ],
+    thumbnail: "/projects/abs-cafe/logo.png",
+    images: [],
+    videos: [],
+    githubUrl: "https://github.com/OishikBiswas123/AB-s-Cafe-android-app.git",
+    highlights: [
+      "Full-stack mobile app with real-time order sync via Socket.IO",
+      "JWT authentication with role-based access control",
+      "Complete restaurant workflow: tables, menu, orders, payments, reports",
+    ],
+  },
 ]
 
 export const galleryItems: { src: string; alt: string; type: "image" | "video" }[] = [
