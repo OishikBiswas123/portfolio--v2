@@ -112,15 +112,15 @@ export default function GalleryPage() {
         scale: 1,
       }
     }
-    if (isRotated) return { scale: phoneScale, translateX: "-50%", translateY: "0%" }
-    return { scale: phoneScale }
-  }, [isMobile, isRotated, phoneLeft, phoneScale])
+    if (isRotated) return { scale: phoneScale, bottom: 120, translateX: "-50%", translateY: "0%" }
+    return { scale: phoneScale, bottom: phoneLocked ? 200 : 650 }
+  }, [isMobile, isRotated, phoneLeft, phoneScale, phoneLocked])
 
   const positionStyle = useMemo((): any => {
     if (!isMobile) return { top: phoneTop }
-    if (isRotated) return { bottom: 120, left: "calc(50% + 20px)", transformOrigin: "center center" }
-    return { bottom: phoneLocked ? 200 : 580, right: 20, transformOrigin: "bottom right" }
-  }, [isMobile, isRotated, phoneLocked, phoneTop])
+    if (isRotated) return { left: "calc(50% + 20px)", transformOrigin: "center center" }
+    return { right: 20, transformOrigin: "bottom right" }
+  }, [isMobile, isRotated, phoneTop])
 
   const mobileTransition = useMemo((): any => {
     if (!isMobile) {
@@ -129,7 +129,7 @@ export default function GalleryPage() {
         x: { type: "tween", duration: 0.75, ease: "easeInOut" },
       }
     }
-    return { scale: { type: "spring", stiffness: 350, damping: 25 }, translateX: { type: "tween", duration: 0.4, ease: "easeInOut" } }
+    return { scale: { type: "spring", stiffness: 350, damping: 25 }, bottom: { type: "spring", stiffness: 350, damping: 25 }, translateX: { type: "tween", duration: 0.4, ease: "easeInOut" } }
   }, [isMobile])
 
   const gridRotated = isMobile ? false : isRotated
