@@ -35,6 +35,10 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  icons: {
+    icon: "/favicon.png",
+    apple: "/apple-touch-icon.png",
+  },
 }
 
 export default function RootLayout({
@@ -44,7 +48,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} theme-day`}>
-      <body className="min-h-screen font-sans antialiased overflow-x-hidden">
+      <body className="min-h-screen font-sans antialiased">
         <SmoothScrollProvider>
           {children}
         </SmoothScrollProvider>

@@ -33,7 +33,7 @@ export function HeroSection() {
   }, [])
 
   return (
-    <section id="hero" className="relative min-h-screen flex flex-col justify-center px-8 md:px-16 lg:px-24 scroll-mt-16 overflow-x-hidden">
+    <section id="hero" className="relative min-h-screen flex flex-col justify-center px-8 md:px-16 lg:px-24 scroll-mt-16 overflow-x-hidden md:overflow-x-visible">
       <LightMotes />
       <Bees />
       <div ref={meadowRef} className="absolute z-0 pointer-events-none select-none overflow-hidden md:overflow-visible" style={{ left: '-36px', width: 'calc(100vw + 72px)', bottom: 0 }}>
