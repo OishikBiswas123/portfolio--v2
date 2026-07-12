@@ -44,7 +44,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} theme-day`}>
-      <body className="min-h-screen font-sans antialiased">
+      <body className="min-h-screen font-sans antialiased overflow-x-hidden">
         <SmoothScrollProvider>
           {children}
         </SmoothScrollProvider>

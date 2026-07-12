@@ -22,7 +22,7 @@ export function HeroSection() {
     const loop = () => {
       mx += (tmx - mx) * 0.06
       my += (tmy - my) * 0.06
-      el.style.transform = `translate(${-mx * 36}px, ${-my * 22}px)`
+      el.style.transform = `translate(${-mx * window.innerWidth * 0.06}px, ${-my * window.innerHeight * 0.03}px)`
       raf = requestAnimationFrame(loop)
     }
     raf = requestAnimationFrame(loop)
@@ -33,10 +33,10 @@ export function HeroSection() {
   }, [])
 
   return (
-    <section id="hero" className="relative min-h-screen flex flex-col justify-center px-8 md:px-16 lg:px-24 scroll-mt-16">
+    <section id="hero" className="relative min-h-screen flex flex-col justify-center px-8 md:px-16 lg:px-24 scroll-mt-16 overflow-x-hidden">
       <LightMotes />
       <Bees />
-      <div ref={meadowRef} className="absolute z-0 pointer-events-none select-none overflow-hidden md:overflow-visible" style={{ left: 0, width: '100vw', bottom: 0 }}>
+      <div ref={meadowRef} className="absolute z-0 pointer-events-none select-none overflow-hidden md:overflow-visible" style={{ left: '-36px', width: 'calc(100vw + 72px)', bottom: 0 }}>
         <img
           src="/meadow/medows.png"
           alt=""
