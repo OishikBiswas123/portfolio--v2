@@ -86,13 +86,13 @@ export function HeroSection() {
           className="mt-10 flex flex-col sm:flex-row items-start gap-4"
         >
           <Link
-            href="/projects"
+            href="/#projects"
             className="px-8 py-3 bg-white/20 dark:bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-sm uppercase tracking-widest text-text-primary hover:bg-white/30 dark:hover:bg-white/20 transition-all"
           >
             View Projects
           </Link>
           <Link
-            href="/contact"
+            href="/#contact"
             className="px-8 py-3 border border-white/20 rounded-full text-sm uppercase tracking-widest text-text-secondary hover:bg-white/10 dark:hover:bg-white/5 hover:text-text-primary transition-all"
           >
             Get in Touch
