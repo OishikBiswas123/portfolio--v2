@@ -149,6 +149,10 @@ export function Sidebar() {
             </Link>
           )
         })}
+
+        <span className="w-px h-6 bg-border-light shrink-0 mx-1" />
+
+        <SkyToggle horizontal />
       </nav>
     </>
   )

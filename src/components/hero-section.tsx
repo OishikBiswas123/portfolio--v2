@@ -36,11 +36,11 @@ export function HeroSection() {
     <section id="hero" className="relative min-h-screen flex flex-col justify-center px-8 md:px-16 lg:px-24 scroll-mt-16">
       <LightMotes />
       <Bees />
-      <div ref={meadowRef} className="absolute z-0 pointer-events-none select-none" style={{ left: 0, width: '100vw', bottom: '-2%' }}>
+      <div ref={meadowRef} className="absolute z-0 pointer-events-none select-none" style={{ left: 0, width: '100vw', bottom: 0 }}>
         <img
           src="/meadow/medows.png"
           alt=""
-          className="w-full h-auto"
+          className="w-full h-auto scale-[2.5] md:scale-100 origin-bottom"
           style={{
             WebkitMaskImage: "linear-gradient(to bottom, black 78%, transparent 100%)",
             maskImage: "linear-gradient(to bottom, black 78%, transparent 100%)",
