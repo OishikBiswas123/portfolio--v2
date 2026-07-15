@@ -1,3 +1,6 @@
+"use client"
+
+import { useState } from "react"
 import { HeroSection } from "@/components/hero-section"
 import { StatsStrip } from "@/components/stats-strip"
 import { WhatIDo } from "@/components/what-i-do"
@@ -10,6 +13,9 @@ import { ProjectCard } from "@/components/project-card"
 import { projects } from "@/lib/data"
 
 export default function Home() {
+  const [spotifyResetKey, setSpotifyResetKey] = useState(0)
+  const [hobbyStopKey, setHobbyStopKey] = useState(0)
+
   return (
     <>
       <script
@@ -63,9 +69,15 @@ export default function Home() {
 
       <MyMoviePicks />
 
-      <MyMusicPicks />
+      <MyMusicPicks
+        resetKey={spotifyResetKey}
+        onTrackChange={() => setHobbyStopKey(k => k + 1)}
+      />
 
-      <HobbiesSection />
+      <HobbiesSection
+        stopKey={hobbyStopKey}
+        onPlay={() => setSpotifyResetKey(k => k + 1)}
+      />
 
       <ContactSection />
     </>

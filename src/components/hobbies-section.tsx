@@ -11,12 +11,26 @@ const audioCards = [
   { key: "beatbox", icon: Headphones, label: "Beatboxing", src: "/beatbox.ogg" },
 ] as const
 
-export function HobbiesSection() {
+export function HobbiesSection({ stopKey = 0, onPlay }: { stopKey?: number; onPlay?: () => void }) {
   const router = useRouter()
   const [playing, setPlaying] = useState<string | null>(null)
   const [paused, setPaused] = useState(false)
   const [progress, setProgress] = useState(0)
   const currentAudio = useRef<HTMLAudioElement | null>(null)
+
+  const stopAudio = useCallback(() => {
+    if (currentAudio.current) {
+      currentAudio.current.pause()
+      currentAudio.current = null
+    }
+    setPlaying(null)
+    setPaused(false)
+    setProgress(0)
+  }, [])
+
+  useEffect(() => {
+    stopAudio()
+  }, [stopKey, stopAudio])
 
   const togglePlay = useCallback((key: string, src: string) => {
     if (playing === key) {
@@ -65,10 +79,11 @@ export function HobbiesSection() {
 
     audio.play().then(() => {
       setPlaying(key)
+      onPlay?.()
     }).catch(() => {
       setPlaying(null)
     })
-  }, [playing])
+  }, [playing, onPlay])
 
   useEffect(() => {
     return () => {

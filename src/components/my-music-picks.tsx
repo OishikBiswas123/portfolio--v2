@@ -5,13 +5,21 @@ import { motion } from "framer-motion"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { musicTracks } from "@/lib/entertainment-data"
 
-export function MyMusicPicks() {
+export function MyMusicPicks({ resetKey = 0, onTrackChange }: { resetKey?: number; onTrackChange?: () => void }) {
   const [centerIndex, setCenterIndex] = useState(0)
   const swipeBarRef = useRef<HTMLDivElement>(null)
+  const prevCenterRef = useRef(centerIndex)
 
   const goTo = useCallback((index: number) => {
     setCenterIndex(((index % musicTracks.length) + musicTracks.length) % musicTracks.length)
   }, [])
+
+  useEffect(() => {
+    if (prevCenterRef.current !== centerIndex) {
+      onTrackChange?.()
+      prevCenterRef.current = centerIndex
+    }
+  }, [centerIndex, onTrackChange])
 
   useEffect(() => {
     const bar = swipeBarRef.current
@@ -104,6 +112,7 @@ export function MyMusicPicks() {
                 <div className="relative rounded-xl shadow-2xl overflow-hidden bg-white/5">
                   <div style={{ pointerEvents: isCenter ? "auto" : "none" }} className="overflow-hidden">
                     <iframe
+                      key={`${track.spotifyId}-${isCenter ? centerIndex : ''}-${resetKey}`}
                       src={`https://open.spotify.com/embed/track/${track.spotifyId}?utm_source=generator&theme=0`}
                       width="100%"
                       height="232"
